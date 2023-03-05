@@ -6,7 +6,6 @@ const path = require("path");
 const express = require("express");
 const indexRouter = require("./routes/index");
 const calendarRouter = require("./routes/calendar");
-const config = require("./config");
 
 //Renderizar pagina
 const app = express();
