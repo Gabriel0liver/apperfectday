@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <title>APPerfectDay</title>
+</head>
+
+<body>
+  <div class="app-calendar-day">
+    <div class="calendar-panel">
+      <a href="/calendar/<%= year %>/<%= month %>">Volver al mes</a>
+      <div><%= day %> de <%= monthName %> de <%= year %></div>
+      <a href="#">Salir</a>
+    </div>
+    <% for (let activity of activities) { %>
+    <div class="calendar-row">
+      <%= activity %>
+    </div>
+    <% } %>
+  </div>
+  <script src="js/principal.js"></script>
+</body>
+
+</html>

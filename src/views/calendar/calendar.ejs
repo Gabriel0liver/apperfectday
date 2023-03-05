@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <title>APPerfectDay</title>
+</head>
+
+<body>
+  <div class="app-calendar-month">
+    <div class="calendar-panel">
+      <%
+      let prevYear = month == 1 ? year - 1 : year;
+      let prevMonth = month == 1 ? 12 : month - 1;
+      let nextYear = month == 12 ? year + 1 : year;
+      let nextMonth = month == 12 ? 1 : month + 1;
+      %>
+      <a href="/calendar/<%= prevYear %>/<%= prevMonth %>">Mes anterior</a>
+      <div><%= monthName %> <%= year %></div>
+      <a href="/calendar/<%= nextYear %>/<%= nextMonth %>">Mes posterior</a>
+    </div>
+    <% for (let row = 0; row < calendarDays.length / 7; row++) { %>
+    <div class="calendar-row">
+      <% for (let col = 0; col < 7; col++) { %>
+      <%
+      let i = row * 7 + col;
+      let classes = ["calendar-day"];
+      if (!calendarDays[i].isThisMonth) {
+        classes.push("calendar-day-off");
+      }
+      if (calendarDays[i].isToday) {
+        classes.push("calendar-day-now");
+      }
+      
+      %>
+      <a href="/calendar/<%= calendarDays[i].year %>/<%= calendarDays[i].month %>/<%= calendarDays[i].day %>">
+        <div class="<%= classes.join(' ') %>">
+          <div class="calendar-day-number"><%= calendarDays[i].day %></div>
+          <% for (let activity of calendarDays[i].activities) { %>
+          <div class="calendar-day-activity"><%= activity %></div>
+          <% } %>
+        </div>
+      </a>
+      <% } %>
+    </div>
+    <% } %>
+  </div>
+  <script src="js/principal.js"></script>
+</body>
+
+</html>
