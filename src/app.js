@@ -1,4 +1,7 @@
 "use strict";
+
+require('dotenv').config();
+
 const path = require("path");
 const express = require("express");
 const indexRouter = require("./routes/index");
@@ -20,7 +23,7 @@ app.use(express.static(path.resolve("public")));
 app.use("/", indexRouter);
 app.use("/calendar", calendarRouter);
 
-const port = process.env.port;
+const port = process.env.PORT;
 
 app.listen(port, (err) => {
   if (err) {
