@@ -22,7 +22,7 @@ app.use("/calendar", calendarRouter);
 
 const port = config.port;
 
-app.listen(80, (err) => {
+app.listen(8080, (err) => {
   if (err) {
     console.error("No se pudo inicializar el servidor: " + err.message);
   } else {
