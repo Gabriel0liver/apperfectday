@@ -20,9 +20,9 @@ app.use(express.static(path.resolve("public")));
 app.use("/", indexRouter);
 app.use("/calendar", calendarRouter);
 
-const port = config.port;
+const port = process.env.port || 80;
 
-app.listen(8080, (err) => {
+app.listen(port, (err) => {
   if (err) {
     console.error("No se pudo inicializar el servidor: " + err.message);
   } else {
