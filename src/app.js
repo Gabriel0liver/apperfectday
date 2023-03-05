@@ -20,7 +20,7 @@ app.use(express.static(path.resolve("public")));
 app.use("/", indexRouter);
 app.use("/calendar", calendarRouter);
 
-const port = process.env.port || 80;
+const port = process.env.port;
 
 app.listen(port, (err) => {
   if (err) {
