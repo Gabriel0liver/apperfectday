@@ -1,7 +1,5 @@
 "use strict";
 
-require("dotenv").config();
-
 const path = require("path");
 const express = require("express");
 const indexRouter = require("./routes/index");
@@ -10,6 +8,8 @@ const nconf = require("nconf");
 const { existsSync } = require("fs");
 
 (() => {
+  require("dotenv").config();
+
   let env = process.env.NODE_ENV || "local";
 
   const envs = ["production", "development", "local"];
@@ -43,7 +43,7 @@ const { existsSync } = require("fs");
   app.use("/", indexRouter);
   app.use("/calendar", calendarRouter);
 
-  const port = nconf.get("server:port");
+  const port = process.env.PORT;
 
   app.listen(port, (err) => {
     if (err) {
