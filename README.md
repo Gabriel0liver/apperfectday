@@ -15,3 +15,5 @@ Para arrancar la aplicación: `npm run start:dev`
 - Production:
 
 Para arrancar la aplicación: `npm start`
+
+para ejecutar los tests : 'npm test'
