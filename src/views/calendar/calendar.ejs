@@ -18,9 +18,9 @@
       let nextYear = month == 12 ? year + 1 : year;
       let nextMonth = month == 12 ? 1 : month + 1;
       %>
-      <a href="/calendar/<%= prevYear %>/<%= prevMonth %>">Mes anterior</a>
+      <!--a href="/calendar/<%= prevYear %>/<%= prevMonth %>">Mes anterior</a-->
       <div><%= monthName %> <%= year %></div>
-      <a href="/calendar/<%= nextYear %>/<%= nextMonth %>">Mes posterior</a>
+      <!--a href="/calendar/<%= nextYear %>/<%= nextMonth %>">Mes posterior</a-->
     </div>
     <% for (let row = 0; row < calendarDays.length / 7; row++) { %>
     <div class="calendar-row">
@@ -36,19 +36,18 @@
       }
       
       %>
-      <a href="/calendar/<%= calendarDays[i].year %>/<%= calendarDays[i].month %>/<%= calendarDays[i].day %>">
+      <!-- a href="/calendar/<%= calendarDays[i].year %>/<%= calendarDays[i].month %>/<%= calendarDays[i].day %>"-->
         <div class="<%= classes.join(' ') %>">
           <div class="calendar-day-number"><%= calendarDays[i].day %></div>
           <% for (let activity of calendarDays[i].activities) { %>
           <div class="calendar-day-activity"><%= activity %></div>
           <% } %>
         </div>
-      </a>
+      <!--/a-->
       <% } %>
     </div>
     <% } %>
   </div>
-  <script src="js/principal.js"></script>
 </body>
 
 </html>

@@ -17,6 +17,14 @@ const actividadSchema = new Schema({
   fin: {
     type: Date,
     required: true
+  },
+  color:{
+    type: String,
+    required: true
+  },
+  asignatura:{
+    type: ObjectId,
+    required: false
   }
 });
 
