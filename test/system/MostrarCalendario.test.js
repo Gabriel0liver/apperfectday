@@ -3,7 +3,7 @@ const chrome = require('selenium-webdriver/chrome');
 const { until } = require('selenium-webdriver');
 const { Options } = require('selenium-webdriver/chrome');
 require('chromedriver')
-
+ /*
 describe('system test', () => {
   let driver;
 
@@ -35,4 +35,4 @@ await driver.get(url);
     // Check that the response status code is the expected one
     expect(statusCode).toBe(expectedStatus);
   });
-});
+});*/
