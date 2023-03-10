@@ -2,6 +2,7 @@ const { Builder } = require('selenium-webdriver');
 const chrome = require('selenium-webdriver/chrome');
 const { until } = require('selenium-webdriver');
 const { Options } = require('selenium-webdriver/chrome');
+const axios = require('axios');
 require('chromedriver')
  /*
 describe('system test', () => {
