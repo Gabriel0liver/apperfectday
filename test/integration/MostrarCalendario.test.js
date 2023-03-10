@@ -22,13 +22,10 @@ test('https://apperfectday.herokuapp.com/calendar/2000/12 responds with 200 OK',
 
 // prueba integracion HU mostrar Calendario
 //con /calendar/2000/12k campo mes no es valido debe devolver error
-
-/*
 test('https://apperfectday.herokuapp.com/calendar/2000/12k responds with 404 Error', async () => {
   const response = await axios.get(
     'https://apperfectday.herokuapp.com/calendar/3/2023'
   )
   expect(response.status).toBe(404)
 })
-*/
 

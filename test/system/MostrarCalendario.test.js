@@ -2,9 +2,8 @@ const { Builder } = require('selenium-webdriver');
 const chrome = require('selenium-webdriver/chrome');
 const { until } = require('selenium-webdriver');
 const { Options } = require('selenium-webdriver/chrome');
-const axios = require('axios');
 require('chromedriver')
- /*
+ 
 describe('system test', () => {
   let driver;
 
@@ -36,12 +35,4 @@ await driver.get(url);
     // Check that the response status code is the expected one
     expect(statusCode).toBe(expectedStatus);
   });
-});*/
-
-//solo de prueba
-test('https://apperfectday.herokuapp.com/calendar/2000/12 responds with 200 OK', async () => {
-  const response = await axios.get(
-    'https://apperfectday.herokuapp.com/calendar/3/2023'
-  )
-  expect(response.status).toBe(200)
-})
+});
