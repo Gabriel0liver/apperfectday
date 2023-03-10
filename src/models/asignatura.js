@@ -37,6 +37,6 @@ const asignaturaSchema = new Schema({
   }
 });
 
-const Asignatura = mongoose.model('Actividad', asignaturaSchema);
+const Asignatura = mongoose.model('Asignatura', asignaturaSchema);
 
 module.exports = Asignatura;
