@@ -36,3 +36,11 @@ await driver.get(url);
     expect(statusCode).toBe(expectedStatus);
   });
 });*/
+
+//solo de prueba
+test('https://apperfectday.herokuapp.com/calendar/2000/12 responds with 200 OK', async () => {
+  const response = await axios.get(
+    'https://apperfectday.herokuapp.com/calendar/3/2023'
+  )
+  expect(response.status).toBe(200)
+})
