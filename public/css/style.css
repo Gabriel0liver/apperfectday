@@ -67,6 +67,14 @@ body {
   font-size: 0.75rem;
 }
 
+.app-calendar-month
+  .calendar-row
+  .calendar-day.calendar-day-now
+  .calendar-day-number {
+  text-shadow: 0 0 2px black, 0 0 4px black, 0 0 5px black, 0 0 5px black;
+  color: var(--gold);
+}
+
 .app-calendar-month .calendar-row .calendar-day .calendar-day-more {
   font-size: 0.75rem;
   font-weight: bold;

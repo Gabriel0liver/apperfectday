@@ -69,22 +69,28 @@ router.get("/:year/:month", (req, res) => {
         {
           _id: "1",
           titulo: "Actividad 1",
-          inicio: DateTime.now().set({ hour: 10, minute: 30 }).toJSDate(),
-          fin: DateTime.now().set({ hour: 13, minute: 30 }).toJSDate(),
+          inicio: DateTime.now()
+            .set({ day: 8, hour: 10, minute: 30 })
+            .toJSDate(),
+          fin: DateTime.now().set({ day: 8, hour: 13, minute: 30 }).toJSDate(),
           color: "blue",
         },
         {
           _id: "2",
           titulo: "Actividad 2",
-          inicio: DateTime.now().set({ hour: 13, minute: 30 }).toJSDate(),
-          fin: DateTime.now().set({ hour: 15, minute: 00 }).toJSDate(),
+          inicio: DateTime.now()
+            .set({ day: 8, hour: 13, minute: 30 })
+            .toJSDate(),
+          fin: DateTime.now().set({ day: 8, hour: 15, minute: 00 }).toJSDate(),
           asignatura: "1",
         },
         {
           _id: "3",
           titulo: "Actividad 3",
-          inicio: DateTime.now().set({ hour: 09, minute: 00 }).toJSDate(),
-          fin: DateTime.now().set({ hour: 10, minute: 00 }).toJSDate(),
+          inicio: DateTime.now()
+            .set({ day: 8, hour: 09, minute: 00 })
+            .toJSDate(),
+          fin: DateTime.now().set({ day: 8, hour: 10, minute: 00 }).toJSDate(),
         },
       ],
       subjects: [
