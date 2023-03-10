@@ -3,19 +3,21 @@ const router = express.Router();
 const { DateTime } = require("luxon");
 const { getMonthName } = require("../common/utils");
 const buildMonthCalendar = require("./buildMonthCalendar");
-
-router.get("/:year/:month", (req, res) => {
-  const { params } = req;
-  const paramYear = params["year"];
-  const paramMonth = params["month"];
+router.get("/", (req, res) => {
   const now = new Date();
   let year = now.getFullYear(),
     month = now.getMonth() + 1;
+  res.redirect(`/calendar/${year}/${month}`);
+});
+router.get("/:year", (req, res) => {
+  const { params } = req;
+  const paramYear = params["year"];
+  const paramMonth = params["month"];
+  let year, month;
   if (paramYear) {
     const n = Number(paramYear);
     if (!isNaN(n) && n >= 1970 && n <= 3000) {
       year = n;
-      month = 1;
     }
   }
   if (paramMonth) {
@@ -23,6 +25,40 @@ router.get("/:year/:month", (req, res) => {
     if (!isNaN(n) && n >= 1 && n <= 12) {
       month = n;
     }
+  }
+  if (!year) {
+    const now = new Date();
+    year = now.getFullYear();
+    month = now.getMonth() + 1;
+    res.redirect(`/calendar/${year}/${month}`);
+    return;
+  }
+  month = 1;
+  res.redirect(`/calendar/${year}/${month}`);
+});
+router.get("/:year/:month", (req, res) => {
+  const { params } = req;
+  const paramYear = params["year"];
+  const paramMonth = params["month"];
+  let year, month;
+  if (paramYear) {
+    const n = Number(paramYear);
+    if (!isNaN(n) && n >= 1970 && n <= 3000) {
+      year = n;
+    }
+  }
+  if (paramMonth) {
+    const n = Number(paramMonth);
+    if (!isNaN(n) && n >= 1 && n <= 12) {
+      month = n;
+    }
+  }
+  if (!year || !month) {
+    const now = new Date();
+    year = now.getFullYear();
+    month = now.getMonth() + 1;
+    res.redirect(`/calendar/${year}/${month}`);
+    return;
   }
   res.render("calendar/calendar", {
     year,
