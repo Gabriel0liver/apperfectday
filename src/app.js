@@ -8,16 +8,17 @@ const nconf = require("nconf");
 const { existsSync } = require("fs");
 
 (() => {
-  require("dotenv").config();
-
   let env = process.env.NODE_ENV || "local";
-
   const envs = ["production", "development", "local"];
   if (envs.indexOf(env) == -1) {
     console.log(
       `${env} no es un entorno disponible. Asignado el entorno "local"`
     );
     env = "local";
+  }
+
+  if (env == "local") {
+    require("dotenv").config();
   }
 
   const nconfPath = `nconf/${env}.json`;
@@ -43,7 +44,8 @@ const { existsSync } = require("fs");
   app.use("/", indexRouter);
   app.use("/calendar", calendarRouter);
 
-  const port = process.env.PORT;
+  const port =
+    env == "production" ? process.env.PORT : nconf.get("server:port");
 
   app.listen(port, (err) => {
     if (err) {

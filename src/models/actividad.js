@@ -1,33 +1,33 @@
-'use strict';
+"use strict";
 
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const ObjectId = Schema.Types.ObjectId;
 
 const actividadSchema = new Schema({
-  title: {
+  titulo: {
     type: String,
-    required: true
+    required: true,
   },
   inicio: {
     type: Date,
-    required: true
+    required: true,
   },
   fin: {
     type: Date,
-    required: true
+    required: true,
   },
-  color:{
+  color: {
     type: String,
-    required: true
+    required: true,
   },
-  asignatura:{
+  asignatura: {
     type: ObjectId,
-    required: false
-  }
+    required: false,
+  },
 });
 
-const Actividad = mongoose.model('Actividad', actividadSchema);
+const Actividad = mongoose.model("Actividad", actividadSchema);
 
 module.exports = Actividad;

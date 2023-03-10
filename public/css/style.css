@@ -1,3 +1,5 @@
+@import "colors.css";
+
 *,
 *::before,
 *::after {
@@ -8,6 +10,7 @@
 
 body {
   font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
 }
 
 .app-calendar-month,
@@ -33,11 +36,15 @@ body {
 }
 
 .app-calendar-month .calendar-row .calendar-day {
-  height: 96px;
+  height: 100%;
   position: relative;
-  padding: 0.25rem 0.25rem 0.25rem 1.5rem;
+  padding: 0.25rem 0.25rem 0.25rem 2.25rem;
   width: 100%;
   color: #000;
+  min-height: 5rem;
+  max-height: 15rem;
+  display: flex;
+  flex-direction: column;
 }
 
 .app-calendar-month .calendar-row .calendar-day.calendar-day-off {
@@ -45,7 +52,7 @@ body {
 }
 
 .app-calendar-month .calendar-row .calendar-day.calendar-day-now {
-  background: #e0950a;
+  background: #f3f3f3;
 }
 
 .app-calendar-month .calendar-row .calendar-day .calendar-day-number {
@@ -55,13 +62,47 @@ body {
   padding: 0.25rem;
   font-family: monospace;
   font-weight: bold;
+  font-size: 0.75rem;
+}
+
+.app-calendar-month .calendar-row .calendar-day .calendar-day-more {
+  font-size: 0.75rem;
+  font-weight: bold;
+  background-color: #000;
+  padding: 0.25rem;
+  color: #fff;
+  border-radius: 50%;
+  position: absolute;
+  bottom: 0.25rem;
+  left: 0.25rem;
 }
 
 .app-calendar-month .calendar-row .calendar-day .calendar-day-activity {
   padding: 0.25rem;
-  background: #2350e7;
-  color: #fff;
+  background: #c0c0c0;
+  color: #000;
   border-radius: 0.25rem;
+  margin-bottom: 0.25rem;
+  font-size: 0.75rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.app-calendar-month
+  .calendar-row
+  .calendar-day
+  .calendar-day-activity:last-child {
+  margin: 0 !important;
+}
+
+.app-calendar-month
+  .calendar-row
+  .calendar-day
+  .calendar-day-activity
+  .calendar-day-activity-timerange {
+  font-family: monospace;
+  font-size: 0.625rem;
 }
 
 .app-calendar-month .calendar-panel,

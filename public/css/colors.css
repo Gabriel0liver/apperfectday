@@ -1,0 +1,104 @@
+:root {
+  --red: #ff0000;
+  --orange: #ff7f00;
+  --yellow: #ffff00;
+  --green: #00ff00;
+  --blue: #0000ff;
+  --indigo: #4b0082;
+  --violet: #ee82ee;
+  --cyan: #00ffff;
+  --magenta: #ff00ff;
+  --pink: #ffc0cb;
+  --teal: #008080;
+  --navy: #000080;
+  --gold: #ffd700;
+  --aqua: #00ffff;
+  --burlywood: #deb887;
+  --crimson: #dc143c;
+  --forestgreen: #228b22;
+  --greenyellow: #adff2f;
+  --hotpink: #ff69b4;
+  --indianred: #cd5c5c;
+}
+
+/* Classes for background-color */
+.background-red {
+  background-color: var(--red) !important;
+  color: white !important;
+}
+.background-orange {
+  background-color: var(--orange) !important;
+  color: black !important;
+}
+.background-yellow {
+  background-color: var(--yellow) !important;
+  color: black !important;
+}
+.background-green {
+  background-color: var(--green) !important;
+  color: white !important;
+}
+.background-blue {
+  background-color: var(--blue) !important;
+  color: white !important;
+}
+.background-indigo {
+  background-color: var(--indigo) !important;
+  color: white !important;
+}
+.background-violet {
+  background-color: var(--violet) !important;
+  color: black !important;
+}
+.background-cyan {
+  background-color: var(--cyan) !important;
+  color: black !important;
+}
+.background-magenta {
+  background-color: var(--magenta) !important;
+  color: white !important;
+}
+.background-pink {
+  background-color: var(--pink) !important;
+  color: black !important;
+}
+.background-teal {
+  background-color: var(--teal) !important;
+  color: white !important;
+}
+.background-navy {
+  background-color: var(--navy) !important;
+  color: white !important;
+}
+.background-gold {
+  background-color: var(--gold) !important;
+  color: black !important;
+}
+.background-aqua {
+  background-color: var(--aqua) !important;
+  color: black !important;
+}
+.background-burlywood {
+  background-color: var(--burlywood) !important;
+  color: black !important;
+}
+.background-crimson {
+  background-color: var(--crimson) !important;
+  color: white !important;
+}
+.background-forestgreen {
+  background-color: var(--forestgreen) !important;
+  color: white !important;
+}
+.background-greenyellow {
+  background-color: var(--greenyellow) !important;
+  color: black !important;
+}
+.background-hotpink {
+  background-color: var(--hotpink) !important;
+  color: black !important;
+}
+.background-indianred {
+  background-color: var(--indianred) !important;
+  color: white !important;
+}

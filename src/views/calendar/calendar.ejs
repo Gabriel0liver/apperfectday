@@ -37,12 +37,26 @@
       
       %>
       <!-- a href="/calendar/<%= calendarDays[i].year %>/<%= calendarDays[i].month %>/<%= calendarDays[i].day %>"-->
-        <div class="<%= classes.join(' ') %>">
-          <div class="calendar-day-number"><%= calendarDays[i].day %></div>
-          <% for (let activity of calendarDays[i].activities) { %>
-          <div class="calendar-day-activity"><%= activity %></div>
+      <div class="<%= classes.join(' ') %>">
+        <div class="calendar-day-number"><%= calendarDays[i].day %></div>
+        <div class="calendar-day-activities">
+          <% for (let j = 0; j < calendarDays[i].activities.length && j < 3; j++) { %>
+          <%
+          classes = ["calendar-day-activity"];
+          if (calendarDays[i].activities[j].color) {
+            classes.push("background-" + calendarDays[i].activities[j].color);
+          }
+          %>
+          <div class="<%= classes.join(' ') %>">
+            <span class="calendar-day-activity-title"><%= calendarDays[i].activities[j].title %></span>
+            <span class="calendar-day-activity-timerange"><%= calendarDays[i].activities[j].from %> - <%= calendarDays[i].activities[j].to %></span>
+          </div>
           <% } %>
         </div>
+        <% if (calendarDays[i].activities.length > 3) { %>
+        <div class="calendar-day-more">+<%= calendarDays[i].activities.length - 3 %></div>
+        <% } %>
+      </div>
       <!--/a-->
       <% } %>
     </div>

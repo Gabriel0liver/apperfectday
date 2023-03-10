@@ -2,28 +2,24 @@ const express = require("express");
 const router = express.Router();
 const { DateTime } = require("luxon");
 const { getMonthName } = require("../common/utils");
-const buildMonthCalendar = require('./buildMonthCalendar')
-
-
-
-
+const buildMonthCalendar = require("./buildMonthCalendar");
 
 router.get("/:year/:month", (req, res) => {
   const { params } = req;
-  const queryYear = params["year"];
-  const queryMonth = params["month"];
+  const paramYear = params["year"];
+  const paramMonth = params["month"];
   const now = new Date();
   let year = now.getFullYear(),
     month = now.getMonth() + 1;
-  if (queryYear) {
-    const n = Number(queryYear);
+  if (paramYear) {
+    const n = Number(paramYear);
     if (!isNaN(n) && n >= 1970 && n <= 3000) {
       year = n;
       month = 1;
     }
   }
-  if (queryMonth) {
-    const n = Number(queryMonth);
+  if (paramMonth) {
+    const n = Number(paramMonth);
     if (!isNaN(n) && n >= 1 && n <= 12) {
       month = n;
     }
@@ -35,9 +31,49 @@ router.get("/:year/:month", (req, res) => {
     calendarDays: buildMonthCalendar({
       activities: [
         {
-          from: DateTime.now().minus({ days: 3 }).toJSDate(),
-          to: DateTime.now().plus({ days: 3 }).toJSDate(),
-          title: "Prueba",
+          _id: "1",
+          titulo: "Actividad 1",
+          inicio: DateTime.now().set({ hour: 10, minute: 30 }).toJSDate(),
+          fin: DateTime.now().set({ hour: 13, minute: 30 }).toJSDate(),
+          color: "blue",
+        },
+        {
+          _id: "2",
+          titulo: "Actividad 2",
+          inicio: DateTime.now().set({ hour: 13, minute: 30 }).toJSDate(),
+          fin: DateTime.now().set({ hour: 15, minute: 00 }).toJSDate(),
+          asignatura: "1",
+        },
+        {
+          _id: "3",
+          titulo: "Actividad 3",
+          inicio: DateTime.now().set({ hour: 09, minute: 00 }).toJSDate(),
+          fin: DateTime.now().set({ hour: 10, minute: 00 }).toJSDate(),
+        },
+      ],
+      subjects: [
+        {
+          _id: "1",
+          titulo: "Asignatura 1",
+          color: "red",
+          creditos: 6,
+          horario: [
+            {
+              dia: 1,
+              inicio: DateTime.now().set({ hour: 12, minute: 0 }).toJSDate(),
+              fin: DateTime.now().set({ hour: 14, minute: 0 }).toJSDate(),
+            },
+            {
+              dia: 3,
+              inicio: DateTime.now().set({ hour: 12, minute: 0 }).toJSDate(),
+              fin: DateTime.now().set({ hour: 14, minute: 0 }).toJSDate(),
+            },
+            {
+              dia: 5,
+              inicio: DateTime.now().set({ hour: 12, minute: 0 }).toJSDate(),
+              fin: DateTime.now().set({ hour: 14, minute: 0 }).toJSDate(),
+            },
+          ],
         },
       ],
       year,
@@ -48,30 +84,30 @@ router.get("/:year/:month", (req, res) => {
 
 router.get("/:year/:month/:day", (req, res) => {
   const { params } = req;
-  const queryYear = params.year;
-  const queryMonth = params.month;
-  const queryDay = params.day;
+  const paramYear = params.year;
+  const paramMonth = params.month;
+  const paramDay = params.day;
   const now = new Date();
   let year = now.getFullYear(),
     month = now.getMonth() + 1,
     day = now.getDate();
-  if (queryYear) {
-    const n = Number(queryYear);
+  if (paramYear) {
+    const n = Number(paramYear);
     if (!isNaN(n) && n >= 1970 && n <= 3000) {
       year = n;
       month = 1;
       day = 1;
     }
   }
-  if (queryMonth) {
-    const n = Number(queryMonth);
+  if (paramMonth) {
+    const n = Number(paramMonth);
     if (!isNaN(n) && n >= 1 && n <= 12) {
       month = n;
       day = 1;
     }
   }
-  if (queryDay) {
-    const n = Number(queryDay);
+  if (paramDay) {
+    const n = Number(paramDay);
     if (!isNaN(n) && DateTime.fromObject({ year, month, day }).isValid) {
       day = n;
     }

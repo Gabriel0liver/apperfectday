@@ -6,8 +6,8 @@
   "scripts": {
     "test": "jest",
     "start": "npm run start:prod",
-    "start:dev": "NODE_ENV=development node src/app.js",
-    "start:prod": "NODE_ENV=production node src/app.js",
+    "start:dev": "node src/app.js",
+    "start:prod": "node src/app.js",
     "start:local": "nodemon src/app.js"
   },
   "author": "",

@@ -1,19 +1,19 @@
-'use strict';
+"use strict";
 
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const ObjectId = Schema.Types.ObjectId;
 
 const asignaturaSchema = new Schema({
-  title: {
+  titulo: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
   },
-  horario:[
+  horario: [
     {
-      dia:{
+      dia: {
         type: Number,
         required: true,
       },
@@ -25,18 +25,18 @@ const asignaturaSchema = new Schema({
         type: Date,
         required: true,
       },
-    }
+    },
   ],
-  creditos:{
+  creditos: {
     type: Number,
-    required:true
+    required: true,
   },
-  color:{
+  color: {
     type: String,
-    required: true
-  }
+    required: true,
+  },
 });
 
-const Asignatura = mongoose.model('Asignatura', asignaturaSchema);
+const Asignatura = mongoose.model("Asignatura", asignaturaSchema);
 
 module.exports = Asignatura;

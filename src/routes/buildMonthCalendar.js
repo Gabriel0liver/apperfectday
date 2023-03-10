@@ -1,14 +1,159 @@
-const { DateTime } = require('luxon')
+const { DateTime } = require("luxon");
+/**
+ * @typedef {Object} Asignatura
+ * @property {string} _id
+ * @property {string} titulo
+ * @property {number} creditos
+ * @property {string} color
+ * @property {HorarioAsignatura[]} horario
+ */
+
+/**
+ * @typedef {Object} HorarioAsignatura
+ * @property {number} dia
+ * @property {Date} inicio
+ * @property {Date} fin
+ */
+
+/**
+ * @typedef {Object} Actividad
+ * @property {string} _id
+ * @property {string} titulo
+ * @property {Date} inicio
+ * @property {Date} fin
+ * @property {string} color
+ * @property {string} asignatura
+ */
+
+/**
+ * @typedef {Record<number, Asignatura[]>} SubjectsByWeekDayMap
+ */
+/**
+ * @typedef {HorarioAsignatura & { titulo: string; color: string; }} HorarioAsignaturaYTituloYColor
+ */
+/**
+ * @typedef {Record<string, Actividad[]>} ActivitiesByDateMap
+ */
+
+/**
+ * @typedef {{ title: string; from: string; to: string; color?: string; }} ActividadVista
+ */
+
+/**
+ * Devuelve las actividades para el día de `dateTime`
+ * @param {{
+ *  subjects: Asignatura[];
+ *  subjectsByWeekDay: SubjectsByWeekDayMap;
+ *  activitiesByDate: ActivitiesByDateMap;
+ *  dateTime: DateTime;
+ * }} options
+ */
+function mapActivitiesByDate(options) {
+  const { activitiesByDate, dateTime, subjectsByWeekDay, subjects } = options;
+  // Añado las asignaturas como actividades
+  /** @type {ActividadVista[]} */
+  const activities = [];
+  const weekDay = dateTime.weekday;
+  if (subjectsByWeekDay[weekDay]) {
+    const list = subjectsByWeekDay[weekDay].map((a) => ({
+      title: a.titulo,
+      from: DateTime.fromJSDate(a.inicio).toFormat("HH:mm"),
+      to: DateTime.fromJSDate(a.fin).toFormat("HH:mm"),
+      color: a.color,
+    }));
+    activities.push(...list);
+  }
+  // Añado las actividades
+  const date = dateTime.toFormat("yyyy/MM/dd");
+  if (activitiesByDate[date]) {
+    const list = activitiesByDate[date].map((a) => {
+      const color = a.asignatura
+        ? subjects.find((s) => s._id == a.asignatura).color
+        : a.color;
+      return {
+        title: a.titulo,
+        from: DateTime.fromJSDate(a.inicio).toFormat("HH:mm"),
+        to: DateTime.fromJSDate(a.fin).toFormat("HH:mm"),
+        color,
+      };
+    });
+    activities.push(...list);
+  }
+  return activities;
+}
+
+/**
+ * Agrupa las actividades por dia y las asignaturas por dia de la semana
+ * @param {{
+ *  activities: Actividad[];
+ *  subjects: Asignatura[];
+ *  year: number;
+ *  month: number;
+ * }} options
+ */
+function groupActivitiesAndSubjects(options) {
+  const { activities, subjects, year, month } = options;
+  // Agrupo las actividades por día del mes
+  /** @type {ActivitiesByDateMap} */
+  const activitiesByDate = {};
+  activities.forEach((a) => {
+    const { inicio } = a;
+    const date = DateTime.fromJSDate(inicio);
+    const activityYear = date.year;
+    const activityMonth = date.month;
+    if (activityYear != year || activityMonth != month) return;
+    const activityDate = date.toFormat("yyyy/MM/dd");
+    if (!activitiesByDate[activityDate]) {
+      activitiesByDate[activityDate] = [];
+    }
+    activitiesByDate[activityDate].push(a);
+  });
+  // Agrupo las asignaturas por dia de la semana
+  /** @type {HorarioAsignaturaYTituloYColor[]} */
+  let subjectsList = [];
+  subjects.forEach(({ titulo, horario, color }) => {
+    const list = horario.map(({ dia, fin, inicio }) => ({
+      titulo,
+      dia,
+      fin,
+      inicio,
+      color,
+    }));
+    subjectsList.push(...list);
+  });
+  subjectsList = subjectsList.sort((a, b) => {
+    if (a.dia == b.dia) return a.inicio.valueOf() - b.inicio.valueOf();
+    return a.dia - b.dia;
+  });
+  /** @type {SubjectsByWeekDayMap} */
+  const subjectsByWeekDay = {};
+  subjectsList.forEach((s) => {
+    const { dia } = s;
+    if (!subjectsByWeekDay[dia]) {
+      subjectsByWeekDay[dia] = [];
+    }
+    subjectsByWeekDay[dia].push(s);
+  });
+  return {
+    activitiesByDate,
+    subjectsByWeekDay,
+  };
+}
+
 /**
  *
- * @param {{activities:{ from: Date; to: Date; title: string; }[]; year: number; month: number}} options
+ * @param {{
+ *  activities: Actividad[];
+ *  year: number;
+ *  month: number;
+ *  subjects: Asignatura[];
+ * }} options
  */
 function buildMonthCalendar(options) {
-  const { activities, year, month } = options
-
-  /** @type {{date: DateTime; activities: string[]}[]} */
-  const days = []
-  const dateTime = DateTime.fromObject({
+  const { activities, year, month, subjects } = options;
+  /** @type {{date: DateTime; activities: ActividadVista[]}[]} */
+  const days = [];
+  const dateTimeDayOne = DateTime.fromObject({
     year,
     month,
     day: 1,
@@ -16,83 +161,48 @@ function buildMonthCalendar(options) {
     minute: 0,
     second: 0,
     millisecond: 0,
-  })
+  });
+  const { activitiesByDate, subjectsByWeekDay } = groupActivitiesAndSubjects({
+    activities,
+    subjects,
+    year,
+    month,
+  });
   // Dias del mes previo
-  for (let i = dateTime.weekday - 1; i > 0; i--) {
+  for (let i = dateTimeDayOne.weekday - 1; i > 0; i--) {
     days.push({
-      date: dateTime.minus({ days: i }),
+      date: dateTimeDayOne.minus({ days: i }),
       activities: [],
-    })
+    });
   }
   // Días del mes
-  let dateTimeAux = dateTime
-  while (dateTimeAux.month == month) {
+  let dateTime = dateTimeDayOne;
+  while (dateTime.month == month) {
     days.push({
-      date: dateTimeAux,
-      activities: [],
-    })
-    dateTimeAux = dateTimeAux.plus({ days: 1 })
+      date: dateTime,
+      activities: mapActivitiesByDate({
+        activitiesByDate,
+        subjectsByWeekDay,
+        subjects,
+        dateTime,
+      }),
+    });
+    dateTime = dateTime.plus({ days: 1 });
   }
   // Dias del mes posterior
-  const endWeekday = dateTimeAux.weekday
-  const daysToCreate = (7 - endWeekday + 1) % 7
+  const daysToCreate = (7 - dateTime.weekday + 1) % 7;
   for (let i = 0; i < daysToCreate; i++) {
     days.push({
-      date: dateTimeAux.plus({ days: i }),
+      date: dateTime.plus({ days: i }),
       activities: [],
-    })
+    });
   }
-  // Añadir actividades
-  // - Asigno las actividades a cada día del rango
-  /** @type {Record<string, string[]} */
-  const map = {}
-  activities.forEach((d) => {
-    const { title } = d
-    const from = DateTime.fromJSDate(d.from).set({
-      hour: 0,
-      minute: 0,
-      second: 0,
-      millisecond: 0,
-    })
-    const to = DateTime.fromJSDate(d.to).set({
-      hour: 0,
-      minute: 0,
-      second: 0,
-      millisecond: 0,
-    })
-    /** @type {(datetime: DateTime) => void} */
-    const setTitle = (datetime) => {
-      const iso = datetime.toISO()
-      if (!map[iso]) {
-        map[iso] = [title]
-      } else {
-        map[iso].push(title)
-      }
-    }
-    if (to.diff(from, 'days').days == 0) {
-      setTitle(from)
-      return
-    }
-    let dateTimeAux = from
-    while (to.diff(dateTimeAux, 'days').days > 0) {
-      setTitle(dateTimeAux)
-      dateTimeAux = dateTimeAux.plus({ days: 1 })
-    }
-    setTitle(to)
-  })
-  // - Añado las actividades a cada día del calendario
-  days.forEach((d) => {
-    const iso = d.date.toISO()
-    if (map[iso]) {
-      d.activities.push(...map[iso])
-    }
-  })
-  const now = DateTime.now().toUTC().set({
+  const now = DateTime.now().set({
     hour: 0,
     minute: 0,
     second: 0,
     millisecond: 0,
-  })
+  });
   // Mapeo los datos para la vista de calendario
   return days.map((d) => ({
     day: d.date.day,
@@ -104,8 +214,7 @@ function buildMonthCalendar(options) {
       now.month == d.date.month &&
       now.day == d.date.day,
     activities: d.activities,
-  }))
+  }));
 }
 
-
-module.exports = buildMonthCalendar
+module.exports = buildMonthCalendar;
