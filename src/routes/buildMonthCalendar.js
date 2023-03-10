@@ -77,7 +77,7 @@ function mapActivitiesByDate(options) {
         color,
       };
     });
-    activities.push(...list);
+    activities.push(...list.sort((a, b) => a.from.localeCompare(b.from)));
   }
   return activities;
 }

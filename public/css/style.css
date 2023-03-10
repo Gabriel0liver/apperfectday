@@ -26,6 +26,7 @@ body {
 .app-calendar-month .calendar-row {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  border-bottom: solid 1px #e0e0e0;
 }
 
 .app-calendar-day .calendar-row {
@@ -45,6 +46,7 @@ body {
   max-height: 15rem;
   display: flex;
   flex-direction: column;
+  border-right: solid 1px #c0c0c0;
 }
 
 .app-calendar-month .calendar-row .calendar-day.calendar-day-off {
@@ -94,6 +96,14 @@ body {
   .calendar-day
   .calendar-day-activity:last-child {
   margin: 0 !important;
+}
+
+.app-calendar-month
+  .calendar-row
+  .calendar-day
+  .calendar-day-activity
+  .calendar-day-activity-title {
+  font-weight: bold;
 }
 
 .app-calendar-month
