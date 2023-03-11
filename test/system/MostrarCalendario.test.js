@@ -1,38 +1,24 @@
-const { Builder } = require('selenium-webdriver');
-const chrome = require('selenium-webdriver/chrome');
-const { until } = require('selenium-webdriver');
-const { Options } = require('selenium-webdriver/chrome');
-require('chromedriver')
- 
-describe('system test', () => {
-  let driver;
+const { test, expect } = require('@jest/globals')
+const puppeteer = require('puppeteer')
+jest.setTimeout(10000)
+
+
+describe('La aplicación de lista de tareas', () => {
+  let browser
+  let page
 
   beforeAll(async () => {
-    const options = new Options();
-    options.headless();
-
-    driver = await new Builder().forBrowser('chrome').build()
-  });
+    browser = await puppeteer.launch()
+    page = await browser.newPage()
+  })
 
   afterAll(async () => {
-    await driver.quit();
-  });
+    await browser.close()
+  })
 
-  it('should check response status', async () => {
-    const url = 'https://apperfectday.herokuapp.com'
-    const expectedStatus = 200;
-await driver.get(url);
-    // Execute an HTTP request and return the response status code
-    const statusCode = await driver.executeAsyncScript(function(url, callback) {
-      var xhr = new XMLHttpRequest();
-      xhr.open('GET', url);
-      xhr.onload = function() {
-        callback(xhr.status);
-      };
-      xhr.send();
-    }, url);
-
-    // Check that the response status code is the expected one
-    expect(statusCode).toBe(expectedStatus);
-  });
-});
+  test('Carga la página de inicio correctamente', async () => {
+    await page.goto('https://apperfectday.herokuapp.com/')
+    const pageTitle = await page.title()
+    expect(pageTitle).toBe('APPerfectDay')
+  }, 10000)
+})
