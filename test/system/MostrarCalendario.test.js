@@ -4,6 +4,8 @@ const { until } = require('selenium-webdriver');
 const { Options } = require('selenium-webdriver/chrome');
 require('chromedriver')
  
+jest.setTimeout(10000)
+
 describe('system test', () => {
   let driver;
 
