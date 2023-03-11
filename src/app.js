@@ -6,6 +6,7 @@ const indexRouter = require("./routes/index");
 const calendarRouter = require("./routes/calendar");
 const nconf = require("nconf");
 const { existsSync } = require("fs");
+const mongoose = require('mongoose');
 
 (() => {
   let env = process.env.NODE_ENV || "local";
@@ -28,6 +29,17 @@ const { existsSync } = require("fs");
     return;
   }
   nconf.file("global", { file: nconfPath });
+
+  //conecta a la base de datos
+  mongoose.connect(process.env.MONGODB_URI, {
+    keepAlive: true,
+    useNewUrlParser: true,
+    dbName: "apperfectday"
+  }).then(() => {
+    console.log(`Connected to database`);
+  }).catch((error) => {
+    console.error(error);
+  })
 
   //Renderizar pagina
   const app = express();

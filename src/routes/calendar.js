@@ -3,12 +3,16 @@ const router = express.Router();
 const { DateTime } = require("luxon");
 const { getMonthName } = require("../common/utils");
 const buildMonthCalendar = require("./buildMonthCalendar");
+const Activity = require("../models/activity");
+const Subject = require("../models/subject");
+
 router.get("/", (req, res) => {
   const now = new Date();
   let year = now.getFullYear(),
     month = now.getMonth() + 1;
   res.redirect(`/calendar/${year}/${month}`);
 });
+
 router.get("/:year", (req, res) => {
   const { params } = req;
   const paramYear = params["year"];
@@ -36,23 +40,27 @@ router.get("/:year", (req, res) => {
   month = 1;
   res.redirect(`/calendar/${year}/${month}`);
 });
+
 router.get("/:year/:month", (req, res) => {
   const { params } = req;
   const paramYear = params["year"];
   const paramMonth = params["month"];
   let year, month;
+  
   if (paramYear) {
     const n = Number(paramYear);
     if (!isNaN(n) && n >= 1970 && n <= 3000) {
       year = n;
     }
   }
+
   if (paramMonth) {
     const n = Number(paramMonth);
     if (!isNaN(n) && n >= 1 && n <= 12) {
       month = n;
     }
   }
+
   if (!year || !month) {
     const now = new Date();
     year = now.getFullYear();
@@ -60,68 +68,24 @@ router.get("/:year/:month", (req, res) => {
     res.redirect(`/calendar/${year}/${month}`);
     return;
   }
-  res.render("calendar/calendar", {
-    year,
-    month,
-    monthName: getMonthName(month),
-    calendarDays: buildMonthCalendar({
-      activities: [
-        {
-          _id: "1",
-          titulo: "Actividad 1",
-          inicio: DateTime.now()
-            .set({ day: 8, hour: 10, minute: 30 })
-            .toJSDate(),
-          fin: DateTime.now().set({ day: 8, hour: 13, minute: 30 }).toJSDate(),
-          color: "blue",
-        },
-        {
-          _id: "2",
-          titulo: "Actividad 2",
-          inicio: DateTime.now()
-            .set({ day: 8, hour: 13, minute: 30 })
-            .toJSDate(),
-          fin: DateTime.now().set({ day: 8, hour: 15, minute: 00 }).toJSDate(),
-          asignatura: "1",
-        },
-        {
-          _id: "3",
-          titulo: "Actividad 3",
-          inicio: DateTime.now()
-            .set({ day: 8, hour: 09, minute: 00 })
-            .toJSDate(),
-          fin: DateTime.now().set({ day: 8, hour: 10, minute: 00 }).toJSDate(),
-        },
-      ],
-      subjects: [
-        {
-          _id: "1",
-          titulo: "Asignatura 1",
-          color: "red",
-          creditos: 6,
-          horario: [
-            {
-              dia: 1,
-              inicio: DateTime.now().set({ hour: 12, minute: 0 }).toJSDate(),
-              fin: DateTime.now().set({ hour: 14, minute: 0 }).toJSDate(),
-            },
-            {
-              dia: 3,
-              inicio: DateTime.now().set({ hour: 12, minute: 0 }).toJSDate(),
-              fin: DateTime.now().set({ hour: 14, minute: 0 }).toJSDate(),
-            },
-            {
-              dia: 5,
-              inicio: DateTime.now().set({ hour: 12, minute: 0 }).toJSDate(),
-              fin: DateTime.now().set({ hour: 14, minute: 0 }).toJSDate(),
-            },
-          ],
-        },
-      ],
-      year,
-      month,
-    }),
-  });
+
+  Activity.find()
+    .then(activities => {
+      Subject.find()
+        .then(subjects => {
+          res.render("calendar/calendar", {
+            year,
+            month,
+            monthName: getMonthName(month),
+            calendarDays: buildMonthCalendar({
+              activities,
+              subjects,
+              year,
+              month,
+            }),
+          });
+        })
+    })
 });
 
 router.get("/:year/:month/:day", (req, res) => {

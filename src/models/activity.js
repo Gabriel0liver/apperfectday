@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 
 const ObjectId = Schema.Types.ObjectId;
 
-const actividadSchema = new Schema({
+const activitySchema = new Schema({
   titulo: {
     type: String,
     required: true,
@@ -28,6 +28,6 @@ const actividadSchema = new Schema({
   },
 });
 
-const Actividad = mongoose.model("Actividad", actividadSchema);
+const Activity = mongoose.model("Activity", activitySchema);
 
-module.exports = Actividad;
+module.exports = Activity;

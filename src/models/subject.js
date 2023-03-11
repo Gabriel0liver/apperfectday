@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 
 const ObjectId = Schema.Types.ObjectId;
 
-const asignaturaSchema = new Schema({
+const subjectSchema = new Schema({
   titulo: {
     type: String,
     required: true,
@@ -37,6 +37,6 @@ const asignaturaSchema = new Schema({
   },
 });
 
-const Asignatura = mongoose.model("Asignatura", asignaturaSchema);
+const Subject = mongoose.model("Subject", subjectSchema);
 
-module.exports = Asignatura;
+module.exports = Subject;
