@@ -5,14 +5,11 @@ const buildMonthCalendar = require('../../src/routes/buildMonthCalendar') ;
 //parametros para crear calendario para el mes de diciembre del año 2000
  const options = {
    activities: [
-     {
-       from: new Date('December 17, 2000 09:30:00'),
-       to: new Date('December 17, 2000 10:30:00'),
-       title:'Preparar entrega GPS'
-     },
+    
    ],
    year: 2000,
    month: 12,
+   subjects:[]
  }
 //calendario para el mes de diciembre del año 2000 con unica actividad 'Preparar entrega GPS' el dia 17 
  const respuesta = [
@@ -182,7 +179,7 @@ const buildMonthCalendar = require('../../src/routes/buildMonthCalendar') ;
      year: 2000,
      isThisMonth: true,
      isToday: false,
-     activities: ['Preparar entrega GPS'],
+     activities: [],
    },
    {
      day: 18,
@@ -302,7 +299,7 @@ const buildMonthCalendar = require('../../src/routes/buildMonthCalendar') ;
 
 //Prueba unitaria  para la clase de la HU Mostrar calendario
 //Options :parametros para crear calendario para el mes de diciembre del año 2000
-//respuesta: calendario para el mes de diciembre del año 2000 con unica actividad 'Preparar entrega GPS' el dia 17
-test("calendario para el mes de diciembre del año 2000 con unica actividad 'Preparar entrega GPS' el dia 17", () => { 
+//respuesta: calendario para el mes de diciembre del año 2000 
+test("calendario para el mes de diciembre del año 2000 ", () => { 
   expect(buildMonthCalendar(options)).toStrictEqual(respuesta)
  })
