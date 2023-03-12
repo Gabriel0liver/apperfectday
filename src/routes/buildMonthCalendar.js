@@ -217,19 +217,6 @@ function buildMonthCalendar(options) {
   }));
 }
 
-console.log(
-  buildMonthCalendar({
-    activities: [
-      {
-        from: new Date('December 17, 2000 09:30:00'),
-        to: new Date('December 17, 2000 10:30:00'),
-        title: 'Preparar entrega GPS',
-      },
-    ],
-    year: 2000,
-    month: 12,
-    subjects: [],
-  })
-) 
+
 
 module.exports = buildMonthCalendar;
