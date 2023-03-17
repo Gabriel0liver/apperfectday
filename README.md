@@ -6,6 +6,8 @@ Arrancar aplicación:
 
 La primera vez usa: `npm i -g nodemon`
 
+La primera vez, y cada vez que actualices tu rama y te salte "Error: Cannot find module '...'", usa: `npm ci`
+
 Para arrancar la aplicación: `npm run start:local`
 
 - Development:
@@ -16,4 +18,4 @@ Para arrancar la aplicación: `npm run start:dev`
 
 Para arrancar la aplicación: `npm start`
 
-para ejecutar los tests : 'npm test'
+para ejecutar los tests : `npm test`

@@ -1,4 +1,7 @@
 "use strict";
+
+const { Duration } = require("luxon");
+
 module.exports = {
   /**
    * Devuelve el nombre del mes
@@ -33,5 +36,12 @@ module.exports = {
       default:
         throw new Error();
     }
+  },
+  /**
+   * @param {() => any} callback
+   * @returns
+   */
+  microtask(callback) {
+    Promise.resolve().then(() => callback);
   },
 };

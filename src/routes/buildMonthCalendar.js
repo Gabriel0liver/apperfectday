@@ -26,7 +26,7 @@ const { DateTime } = require("luxon");
  */
 
 /**
- * @typedef {Record<number, Asignatura[]>} SubjectsByWeekDayMap
+ * @typedef {Record<number, HorarioAsignaturaYTituloYColor[]>} SubjectsByWeekDayMap
  */
 /**
  * @typedef {HorarioAsignatura & { titulo: string; color: string; }} HorarioAsignaturaYTituloYColor
@@ -68,7 +68,7 @@ function mapActivitiesByDate(options) {
   if (activitiesByDate[date]) {
     const list = activitiesByDate[date].map((a) => {
       const color = a.asignatura
-        ? subjects.find((s) => s._id == a.asignatura).color
+        ? subjects.find((s) => s._id == a.asignatura)?.color
         : a.color;
       return {
         title: a.titulo,
@@ -149,6 +149,7 @@ function groupActivitiesAndSubjects(options) {
  *  subjects: Asignatura[];
  * }} options
  */
+
 function buildMonthCalendar(options) {
   const { activities, year, month, subjects } = options;
   /** @type {{date: DateTime; activities: ActividadVista[]}[]} */
@@ -217,6 +218,39 @@ function buildMonthCalendar(options) {
   }));
 }
 
+/**
+ *
+ * @param {{
+ *  activities: Actividad[];
+ *  year: number;
+ *  month: number;
+ *  day: number;
+ *  subjects: Asignatura[];
+ * }} options
+ */
+function buildDayCalendar(options) {
+  const { year, month, day, activities, subjects } = options;
+  const dateTime = DateTime.fromObject({
+    year,
+    month,
+    day,
+    hour: 0,
+    minute: 0,
+    second: 0,
+    millisecond: 0,
+  });
+  const { activitiesByDate, subjectsByWeekDay } = groupActivitiesAndSubjects({
+    activities,
+    subjects,
+    year,
+    month,
+  });
+  return mapActivitiesByDate({
+    activitiesByDate,
+    subjectsByWeekDay,
+    subjects,
+    dateTime,
+  });
+}
 
-
-module.exports = buildMonthCalendar;
+module.exports = { buildMonthCalendar, buildDayCalendar };

@@ -2,23 +2,25 @@ const express = require("express");
 const router = express.Router();
 const { DateTime } = require("luxon");
 const { getMonthName } = require("../common/utils");
-const buildMonthCalendar = require("./buildMonthCalendar");
+const {
+  buildMonthCalendar,
+  buildDayCalendar,
+} = require("./buildMonthCalendar");
 const Activity = require("../models/activity");
 const Subject = require("../models/subject");
 const { loginRequired } = require("../controllers/auth");
-const User = require('../models/User');
+const User = require("../models/User");
 
-router.get('/', loginRequired, (req, res) => {
-  const now = new Date()
+router.get("/", loginRequired, (req, res) => {
+  const now = new Date();
   let year = now.getFullYear(),
-    month = now.getMonth() + 1
-  res.redirect(`/calendar/${year}/${month}`)
-})
+    month = now.getMonth() + 1;
+  res.redirect(`/calendar/${year}/${month}`);
+});
 
-router.get("/:year",loginRequired, (req, res) => {
+router.get("/:year", loginRequired, (req, res) => {
   const { params } = req;
   const paramYear = params["year"];
-  const paramMonth = params["month"];
   let year, month;
   if (paramYear) {
     const n = Number(paramYear);
@@ -26,29 +28,23 @@ router.get("/:year",loginRequired, (req, res) => {
       year = n;
     }
   }
-  if (paramMonth) {
-    const n = Number(paramMonth);
-    if (!isNaN(n) && n >= 1 && n <= 12) {
-      month = n;
-    }
-  }
-  if (!year) {
-    const now = new Date();
-    year = now.getFullYear();
-    month = now.getMonth() + 1;
+  if (year) {
+    month = 1;
     res.redirect(`/calendar/${year}/${month}`);
     return;
   }
-  month = 1;
+  const now = new Date();
+  year = now.getFullYear();
+  month = now.getMonth() + 1;
   res.redirect(`/calendar/${year}/${month}`);
 });
 
-router.get("/:year/:month",loginRequired,async (req, res) => {
+router.get("/:year/:month", loginRequired, async (req, res) => {
   const { params } = req;
   const paramYear = params["year"];
   const paramMonth = params["month"];
   let year, month;
-  
+
   if (paramYear) {
     const n = Number(paramYear);
     if (!isNaN(n) && n >= 1970 && n <= 3000) {
@@ -70,64 +66,82 @@ router.get("/:year/:month",loginRequired,async (req, res) => {
     res.redirect(`/calendar/${year}/${month}`);
     return;
   }
-  const user = await User.findById(req.session.userId)
+  const user = await User.findById(req.session.userId);
 
-  Activity.find({ user })
-    .then(activities => {
-      Subject.find({ user })
-        .then(subjects => {
-          res.render("calendar/calendar", {
-            user,
-            year,
-            month,
-            monthName: getMonthName(month),
-            calendarDays: buildMonthCalendar({
-              activities,
-              subjects,
-              year,
-              month,
-            }),
-          });
-        })
-    })
+  Activity.find({ user }).then((activities) => {
+    Subject.find({ user }).then((subjects) => {
+      res.render("calendar/calendar", {
+        user,
+        year,
+        month,
+        monthName: getMonthName(month),
+        calendarDays: buildMonthCalendar({
+          activities,
+          subjects,
+          year,
+          month,
+        }),
+      });
+    });
+  });
 });
 
-router.get("/:year/:month/:day",loginRequired, (req, res) => {
+router.get("/:year/:month/:day", loginRequired, async (req, res) => {
   const { params } = req;
   const paramYear = params.year;
   const paramMonth = params.month;
   const paramDay = params.day;
-  const now = new Date();
-  let year = now.getFullYear(),
-    month = now.getMonth() + 1,
-    day = now.getDate();
+  let year, month, day;
   if (paramYear) {
     const n = Number(paramYear);
-    if (!isNaN(n) && n >= 1970 && n <= 3000) {
-      year = n;
-      month = 1;
-      day = 1;
+    if (
+      isNaN(n) ||
+      !DateTime.fromObject({ year: n, month: 1, day: 1 }).isValid
+    ) {
+      res.status(400).json({
+        error: "BAD REQUEST",
+      });
+      return;
     }
+    year = n;
   }
   if (paramMonth) {
     const n = Number(paramMonth);
-    if (!isNaN(n) && n >= 1 && n <= 12) {
-      month = n;
-      day = 1;
+    if (isNaN(n) || !DateTime.fromObject({ year, month: n, day: 1 }).isValid) {
+      res.status(400).json({
+        error: "BAD REQUEST",
+      });
+      return;
     }
+    month = n;
   }
   if (paramDay) {
     const n = Number(paramDay);
-    if (!isNaN(n) && DateTime.fromObject({ year, month, day }).isValid) {
-      day = n;
+    if (isNaN(n) || !DateTime.fromObject({ year, month, day: n }).isValid) {
+      res.status(400).json({
+        error: "BAD REQUEST",
+      });
+      return;
     }
+    day = n;
   }
-  res.render("calendar/calendar-day", {
-    year,
-    month,
-    day,
-    monthName: getMonthName(month),
-    activities: ["Prueba"],
+  const user = await User.findById(req.session.userId);
+  Activity.find({ user }).then((activities) => {
+    Subject.find({ user }).then((subjects) => {
+      res.status(200).json({
+        year,
+        month,
+        day,
+        monthName: getMonthName(month),
+        activities: buildDayCalendar({
+          year,
+          month,
+          day,
+          activities,
+          subjects,
+        }),
+      });
+    });
   });
 });
 
