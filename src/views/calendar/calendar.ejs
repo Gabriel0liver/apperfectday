@@ -1,67 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+      crossorigin="anonymous"
+    />
+    <title>APPerfectDay</title>
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="/css/style.css" />
-  <title>APPerfectDay</title>
-</head>
-
-<body>
-  <div class="app-calendar-month">
-    <div class="calendar-panel">
-      <%
-      let prevYear = month == 1 ? year - 1 : year;
-      let prevMonth = month == 1 ? 12 : month - 1;
-      let nextYear = month == 12 ? year + 1 : year;
-      let nextMonth = month == 12 ? 1 : month + 1;
-      %>
-      <!--a href="/calendar/<%= prevYear %>/<%= prevMonth %>">Mes anterior</a-->
-      <div><%= monthName %> <%= year %></div>
-      <!--a href="/calendar/<%= nextYear %>/<%= nextMonth %>">Mes posterior</a-->
-    </div>
-    <% for (let row = 0; row < calendarDays.length / 7; row++) { %>
-    <div class="calendar-row">
-      <% for (let col = 0; col < 7; col++) { %>
-      <%
-      let i = row * 7 + col;
-      let classes = ["calendar-day"];
-      if (!calendarDays[i].isThisMonth) {
-        classes.push("calendar-day-off");
-      }
-      if (calendarDays[i].isToday) {
-        classes.push("calendar-day-now");
-      }
-      
-      %>
-      <!-- a href="/calendar/<%= calendarDays[i].year %>/<%= calendarDays[i].month %>/<%= calendarDays[i].day %>"-->
-      <div class="<%= classes.join(' ') %>">
-        <div class="calendar-day-number"><%= calendarDays[i].day %></div>
-        <div class="calendar-day-activities">
-          <% for (let j = 0; j < calendarDays[i].activities.length && j < 3; j++) { %>
-          <%
-          classes = ["calendar-day-activity"];
-          if (calendarDays[i].activities[j].color) {
-            classes.push("background-" + calendarDays[i].activities[j].color);
-          }
-          %>
-          <div class="<%= classes.join(' ') %>">
-            <span class="calendar-day-activity-title"><%= calendarDays[i].activities[j].title %></span>
-            <span class="calendar-day-activity-timerange"><%= calendarDays[i].activities[j].from %> - <%= calendarDays[i].activities[j].to %></span>
+  <body>
+    <!--NavBar-->
+    <nav>
+      <div class="row" id="nav">
+        <div class="col-4 text-center" id="cerrarBtn">
+          <button type="button" class="btn btn-primary">Cerrar session</button>
+        </div>
+        <div class="col-4 text-center">
+          <h1 id="title">APPERFECTDAY</h1>
+        </div>
+        <div class="col-4 text-center" >
+          <img src="/img/noUser.png" alt="" id="imgPerfil" />
+          <h3>Fulanito</h3>
+        </div>
+      </div>
+    </nav>
+    <div class="row">
+      <!--Parte Izquierda-->
+      <div class="col-8">
+        <div class="app-calendar-month">
+          <div class="calendar-panel">
+            <% let prevYear = month == 1 ? year - 1 : year; let prevMonth =
+            month == 1 ? 12 : month - 1; let nextYear = month == 12 ? year + 1 :
+            year; let nextMonth = month == 12 ? 1 : month + 1; %>
+            <!--a href="/calendar/<%= prevYear %>/<%= prevMonth %>">Mes anterior</a-->
+            <div><%= monthName %> <%= year %></div>
+            <!--a href="/calendar/<%= nextYear %>/<%= nextMonth %>">Mes posterior</a-->
+          </div>
+          <% for (let row = 0; row < calendarDays.length / 7; row++) { %>
+          <div class="calendar-row">
+            <% for (let col = 0; col < 7; col++) { %> <% let i = row * 7 + col;
+            let classes = ["calendar-day"]; if (!calendarDays[i].isThisMonth) {
+            classes.push("calendar-day-off"); } if (calendarDays[i].isToday) {
+            classes.push("calendar-day-now"); } %>
+            <!-- a href="/calendar/<%= calendarDays[i].year %>/<%= calendarDays[i].month %>/<%= calendarDays[i].day %>"-->
+            <div class="<%= classes.join(' ') %>">
+              <div class="calendar-day-number"><%= calendarDays[i].day %></div>
+              <div class="calendar-day-activities">
+                <% for (let j = 0; j < calendarDays[i].activities.length && j <
+                3; j++) { %> <% classes = ["calendar-day-activity"]; if
+                (calendarDays[i].activities[j].color) {
+                classes.push("background-" +
+                calendarDays[i].activities[j].color); } %>
+                <div class="<%= classes.join(' ') %>">
+                  <span class="calendar-day-activity-title"
+                    ><%= calendarDays[i].activities[j].title %></span
+                  >
+                  <span class="calendar-day-activity-timerange"
+                    ><%= calendarDays[i].activities[j].from %> - <%=
+                    calendarDays[i].activities[j].to %></span
+                  >
+                </div>
+                <% } %>
+              </div>
+              <% if (calendarDays[i].activities.length > 3) { %>
+              <div class="calendar-day-more">
+                +<%= calendarDays[i].activities.length - 3 %>
+              </div>
+              <% } %>
+            </div>
+            <!--/a-->
+            <% } %>
           </div>
           <% } %>
         </div>
-        <% if (calendarDays[i].activities.length > 3) { %>
-        <div class="calendar-day-more">+<%= calendarDays[i].activities.length - 3 %></div>
-        <% } %>
       </div>
-      <!--/a-->
-      <% } %>
+      <!--Parte derecha-->
+      <div class="col-4">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum
+        maiores, nesciunt sed nostrum quidem voluptatibus vitae itaque,
+        architecto pariatur saepe esse quaerat nisi eveniet sit tempora dolorem
+        delectus harum facere.
+        <div class="row">
+          
+        </div>
+      </div>
     </div>
-    <% } %>
-  </div>
-</body>
-
+  </body>
 </html>

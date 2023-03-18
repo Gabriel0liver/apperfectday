@@ -1,4 +1,4 @@
-@import "colors.css";
+@import 'colors.css';
 
 *,
 *::before,
@@ -6,11 +6,13 @@
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+  
 }
 
 body {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 16px;
+  
 }
 
 .app-calendar-month,
@@ -138,4 +140,25 @@ body {
 .app-calendar-month .calendar-panel a,
 .app-calendar-day .calendar-panel a {
   color: #fff;
+}
+
+#nav {
+  background-color: coral;
+}
+
+#cerrarBtn {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+#imgPerfil {
+  width: 5em;
+  height: 5em;
+  border-radius: 50%;
+  
+}
+
+#title{
+  color: white;
+  margin-top: 5%;
 }
