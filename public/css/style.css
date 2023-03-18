@@ -162,3 +162,30 @@ body {
   color: white;
   margin-top: 5%;
 }
+
+#ParteDerecha{
+  background-color: cadetblue;
+}
+
+.btnModal{
+  width: 6em;
+}
+
+
+#AsignaturaContainer, #ActividadContainer{
+  width: 40%;
+  margin: auto;
+  background-color: #fff;
+  border-radius: 6px;
+  padding: 3em 2.5em;
+  display: grid;
+}
+#modalAsignatura, #modalActividad{
+  background-color: #111111bd;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+}
