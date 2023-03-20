@@ -21,16 +21,18 @@
       <nav>
         <div class="row" id="nav">
           <div class="col-4 text-center" id="cerrarBtn">
-            <button type="button" class="btn btn-primary">
-              Cerrar session
-            </button>
+            <form method="post" action="/logout">
+              <button type="submit" class="btn btn-primary">
+                Cerrar session
+              </button>
+            </form>
           </div>
           <div class="col-4 text-center">
             <h1 id="title">APPERFECTDAY</h1>
           </div>
           <div class="col-4 text-center">
             <img src="/img/noUser.png" alt="" id="imgPerfil" />
-            <h3>Fulanito</h3>
+            <h3><%=user.name%></h3>
           </div>
         </div>
       </nav>
@@ -113,125 +115,109 @@
       </div>
     </div>
 
+    <!--lo que parece al pulsar Añadir asignatura-->
+    <section id="modalAsignatura" style="display: none">
+      <div id="AsignaturaContainer">
+        <div class="row text-center"><h3>Añadir Asignatura</h3></div>
 
-<!--lo que parece al pulsar Añadir asignatura-->
-      <section id="modalAsignatura"  style="display: none;">
-        <div id="AsignaturaContainer" >
-          <div class="row text-center"><h3>Añadir Asignatura</h3></div>
-
-          <form style="margin-right: 10%; margin-left: 10%;">
-            <div class="form-group mt-2">
-              <label for="nombreAsignatura">Nombre Asignatura</label>
-              <input
-                type="text"
-                class="form-control"
-                id="nombreAsignatura"
-                placeholder="mates, fisica ..."
-              />
-            </div>
-            <div class="form-group mt-1">
-              <label for="numCreditos">Numero de Creditos</label>
-              <select class="form-control" id="numCreditos">
-                <option>4.5</option>
-                <option>6</option>
-                <option>9</option>
-                <option>12</option>
-              </select>
-            </div>
-           <div class="form-group mt-1">
-              <label for="fechaAsignatura">fecha</label>
-              <input
-                type="date"
-                class="form-control"
-                id="fechaAsignatura"
-              />
-            </div>
-            <div class="form-group mt-1">
-              <label for="horaInicioAsignatura">Hora inicio</label>
-              <input
-                type="time"
-                class="form-control"
-                id="horaInicioAsignatura"
-              />
-            </div>
-            <div class="form-group mt-1">
-              <label for="horaFinAsignatura">Hora Fin</label>
-              <input
-                type="time"
-                class="form-control"
-                id="horaFinAsignatura"
-              />
-            </div>
-            <div class="row text-center mt-2 mb-1">
+        <form style="margin-right: 10%; margin-left: 10%">
+          <div class="form-group mt-2">
+            <label for="nombreAsignatura">Nombre Asignatura</label>
+            <input
+              type="text"
+              class="form-control"
+              id="nombreAsignatura"
+              placeholder="mates, fisica ..."
+            />
+          </div>
+          <div class="form-group mt-1">
+            <label for="numCreditos">Numero de Creditos</label>
+            <select class="form-control" id="numCreditos">
+              <option>4.5</option>
+              <option>6</option>
+              <option>9</option>
+              <option>12</option>
+            </select>
+          </div>
+          <div class="form-group mt-1">
+            <label for="fechaAsignatura">fecha</label>
+            <input type="date" class="form-control" id="fechaAsignatura" />
+          </div>
+          <div class="form-group mt-1">
+            <label for="horaInicioAsignatura">Hora inicio</label>
+            <input type="time" class="form-control" id="horaInicioAsignatura" />
+          </div>
+          <div class="form-group mt-1">
+            <label for="horaFinAsignatura">Hora Fin</label>
+            <input type="time" class="form-control" id="horaFinAsignatura" />
+          </div>
+          <div class="row text-center mt-2 mb-1">
             <div class="col">
-              <button type="button" class="btn btn-primary btnModal" id="btncerrarModalAsignatura">Cerrar</button>
+              <button
+                type="button"
+                class="btn btn-primary btnModal"
+                id="btncerrarModalAsignatura"
+              >
+                Cerrar
+              </button>
             </div>
             <div class="col">
-              <button type="button" class="btn btn-primary btnModal">Guardar</button>
+              <button type="button" class="btn btn-primary btnModal">
+                Guardar
+              </button>
             </div>
           </div>
-          </form>
-        </div>
-      </section>
+        </form>
+      </div>
+    </section>
 
+    <!--lo que parece al pulsar Añadir actividad-->
+    <section id="modalActividad" style="display: none">
+      <div id="ActividadContainer">
+        <div class="row text-center"><h3>Añadir Actividad</h3></div>
 
-
-
-      <!--lo que parece al pulsar Añadir actividad-->
-      <section id="modalActividad"  style="display: none;">
-        <div id="ActividadContainer" >
-          <div class="row text-center"><h3>Añadir Actividad</h3></div>
-
-          <form style="margin-right: 10%; margin-left: 10%;">
-            <div class="form-group mt-2">
-              <label for="nombreActividad">Nombre Actividad</label>
-              <input
-                type="text"
-                class="form-control"
-                id="nombreActividad"
-                placeholder="pasear perro, siesta ..."
-              />
-            </div>
-           <div class="form-group mt-1">
-              <label for="fechaActividad">fecha</label>
-              <input
-                type="date"
-                class="form-control"
-                id="fechaActividad"
-              />
-            </div>
-            <div class="form-group mt-1">
-              <label for="horaInicioActividad">Hora inicio</label>
-              <input
-                type="time"
-                class="form-control"
-                id="horaInicioActividad"
-              />
-            </div>
-            <div class="form-group mt-1">
-              <label for="horaFinActividad">Hora Fin</label>
-              <input
-                type="time"
-                class="form-control"
-                id="horaFinActividad"
-              />
-            </div>
-            <div class="row text-center mt-2 mb-1">
+        <form style="margin-right: 10%; margin-left: 10%">
+          <div class="form-group mt-2">
+            <label for="nombreActividad">Nombre Actividad</label>
+            <input
+              type="text"
+              class="form-control"
+              id="nombreActividad"
+              placeholder="pasear perro, siesta ..."
+            />
+          </div>
+          <div class="form-group mt-1">
+            <label for="fechaActividad">fecha</label>
+            <input type="date" class="form-control" id="fechaActividad" />
+          </div>
+          <div class="form-group mt-1">
+            <label for="horaInicioActividad">Hora inicio</label>
+            <input type="time" class="form-control" id="horaInicioActividad" />
+          </div>
+          <div class="form-group mt-1">
+            <label for="horaFinActividad">Hora Fin</label>
+            <input type="time" class="form-control" id="horaFinActividad" />
+          </div>
+          <div class="row text-center mt-2 mb-1">
             <div class="col">
-              <button type="button" class="btn btn-primary btnModal" id="btncerrarModalActividad">Cerrar</button>
+              <button
+                type="button"
+                class="btn btn-primary btnModal"
+                id="btncerrarModalActividad"
+              >
+                Cerrar
+              </button>
             </div>
             <div class="col">
-              <button type="button" class="btn btn-primary btnModal">Guardar</button>
+              <button type="button" class="btn btn-primary btnModal">
+                Guardar
+              </button>
             </div>
           </div>
-          </form>
-        </div>
-      </section>
-    
+        </form>
+      </div>
+    </section>
 
-          
-
-     
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
@@ -244,23 +230,21 @@
     ></script>
     <script>
       $(document).ready(function () {
-
         //abrir y cerrar modal Asignatura
-        $('#btnAsignatura').on('click',function(){
-        $('#modalAsignatura').show()
+        $('#btnAsignatura').on('click', function () {
+          $('#modalAsignatura').show()
         })
-         $('#btncerrarModalAsignatura').on('click',function(){
-        $('#modalAsignatura').hide()
+        $('#btncerrarModalAsignatura').on('click', function () {
+          $('#modalAsignatura').hide()
         })
 
         //abrir y cerrar modal Actividad
-         $('#btnActividad').on('click',function(){
-        $('#modalActividad').show()
+        $('#btnActividad').on('click', function () {
+          $('#modalActividad').show()
         })
-         $('#btncerrarModalActividad').on('click',function(){
-        $('#modalActividad').hide()
+        $('#btncerrarModalActividad').on('click', function () {
+          $('#modalActividad').hide()
         })
-        
       })
     </script>
   </body>

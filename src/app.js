@@ -57,6 +57,8 @@ const MongoStore = require('connect-mongo');
   app.use(express.static(path.resolve("public")));
 
   app.use(express.json())
+
+  //configuracion session
  app.use(
    session({
      secret: '123',
@@ -69,8 +71,8 @@ const MongoStore = require('connect-mongo');
    })
  )
 
-  app.use('/auth', authRoute);
-  app.use("/", indexRouter);
+  app.use('/', authRoute);
+  //app.use("/", indexRouter);
   app.use("/calendar", calendarRouter);
 
   const port =
