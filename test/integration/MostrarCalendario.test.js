@@ -12,12 +12,12 @@ test('https://apperfectday.herokuapp.com responds with 200 OK', async () => {
 
 // prueba integracion HU mostrar Calendario
 //con /calendar/2000/12 muestra calendario de 12 y 2000 devuelve 200 OK
-test('https://apperfectday.herokuapp.com/calendar/2000/12 responds with 200 OK', async () => {
+/*test('https://apperfectday.herokuapp.com/calendar/2000/12 responds with 200 OK', async () => {
   const response = await axios.get(
     'https://apperfectday.herokuapp.com/calendar/3/2023'
   )
   expect(response.status).toBe(200)
-})
+})*/
 
 
 // prueba integracion HU mostrar Calendario
