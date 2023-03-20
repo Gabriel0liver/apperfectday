@@ -5,7 +5,9 @@ exports.register = async (req, res) => {
   const hashedPassword = await bcrypt.hash(req.body.password, 12)
   const user = await User.create({ ...req.body, password: hashedPassword })
   req.session.userId = user.id
-  return res.status(201).json(user)
+  return res
+    .status(201)
+    .render('calendar/login', { message: 'se ha registrado con exito' })
 }
 
 exports.login = async (req, res) => {
