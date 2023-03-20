@@ -7,6 +7,9 @@ const calendarRouter = require("./routes/calendar");
 const nconf = require("nconf");
 const { existsSync } = require("fs");
 const mongoose = require('mongoose');
+const authRoute = require("./routes/auth");
+const session = require('express-session');
+const MongoStore = require('connect-mongo');
 
 (() => {
   let env = process.env.NODE_ENV || "local";
@@ -53,6 +56,20 @@ const mongoose = require('mongoose');
   //fichero estaticos
   app.use(express.static(path.resolve("public")));
 
+  app.use(express.json())
+ app.use(
+   session({
+     secret: '123',
+     resave: false,
+     saveUninitialized: false,
+     store: MongoStore.create({
+       mongoUrl: process.env.MONGODB_URI,
+       ttl: 14 * 24 * 60 * 60, // Session will expire in 14 days
+     }),
+   })
+ )
+
+  app.use('/auth', authRoute);
   app.use("/", indexRouter);
   app.use("/calendar", calendarRouter);
 
