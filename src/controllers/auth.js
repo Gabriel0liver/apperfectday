@@ -2,12 +2,19 @@ const bcrypt = require('bcrypt')
 const User = require('../models/User')
 
 exports.register = async (req, res) => {
-  const hashedPassword = await bcrypt.hash(req.body.password, 12)
-  const user = await User.create({ ...req.body, password: hashedPassword })
-  req.session.userId = user.id
+  const userexiste = await User.findOne({ email: req.body.email })
+  if(!userexiste){
+    const hashedPassword = await bcrypt.hash(req.body.password, 12)
+    const user = await User.create({ ...req.body, password: hashedPassword })
+    req.session.userId = user.id
+    return res
+      .status(201)
+      .render('calendar/login', { message: 'se ha registrado con exito' })
+  }
   return res
-    .status(201)
-    .render('calendar/login', { message: 'se ha registrado con exito' })
+      .status(404)
+      .render('calendar/login', { message: 'Error El correo  ya esta asociado a otra cuenta.' })
+  
 }
 
 exports.login = async (req, res) => {
