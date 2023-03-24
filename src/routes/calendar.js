@@ -5,15 +5,17 @@ const { getMonthName } = require("../common/utils");
 const buildMonthCalendar = require("./buildMonthCalendar");
 const Activity = require("../models/activity");
 const Subject = require("../models/subject");
+const { loginRequired } = require("../controllers/auth");
+const User = require('../models/User');
 
-router.get("/", (req, res) => {
-  const now = new Date();
+router.get('/', loginRequired, (req, res) => {
+  const now = new Date()
   let year = now.getFullYear(),
-    month = now.getMonth() + 1;
-  res.redirect(`/calendar/${year}/${month}`);
-});
+    month = now.getMonth() + 1
+  res.redirect(`/calendar/${year}/${month}`)
+})
 
-router.get("/:year", (req, res) => {
+router.get("/:year",loginRequired, (req, res) => {
   const { params } = req;
   const paramYear = params["year"];
   const paramMonth = params["month"];
@@ -41,7 +43,7 @@ router.get("/:year", (req, res) => {
   res.redirect(`/calendar/${year}/${month}`);
 });
 
-router.get("/:year/:month", (req, res) => {
+router.get("/:year/:month",loginRequired,async (req, res) => {
   const { params } = req;
   const paramYear = params["year"];
   const paramMonth = params["month"];
@@ -68,12 +70,14 @@ router.get("/:year/:month", (req, res) => {
     res.redirect(`/calendar/${year}/${month}`);
     return;
   }
+  const user = await User.findById(req.session.userId)
 
   Activity.find()
     .then(activities => {
       Subject.find()
         .then(subjects => {
           res.render("calendar/calendar", {
+            user,
             year,
             month,
             monthName: getMonthName(month),
@@ -88,7 +92,7 @@ router.get("/:year/:month", (req, res) => {
     })
 });
 
-router.get("/:year/:month/:day", (req, res) => {
+router.get("/:year/:month/:day",loginRequired, (req, res) => {
   const { params } = req;
   const paramYear = params.year;
   const paramMonth = params.month;
