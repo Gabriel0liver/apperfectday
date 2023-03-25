@@ -4,6 +4,7 @@ const path = require("path");
 const express = require("express");
 const indexRouter = require("./routes/index");
 const calendarRouter = require("./routes/calendar");
+const subjectRouter = require("./routes/subject");
 const nconf = require("nconf");
 const { existsSync } = require("fs");
 const mongoose = require('mongoose');
@@ -74,6 +75,7 @@ const MongoStore = require('connect-mongo');
   app.use('/', authRoute);
   //app.use("/", indexRouter);
   app.use("/calendar", calendarRouter);
+  app.use("/subject", subjectRouter);
 
   const port =
     env == "production" ? process.env.PORT : nconf.get("server:port");
