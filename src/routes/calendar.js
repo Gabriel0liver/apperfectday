@@ -19,7 +19,7 @@ router.get("/", loginRequired, (req, res) => {
 });
 
 router.get("/:year", loginRequired, (req, res) => {
-  const { params } = req;
+  const { params, session } = req;
   const paramYear = params["year"];
   let year, month;
   if (paramYear) {
@@ -40,25 +40,19 @@ router.get("/:year", loginRequired, (req, res) => {
 });
 
 router.get("/:year/:month", loginRequired, async (req, res) => {
-  const { params } = req;
+  const { params, session } = req;
   const paramYear = params["year"];
   const paramMonth = params["month"];
   let year, month;
 
-  if (paramYear) {
-    const n = Number(paramYear);
-    if (!isNaN(n) && n >= 1970 && n <= 3000) {
-      year = n;
-    }
+  let n = Number(paramYear);
+  if (!isNaN(n) && n >= 1970 && n <= 3000) {
+    year = n;
   }
-
-  if (paramMonth) {
-    const n = Number(paramMonth);
-    if (!isNaN(n) && n >= 1 && n <= 12) {
-      month = n;
-    }
+  n = Number(paramMonth);
+  if (!isNaN(n) && n >= 1 && n <= 12) {
+    month = n;
   }
-
   if (!year || !month) {
     const now = new Date();
     year = now.getFullYear();
@@ -66,28 +60,25 @@ router.get("/:year/:month", loginRequired, async (req, res) => {
     res.redirect(`/calendar/${year}/${month}`);
     return;
   }
-  const user = await User.findById(req.session.userId);
-
-  Activity.find({ user }).then((activities) => {
-    Subject.find({ user }).then((subjects) => {
-      res.render("calendar/calendar", {
-        user,
-        year,
-        month,
-        monthName: getMonthName(month),
-        calendarDays: buildMonthCalendar({
-          activities,
-          subjects,
-          year,
-          month,
-        }),
-      });
-    });
+  const user = await User.findById(session["userId"]);
+  const activities = await Activity.find({ user });
+  const subjects = await Subject.find({ user });
+  res.render("calendar/calendar", {
+    user,
+    year,
+    month,
+    monthName: getMonthName(month),
+    calendarDays: buildMonthCalendar({
+      activities,
+      subjects,
+      year,
+      month,
+    }),
   });
 });
 
 router.get("/:year/:month/:day", loginRequired, async (req, res) => {
-  const { params } = req;
+  const { params, session } = req;
   const paramYear = params.year;
   const paramMonth = params.month;
   const paramDay = params.day;
@@ -125,23 +116,21 @@ router.get("/:year/:month/:day", loginRequired, async (req, res) => {
     }
     day = n;
   }
-  const user = await User.findById(req.session.userId);
-  Activity.find({ user }).then((activities) => {
-    Subject.find({ user }).then((subjects) => {
-      res.status(200).json({
-        year,
-        month,
-        day,
-        monthName: getMonthName(month),
-        activities: buildDayCalendar({
-          year,
-          month,
-          day,
-          activities,
-          subjects,
-        }),
-      });
-    });
+  const user = await User.findById(session["userId"]);
+  const activities = await Activity.find({ user });
+  const subjects = await Subject.find({ user });
+  res.status(200).json({
+    year,
+    month,
+    day,
+    monthName: getMonthName(month),
+    activities: buildDayCalendar({
+      year,
+      month,
+      day,
+      activities,
+      subjects,
+    }),
   });
 });
 

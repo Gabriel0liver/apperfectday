@@ -6,10 +6,10 @@ const Schema = mongoose.Schema;
 const ObjectId = Schema.Types.ObjectId;
 
 const activitySchema = new Schema({
-  user:{
+  user: {
     type: ObjectId,
     required: true,
-    ref: 'User'
+    ref: "User",
   },
   titulo: {
     type: String,
@@ -30,6 +30,7 @@ const activitySchema = new Schema({
   asignatura: {
     type: ObjectId,
     required: false,
+    ref: "Subject",
   },
 });
 
