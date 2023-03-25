@@ -1,14 +1,12 @@
 (() => {
-  const sidePanelDiv = document.querySelector("body .sidepanel");
-  const panelBGDiv = document.querySelector("body .panel-bg");
-  const appCalendarDayDiv = sidePanelDiv.querySelector(".app-calendar-day");
-  const calendarEventsDiv = sidePanelDiv.querySelector(".calendar-events");
-  const calendarEventsErrorDiv =
-    calendarEventsDiv.querySelector(".calendar-error");
-  const calendarEventsErrorButton =
-    calendarEventsErrorDiv.querySelector("button");
+  const sidePanelDiv = $("body .sidepanel");
+  const panelBGDiv = $("body .panel-bg");
+  const appCalendarDayDiv = sidePanelDiv.children(".app-calendar-day");
+  const calendarEventsDiv = sidePanelDiv.children(".calendar-events");
+  const calendarEventsErrorDiv = calendarEventsDiv.children(".calendar-error");
+  const calendarEventsErrorButton = calendarEventsErrorDiv.children("button");
   const calendarEventsLoadingDiv =
-    calendarEventsDiv.querySelector(".calendar-loading");
+    calendarEventsDiv.children(".calendar-loading");
 
   /**
    * @param {string} title
@@ -17,22 +15,19 @@
    * @param {string} color
    */
   function createDayCalendarActivity(title, from, to, color) {
-    const activityDiv = document.createElement("div");
-    activityDiv.classList.add("calendar-activity");
-    const activityColorDiv = document.createElement("div");
-    activityColorDiv.classList.add(
-      "calendar-activity-color",
-      `background-${color}`
-    );
-    const activityTitleDiv = document.createElement("div");
-    activityTitleDiv.classList.add("calendar-activity-title");
-    activityTitleDiv.innerText = title;
-    const activityFromDiv = document.createElement("div");
-    activityFromDiv.classList.add("calendar-activity-from");
-    activityFromDiv.innerText = from;
-    const activityToDiv = document.createElement("div");
-    activityToDiv.classList.add("calendar-activity-to");
-    activityToDiv.innerText = to;
+    const activityDiv = $("<div>");
+    activityDiv.addClass("calendar-activity");
+    const activityColorDiv = $("<div>");
+    activityColorDiv.addClass("calendar-activity-color", `background-${color}`);
+    const activityTitleDiv = $("<div>");
+    activityTitleDiv.addClass("calendar-activity-title");
+    activityTitleDiv.text(title);
+    const activityFromDiv = $("<div>");
+    activityFromDiv.addClass("calendar-activity-from");
+    activityFromDiv.text(from);
+    const activityToDiv = $("<div>");
+    activityToDiv.addClass("calendar-activity-to");
+    activityToDiv.text(to);
     activityDiv.append(
       activityColorDiv,
       activityTitleDiv,
@@ -44,9 +39,6 @@
 
   let loading = 0;
 
-  /** @type {() => any} */
-  let calendarErrorButtonListener;
-
   let sidePanelShowing = false;
   /**
    * @param {string} year
@@ -55,16 +47,11 @@
    */
   function loadCalendarDay(year, month, day) {
     const id = ++loading;
-    if (calendarErrorButtonListener) {
-      calendarEventsErrorButton.removeEventListener(
-        "click",
-        calendarErrorButtonListener
-      );
-    }
-    appCalendarDayDiv.classList.add("hidden");
-    calendarEventsErrorDiv.classList.add("d-none");
-    calendarEventsLoadingDiv.classList.remove("d-none");
-    appCalendarDayDiv.classList.add("opacity-hidden");
+    calendarEventsErrorButton.off("click");
+    appCalendarDayDiv.addClass("hidden");
+    calendarEventsErrorDiv.addClass("d-none");
+    calendarEventsLoadingDiv.removeClass("d-none");
+    appCalendarDayDiv.addClass("opacity-hidden");
     waitAtLeast({
       ms: 200,
       promise: fetch(
@@ -78,15 +65,13 @@
         return res.json();
       })
       .then((json) => {
-        const panelDiv = appCalendarDayDiv.querySelector(".calendar-panel");
-        const dateDiv = panelDiv.querySelector(".calendar-date");
+        const panelDiv = appCalendarDayDiv.children(".calendar-panel");
+        const dateDiv = panelDiv.children(".calendar-date");
         dateDiv.innerText = `${day} de ${json["monthName"]} de ${year}`;
-        const activitiesDiv = appCalendarDayDiv.querySelector(
+        const activitiesDiv = appCalendarDayDiv.children(
           ".calendar-activities"
         );
-        while (activitiesDiv.firstChild) {
-          activitiesDiv.removeChild(activitiesDiv.firstChild);
-        }
+        activitiesDiv.children().remove();
         const activities = json["activities"];
         if (activities.length != 0) {
           activitiesDiv.append(
@@ -95,26 +80,22 @@
             )
           );
         } else {
-          const div = document.createElement("div");
-          div.classList.add("calendar-no-activities");
-          div.innerText = "No hay actividades";
+          const div = $("<div>");
+          div.addClass("calendar-no-activities");
+          div.text("No hay actividades");
           activitiesDiv.append(div);
         }
-        appCalendarDayDiv.classList.remove("hidden");
-        appCalendarDayDiv.classList.remove("opacity-hidden");
+        appCalendarDayDiv.removeClass("hidden");
+        appCalendarDayDiv.removeClass("opacity-hidden");
       })
       .catch(() => {
         if (id != loading) return;
         if (!sidePanelShowing) return;
-        calendarErrorButtonListener = () => {
+        calendarEventsErrorButton.on("click", () => {
           loadCalendarDay(year, month, day);
-        };
-        calendarEventsErrorButton.addEventListener(
-          "click",
-          calendarErrorButtonListener
-        );
-        calendarEventsLoadingDiv.classList.add("d-none");
-        calendarEventsErrorDiv.classList.remove("d-none");
+        });
+        calendarEventsLoadingDiv.addClass("d-none");
+        calendarEventsErrorDiv.removeClass("d-none");
       });
   }
 
@@ -126,41 +107,38 @@
   function openSidePanel(year, month, day) {
     if (sidePanelShowing) return;
     sidePanelShowing = true;
-    sidePanelDiv.classList.add("active");
-    panelBGDiv.classList.remove("hidden");
-    panelBGDiv.classList.add("active");
+    sidePanelDiv.addClass("active");
+    panelBGDiv.removeClass("hidden");
+    panelBGDiv.addClass("active");
     loadCalendarDay(year, month, day);
   }
 
   function closeSidePanel() {
     if (!sidePanelShowing) return;
     sidePanelShowing = false;
-    sidePanelDiv.classList.remove("active");
-    panelBGDiv.classList.remove("active");
+    sidePanelDiv.removeClass("active");
+    panelBGDiv.removeClass("active");
     setTimeout(() => {
-      panelBGDiv.classList.add("hidden");
-      appCalendarDayDiv.classList.add("opacity-hidden");
-      appCalendarDayDiv.classList.add("hidden");
+      panelBGDiv.addClass("hidden");
+      appCalendarDayDiv.addClass("opacity-hidden");
+      appCalendarDayDiv.addClass("hidden");
     }, 200);
   }
 
-  panelBGDiv.addEventListener("click", closeSidePanel);
+  panelBGDiv.on("click", closeSidePanel);
 
-  /** @type {HTMLDivElement[]} */
-  const daysElements = document.querySelectorAll(
-    ".app-calendar-month .calendar-day"
-  );
+  const daysElements = $(".app-calendar-month .calendar-day");
 
   if (daysElements.length != 0) {
-    daysElements.forEach((el) => {
-      if (!el.classList.contains("calendar-day-off")) {
-        el.addEventListener("click", (ev) => {
-          /** @type {HTMLDivElement} */
-          const div = ev.currentTarget;
+    daysElements.each((_, el) => {
+      const o = $(el);
+      if (!o.hasClass("calendar-day-off")) {
+        o.on("click", (ev) => {
+          const div = $(ev.currentTarget);
           if (!div) return;
-          const year = div.dataset.year;
-          const month = div.dataset.month;
-          const day = div.dataset.day;
+          const year = div.data("year");
+          const month = div.data("month");
+          const day = div.data("day");
           openSidePanel(year, month, day);
         });
       }

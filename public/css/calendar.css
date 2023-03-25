@@ -18,7 +18,7 @@ body {
   opacity: 0;
 }
 
-/* SIDEPANEL ------------------------------------------- */
+/* SIDEPANEL Y MODALS ------------------------------------------- */
 
 :root {
   --sidepanel-width: 500px;
@@ -41,18 +41,58 @@ body div.sidepanel.active {
   right: 0;
 }
 
-body div.panel-bg {
+body div.panel-bg,
+body div.modal-bg {
   background: rgba(0, 0, 0, 0);
   z-index: 9;
+}
+
+body div.panel-bg {
   transition: linear 0.2s background-color;
+}
+
+body div.modal-bg {
+  background: rgba(0, 0, 0, 0.35);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 body div.panel-bg.active {
   background: rgba(0, 0, 0, 0.35);
 }
 
-body div.panel-bg.hidden {
+body div.panel-bg.hidden,
+body div.modal-bg.hidden {
   z-index: -9;
+}
+
+body div.modal-bg.hidden {
+  background: rgba(0, 0, 0, 0);
+}
+
+body div.modal-bg section {
+  background: #f1f1f1;
+  border-radius: 2rem;
+  padding: 2rem;
+  min-width: 30rem;
+  box-shadow: 0 0.75rem 1rem 0.25rem rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+
+body div.modal-bg section .close-btn {
+  background: #ff3d3d;
+  position: absolute;
+  top: -0.25rem;
+  right: -0.25rem;
+  width: 2rem;
+  height: 2rem;
+  text-align: center;
+  border-radius: 50%;
+  border: none;
+  font-weight: bold;
+  color: white;
+  box-shadow: 0 0 0.25rem 0.125rem rgba(0, 0, 0, 0.2);
 }
 
 /* CALENDAR MONTH AND CALENDAR DAY ------------------------ */
@@ -263,3 +303,5 @@ body div.panel-bg.hidden {
 .app-calendar-day .calendar-panel a {
   color: #fff;
 }
+
+/* MODALS AÑADIR ASIGNATURA Y AÑADIR ACTIVIDAD */

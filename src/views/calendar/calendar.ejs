@@ -108,94 +108,97 @@
         </div>
       </div>
     </div>
-    <!--lo que parece al pulsar Añadir asignatura-->
-    <section id="modalAsignatura" style="display: none">
-      <div id="AsignaturaContainer">
-        <div class="row text-center">
-          <h3>Añadir Asignatura</h3>
+    <div class="modal-bg expand hidden">
+      <!--lo que parece al pulsar Añadir asignatura-->
+      <section id="modalAsignatura" class="d-none">
+        <button class="close-btn">X</button>
+        <div id="AsignaturaContainer">
+          <div class="row text-center">
+            <h3>Añadir Asignatura</h3>
+          </div>
+  
+          <form style="margin-right: 10%; margin-left: 10%">
+            <div class="form-group mt-2">
+              <label for="nombreAsignatura">Nombre Asignatura</label>
+              <input type="text" class="form-control" id="nombreAsignatura" placeholder="mates, fisica ..." />
+            </div>
+            <div class="form-group mt-1">
+              <label for="numCreditos">Numero de Creditos</label>
+              <select class="form-control" id="numCreditos">
+                <option>4.5</option>
+                <option>6</option>
+                <option>9</option>
+                <option>12</option>
+              </select>
+            </div>
+            <div class="form-group mt-1">
+              <label for="fechaAsignatura">fecha</label>
+              <input type="date" class="form-control" id="fechaAsignatura" />
+            </div>
+            <div class="form-group mt-1">
+              <label for="horaInicioAsignatura">Hora inicio</label>
+              <input type="time" class="form-control" id="horaInicioAsignatura" />
+            </div>
+            <div class="form-group mt-1">
+              <label for="horaFinAsignatura">Hora Fin</label>
+              <input type="time" class="form-control" id="horaFinAsignatura" />
+            </div>
+            <div class="row text-center mt-2 mb-1">
+              <div class="col">
+                <button type="button" class="btn btn-primary btnModal" id="btncerrarModalAsignatura">
+                  Cerrar
+                </button>
+              </div>
+              <div class="col">
+                <button type="button" class="btn btn-primary btnModal">
+                  Guardar
+                </button>
+              </div>
+            </div>
+          </form>
         </div>
-
-        <form style="margin-right: 10%; margin-left: 10%">
-          <div class="form-group mt-2">
-            <label for="nombreAsignatura">Nombre Asignatura</label>
-            <input type="text" class="form-control" id="nombreAsignatura" placeholder="mates, fisica ..." />
+      </section>
+      <!--lo que parece al pulsar Añadir actividad-->
+      <section id="modalActividad" class="d-none">
+        <button class="close-btn">X</button>
+        <div id="ActividadContainer">
+          <div class="row text-center">
+            <h3>Añadir Actividad</h3>
           </div>
-          <div class="form-group mt-1">
-            <label for="numCreditos">Numero de Creditos</label>
-            <select class="form-control" id="numCreditos">
-              <option>4.5</option>
-              <option>6</option>
-              <option>9</option>
-              <option>12</option>
-            </select>
-          </div>
-          <div class="form-group mt-1">
-            <label for="fechaAsignatura">fecha</label>
-            <input type="date" class="form-control" id="fechaAsignatura" />
-          </div>
-          <div class="form-group mt-1">
-            <label for="horaInicioAsignatura">Hora inicio</label>
-            <input type="time" class="form-control" id="horaInicioAsignatura" />
-          </div>
-          <div class="form-group mt-1">
-            <label for="horaFinAsignatura">Hora Fin</label>
-            <input type="time" class="form-control" id="horaFinAsignatura" />
-          </div>
-          <div class="row text-center mt-2 mb-1">
-            <div class="col">
-              <button type="button" class="btn btn-primary btnModal" id="btncerrarModalAsignatura">
-                Cerrar
-              </button>
+  
+          <form style="margin-right: 10%; margin-left: 10%">
+            <div class="form-group mt-2">
+              <label for="nombreActividad">Nombre Actividad</label>
+              <input type="text" class="form-control" id="nombreActividad" placeholder="pasear perro, siesta ..." />
             </div>
-            <div class="col">
-              <button type="button" class="btn btn-primary btnModal">
-                Guardar
-              </button>
+            <div class="form-group mt-1">
+              <label for="fechaActividad">fecha</label>
+              <input type="date" class="form-control" id="fechaActividad" />
             </div>
-          </div>
-        </form>
-      </div>
-    </section>
-
-    <!--lo que parece al pulsar Añadir actividad-->
-    <section id="modalActividad" style="display: none">
-      <div id="ActividadContainer">
-        <div class="row text-center">
-          <h3>Añadir Actividad</h3>
+            <div class="form-group mt-1">
+              <label for="horaInicioActividad">Hora inicio</label>
+              <input type="time" class="form-control" id="horaInicioActividad" />
+            </div>
+            <div class="form-group mt-1">
+              <label for="horaFinActividad">Hora Fin</label>
+              <input type="time" class="form-control" id="horaFinActividad" />
+            </div>
+            <div class="row text-center mt-2 mb-1">
+              <div class="col">
+                <button type="button" class="btn btn-primary btnModal" id="btncerrarModalActividad">
+                  Cerrar
+                </button>
+              </div>
+              <div class="col">
+                <button type="button" class="btn btn-primary btnModal">
+                  Guardar
+                </button>
+              </div>
+            </div>
+          </form>
         </div>
-
-        <form style="margin-right: 10%; margin-left: 10%">
-          <div class="form-group mt-2">
-            <label for="nombreActividad">Nombre Actividad</label>
-            <input type="text" class="form-control" id="nombreActividad" placeholder="pasear perro, siesta ..." />
-          </div>
-          <div class="form-group mt-1">
-            <label for="fechaActividad">fecha</label>
-            <input type="date" class="form-control" id="fechaActividad" />
-          </div>
-          <div class="form-group mt-1">
-            <label for="horaInicioActividad">Hora inicio</label>
-            <input type="time" class="form-control" id="horaInicioActividad" />
-          </div>
-          <div class="form-group mt-1">
-            <label for="horaFinActividad">Hora Fin</label>
-            <input type="time" class="form-control" id="horaFinActividad" />
-          </div>
-          <div class="row text-center mt-2 mb-1">
-            <div class="col">
-              <button type="button" class="btn btn-primary btnModal" id="btncerrarModalActividad">
-                Cerrar
-              </button>
-            </div>
-            <div class="col">
-              <button type="button" class="btn btn-primary btnModal">
-                Guardar
-              </button>
-            </div>
-          </div>
-        </form>
-      </div>
-    </section>
+      </section>
+    </div>
     <div class="sidepanel">
       <div class="calendar-events">
         <img class="calendar-loading" src="/media/loading_spinner.gif" />
@@ -212,27 +215,55 @@
       </div>
     </div>
     <div class="panel-bg expand hidden"></div>
-    <script src="/js/calendar.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <script src="/js/calendar.js"></script>
     <script>
-      $(document).ready(function() {
+      (() => {
+        const modalAsignatura = $('#modalAsignatura');
+        const modalActividad = $('#modalActividad');
+        const modalBackground = $('body div.modal-bg');
+        
         //abrir y cerrar modal Asignatura
-        $('#btnAsignatura').on('click', function() {
-          $('#modalAsignatura').show()
+        $('#btnAsignatura').on('click', () => {
+            modalAsignatura.removeClass("d-none");
+            modalBackground.removeClass("hidden");
         })
-        $('#btncerrarModalAsignatura').on('click', function() {
-          $('#modalAsignatura').hide()
+        modalAsignatura.children(".close-btn").on('click', () => {
+          if (!modalAsignatura.hasClass("d-none")) {
+            modalAsignatura.addClass("d-none");
+          }
+          if (!modalBackground.hasClass("hidden")) {
+            modalBackground.addClass("hidden");
+          }
         })
-
+  
         //abrir y cerrar modal Actividad
-        $('#btnActividad').on('click', function() {
-          $('#modalActividad').show()
+        $('#btnActividad').on('click', () => {
+            modalActividad.removeClass("d-none");
+            modalBackground.removeClass("hidden");
         })
-        $('#btncerrarModalActividad').on('click', function() {
-          $('#modalActividad').hide()
+        modalActividad.children(".close-btn").on('click', () => {
+          if (!modalActividad.hasClass("d-none")) {
+            modalActividad.addClass("d-none");
+          }
+          if (!modalBackground.hasClass("hidden")) {
+            modalBackground.addClass("hidden");
+          }
         })
-      })
+        
+        modalBackground.on('click', () => {
+          if (!modalAsignatura.hasClass("d-none")) {
+            modalAsignatura.addClass("d-none");
+          }
+          if (!modalActividad.hasClass("d-none")) {
+            modalActividad.addClass("d-none");
+          }
+          if (!modalBackground.hasClass("hidden")) {
+            modalBackground.addClass("hidden");
+          }
+        })
+      })();
     </script>
   </body>
 
