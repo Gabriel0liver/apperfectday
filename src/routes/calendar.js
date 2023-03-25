@@ -72,9 +72,9 @@ router.get("/:year/:month",loginRequired,async (req, res) => {
   }
   const user = await User.findById(req.session.userId)
 
-  Activity.find()
+  Activity.find({ user })
     .then(activities => {
-      Subject.find()
+      Subject.find({ user })
         .then(subjects => {
           res.render("calendar/calendar", {
             user,

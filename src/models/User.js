@@ -18,11 +18,7 @@ const UserSchema = new Schema({
   password: {
     type: String,
     required: true,
-  },
-  //array con todas las asignaturas del usuario
-  subjects: [],
-  //array con todas las actividades del del usuario
-  activities: [],
+  }
 })
 
 const User = mongoose.model('User', UserSchema)

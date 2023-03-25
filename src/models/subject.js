@@ -6,6 +6,11 @@ const Schema = mongoose.Schema;
 const ObjectId = Schema.Types.ObjectId;
 
 const subjectSchema = new Schema({
+  user:{
+    type: ObjectId,
+    required: true,
+    ref: 'User'
+  },
   titulo: {
     type: String,
     required: true,
