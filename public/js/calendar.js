@@ -67,7 +67,7 @@
       .then((json) => {
         const panelDiv = appCalendarDayDiv.children(".calendar-panel");
         const dateDiv = panelDiv.children(".calendar-date");
-        dateDiv.innerText = `${day} de ${json["monthName"]} de ${year}`;
+        dateDiv.text(`${day} de ${json["monthName"]} de ${year}`);
         const activitiesDiv = appCalendarDayDiv.children(
           ".calendar-activities"
         );

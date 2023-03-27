@@ -24,6 +24,14 @@ body {
   --sidepanel-width: 500px;
 }
 
+.calendar-actions {
+  padding: 0.5rem;
+  display: flex;
+}
+.calendar-actions > * {
+  margin-right: 0.5rem;
+}
+
 body div.sidepanel {
   background: #fff;
   position: fixed;
@@ -56,6 +64,8 @@ body div.modal-bg {
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow-y: auto;
+  padding: 2rem 0;
 }
 
 body div.panel-bg.active {
@@ -78,6 +88,7 @@ body div.modal-bg section {
   min-width: 30rem;
   box-shadow: 0 0.75rem 1rem 0.25rem rgba(0, 0, 0, 0.2);
   position: relative;
+  z-index: 10;
 }
 
 body div.modal-bg section .close-btn {

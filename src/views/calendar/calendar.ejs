@@ -16,7 +16,7 @@
   <div class="container-flex">
     <!--NavBar-->
     <nav>
-      <div class="row" id="nav">
+      <div class="row m-0" id="nav">
         <div class="col-4 text-center" id="cerrarBtn">
           <form method="post" action="/logout">
             <button type="submit" class="btn btn-primary">
@@ -33,9 +33,17 @@
         </div>
       </div>
     </nav>
-    <div class="row">
+    <div class="calendar-actions">
+      <button type="button" class="btn btn-primary" id="btnAsignatura">
+        Añadir Asignatura
+      </button>
+      <button type="button" class="btn btn-primary" id="btnActividad">
+        Añadir Actividad
+      </button>
+    </div>
+    <div class="row p-0 m-0">
       <!--Parte Izquierda-->
-      <div class="col-8">
+      <div class="col p-0 m-0">
         <div class="app-calendar-month">
           <div class="calendar-panel">
             <% let prevYear = month == 1 ? year - 1 : year; let prevMonth =
@@ -82,31 +90,6 @@
           <% } %>
         </div>
       </div>
-      <!--Parte derecha-->
-      <div class="col-4" id="ParteDerecha">
-        <div class="row text-center mt-1">
-          <h3 style="color: white">20/12/2022</h3>
-        </div>
-        <div class="row" style="height: 80%">
-          <%for(let i=1;i<=5;i++){%>
-          <div class="row">Actividad <%=i%></div>
-          <%}%>
-            </div>
-            <div class="row text-center">
-              <div class="col">
-                <button type="button" class="btn btn-primary" id="btnAsignatura">
-                  Añadir Asignatura
-                </button>
-              </div>
-              <div class="col">
-                <button type="button" class="btn btn-primary" id="btnActividad">
-                  Añadir Actividad
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
     <div class="modal-bg expand hidden">
       <!--lo que parece al pulsar Añadir asignatura-->
@@ -116,7 +99,7 @@
           <div class="row text-center">
             <h3>Añadir Asignatura</h3>
           </div>
-  
+
           <form style="margin-right: 10%; margin-left: 10%">
             <div class="form-group mt-2">
               <label for="nombreAsignatura">Nombre Asignatura</label>
@@ -165,7 +148,7 @@
           <div class="row text-center">
             <h3>Añadir Actividad</h3>
           </div>
-  
+
           <form style="margin-right: 10%; margin-left: 10%">
             <div class="form-group mt-2">
               <label for="nombreActividad">Nombre Actividad</label>
@@ -223,11 +206,11 @@
         const modalAsignatura = $('#modalAsignatura');
         const modalActividad = $('#modalActividad');
         const modalBackground = $('body div.modal-bg');
-        
+
         //abrir y cerrar modal Asignatura
         $('#btnAsignatura').on('click', () => {
-            modalAsignatura.removeClass("d-none");
-            modalBackground.removeClass("hidden");
+          modalAsignatura.removeClass("d-none");
+          modalBackground.removeClass("hidden");
         })
         modalAsignatura.children(".close-btn").on('click', () => {
           if (!modalAsignatura.hasClass("d-none")) {
@@ -237,11 +220,11 @@
             modalBackground.addClass("hidden");
           }
         })
-  
+
         //abrir y cerrar modal Actividad
         $('#btnActividad').on('click', () => {
-            modalActividad.removeClass("d-none");
-            modalBackground.removeClass("hidden");
+          modalActividad.removeClass("d-none");
+          modalBackground.removeClass("hidden");
         })
         modalActividad.children(".close-btn").on('click', () => {
           if (!modalActividad.hasClass("d-none")) {
@@ -251,20 +234,8 @@
             modalBackground.addClass("hidden");
           }
         })
-        
-        modalBackground.on('click', () => {
-          if (!modalAsignatura.hasClass("d-none")) {
-            modalAsignatura.addClass("d-none");
-          }
-          if (!modalActividad.hasClass("d-none")) {
-            modalActividad.addClass("d-none");
-          }
-          if (!modalBackground.hasClass("hidden")) {
-            modalBackground.addClass("hidden");
-          }
-        })
       })();
     </script>
-  </body>
+</body>
 
 </html>
