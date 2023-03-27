@@ -31,7 +31,7 @@ const activitySchema = new Schema({
     type: ObjectId,
     required: false,
     ref: "Subject",
-  },
+  }
 });
 
 const Activity = mongoose.model("Activity", activitySchema);
