@@ -297,9 +297,26 @@ const buildMonthCalendar = require('../../src/routes/buildMonthCalendar') ;
 
 
 
-//Prueba unitaria  para la clase de la HU Mostrar calendario
+//Prueba unitaria  para la clase de la clase
 //Options :parametros para crear calendario para el mes de diciembre del año 2000
 //respuesta: calendario para el mes de diciembre del año 2000 
 test("calendario para el mes de diciembre del año 2000 ", () => { 
-  expect(buildMonthCalendar(options)).toStrictEqual(respuesta)
+  expect(buildMonthCalendar.buildMonthCalendar(options)).toStrictEqual(
+    respuesta
+  )
  })
+
+
+test('bild day año 2000  de diciembre y dia 17 es vacio', () => {
+  expect(
+    buildMonthCalendar.buildDayCalendar({
+      activities: [],
+      year: 2000,
+      month: 12,
+      day: 7,
+      subjects: [],
+    })
+  ).toStrictEqual([])
+})
+
+
