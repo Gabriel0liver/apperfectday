@@ -253,4 +253,8 @@ function buildDayCalendar(options) {
   });
 }
 
-module.exports = { buildMonthCalendar, buildDayCalendar };
+module.exports = {
+  buildMonthCalendar,
+  buildDayCalendar,
+  groupActivitiesAndSubjects,
+}
