@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Subject = require('../models/subject')
+const { loginRequired } = require("../controllers/auth");
 
 // crear una asignatura
 router.post('/create', loginRequired, (req, res, next) => {
