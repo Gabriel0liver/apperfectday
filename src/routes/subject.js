@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const Subject = require('../models/subject')
+const Subject = require('../models/subject');
+const Activity = require('../models/activity');
 const { loginRequired } = require("../controllers/auth");
 
 // crear una asignatura
@@ -35,10 +36,13 @@ router.post('/:asignaturaId/remove', loginRequired, (req, res, next) => {
     Subject.findById(req.params.asignaturaId)
         .then((asignatura)=>{
             if(asignatura.user == req.session.user._id){
-                Subject.findByIdAndRemove(req.params.asignaturaId)
+                Activity.deleteMany({subject: asignatura._id})
+                .then(()=>{
+                    Subject.findByIdAndRemove(req.params.asignaturaId)
                     .then(()=>{
                         res.redirect('/');
                     })
+                })
             }else{
                 res.redirect('/');
             }
