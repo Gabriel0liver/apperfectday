@@ -12,7 +12,7 @@ router.post('/create', loginRequired, (req, res, next) => {
         horario, 
         creditos, 
         color,
-        user: req.session.user._id
+        user: req.session.userId
     }).then(()=>{
         res.redirect("/");
     })

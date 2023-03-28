@@ -4,7 +4,7 @@ require('dotenv').config();
 const mongoose = require('mongoose');
 const Subject = require('../src/models/subject');
 const { DateTime } = require("luxon");
-
+const ObjectId = mongoose.Types.ObjectId;
 
 mongoose.connect(process.env.MONGODB_URI, {
   keepAlive: true,
@@ -14,6 +14,7 @@ mongoose.connect(process.env.MONGODB_URI, {
 
 const subjects = [
     {
+        user: new ObjectId('6421d1c2fdc3c230e34fa1a1'),
         titulo: "Asignatura 1",
         color: "red",
         creditos: 6,

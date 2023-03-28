@@ -11,7 +11,7 @@ router.post('/create', (req, res, next) => {
       description,
       comment,
       imageUrl,
-      owner: req.session.currentUser._id
+      owner: req.session.userId
     })
   });
   

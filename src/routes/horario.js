@@ -2,8 +2,11 @@ const express = require("express");
 const router = express.Router();
 const Activity = require('../models/activity')
 const Subject = require('../models/subject')
+const User = require('../models/User')
 const { loginRequired } = require("../controllers/auth");
 const { DateTime } = require("luxon");
+const mongoose = require('mongoose');
+const ObjectId = mongoose.Types.ObjectId;
 
 Date.prototype.addDays = function(days) {
     var date = new Date(this.valueOf());
@@ -13,32 +16,36 @@ Date.prototype.addDays = function(days) {
 
 Date.prototype.addHours = function(hours) {
     var date = new Date(this.valueOf());
-    date.setDate(date.getHours() + hours);
+    date.setHours(date.getHours() + hours);
     return date;
 }
 
 router.post('/create/:year/:month/:day', loginRequired , async (req, res, next) => {
-    const user = await User.findById(session["userId"]);
+    const user = await User.findById(req.session.userId);
     const subjectsList = await Subject.find({ user });// habria que ordenar por creditos
     const activitiesList = await Activity.find({ user });
 
+    const { params }  = req;
     const paramMonth = params.month;
     const paramYear= params.year;
     const paramDay = params.day;
     let horario = user.horario_libre;
-    let diasbloques;
+    let diasbloques = [[],[],[],[],[],[],[]];
 
     let monday = DateTime.now().set({ year: paramYear, month: paramMonth, day: paramDay});
+
 
     //adaptar el horario al de esa semana
     for(i in horario){
         let dia = monday.plus({days: i}).toJSDate();
-        let hourinicio = horario[i].inicio.getHours();
-        let minuteinicio = horario[i].inicio.getminutes();
-        let hourfin = horario[i].fin.getHours();
-        let minutefin= horario[i].fin.getminutes();
-        horario[i].inicio = dia.setHours(hourinicio).setMinutes(minuteinicio);
-        horario[i].fin = dia.setHours(hourfin).setMinutes(minutefin);
+        let hourinicio = horario[i].inicio.getHours()-2;
+        let minuteinicio = horario[i].inicio.getMinutes();
+        let hourfin = horario[i].fin.getHours()-2;
+        let minutefin= horario[i].fin.getMinutes();
+        horario[i].inicio = dia.setHours(hourinicio);
+        horario[i].inicio =  horario[i].inicio.setMinutes(minuteinicio);
+        horario[i].fin = dia.setHours(hourfin);
+        horario[i].fin =  horario[i].fin.setMinutes(minutefin);
     }
 
 
@@ -59,10 +66,10 @@ router.post('/create/:year/:month/:day', loginRequired , async (req, res, next) 
                 }
             }
         })
-        if(horario[i].inicio < horaio[i].fin){
+        if(horario[i].inicio < horario[i].fin){
             diasbloques[i].push({
                 inicio: horario[i].inicio,
-                fin: horaio[i].fin
+                fin: horario[i].fin
             });
         }
     }
@@ -75,12 +82,12 @@ router.post('/create/:year/:month/:day', loginRequired , async (req, res, next) 
         let dia = 0;
         let cabe = 0;
 
-        while( c >= 0 && cabe < 2){
+        while( c > 0 && cabe < 2){
             
             let listabloques = diasbloques[dia];
 
             let encajao = false;
-            for(let i = 0; i < listabloques.size() && !encajao; i++){//se iteran los bloques del dia en cuestion
+            for(let i = 0; i < listabloques.length && !encajao; i++){//se iteran los bloques del dia en cuestion
                 if(listabloques[i].inicio.addHours(1) <= listabloques[i].fin){//la asignatura cabe en el bloque
                     await Activity.create({ //se crea la asignatura
                         user: user._id,
@@ -103,6 +110,7 @@ router.post('/create/:year/:month/:day', loginRequired , async (req, res, next) 
                 dia++;
             }
         }
+        //añadir response
     })
 });
   
