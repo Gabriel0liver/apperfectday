@@ -49,9 +49,9 @@
             <% let prevYear = month == 1 ? year - 1 : year; let prevMonth =
                 month == 1 ? 12 : month - 1; let nextYear = month == 12 ? year + 1
                 : year; let nextMonth = month == 12 ? 1 : month + 1; %>
-            <!--a href="/calendar/<%= prevYear %>/<%= prevMonth %>">Mes anterior</a-->
+            <a href="/calendar/<%= prevYear %>/<%= prevMonth %>">Mes anterior</a>
             <div><%= monthName %> <%= year %></div>
-            <!--a href="/calendar/<%= nextYear %>/<%= nextMonth %>">Mes posterior</a-->
+            <a href="/calendar/<%= nextYear %>/<%= nextMonth %>">Mes posterior</a>
           </div>
           <% for (let row = 0; row < calendarDays.length / 7; row++) { %>
           <div class="calendar-row">
