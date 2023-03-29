@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { DateTime } = require("luxon");
-const { getMonthName } = require("../common/utils");
+const { getMonthName, getColors } = require("../common/utils");
 const {
   buildMonthCalendar,
   buildDayCalendar,
@@ -72,6 +72,7 @@ router.get("/:year/:month", loginRequired, async (req, res) => {
       year,
       month,
     }),
+    colors: getColors(),
   });
 });
 
@@ -130,6 +131,53 @@ router.get("/:year/:month/:day", loginRequired, async (req, res) => {
       subjects,
     }),
   });
+});
+
+router.post("/createSubject", loginRequired, async (req, res) => {
+  const { body, session } = req;
+  let failed = false;
+  const horario = body.horario.map((h) => {
+    let splitted = h.inicio.split(":");
+    const inicio = DateTime.now().set({
+      hour: Number(splitted[0]),
+      minute: Number(splitted[1]),
+      second: 0,
+      millisecond: 0,
+    });
+    splitted = h.fin.split(":");
+    const fin = DateTime.now().set({
+      hour: Number(splitted[0]),
+      minute: Number(splitted[1]),
+      second: 0,
+      millisecond: 0,
+    });
+    if (fin <= inicio) {
+      failed = true;
+    }
+    return {
+      dia: h.dia,
+      inicio: inicio.toJSDate(),
+      fin: fin.toJSDate(),
+    };
+  });
+  if (failed) {
+    res.status(409).json({});
+    return;
+  }
+  const subject = new Subject({
+    user: session["userId"],
+    titulo: body.nombre,
+    creditos: body.numCreditos,
+    horario,
+    color: "red",
+  });
+  try {
+    await subject.save();
+  } catch (ex) {
+    res.status(409).json({});
+    return;
+  }
+  res.status(200).json({});
 });
 
 module.exports = router;

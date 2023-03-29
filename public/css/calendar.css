@@ -225,7 +225,8 @@ body div.modal-bg section .close-btn {
 }
 
 .app-calendar-month .calendar-row .calendar-day.calendar-day-off {
-  background: #d0d0d0;
+  background: #d0d0d0 !important;
+  box-shadow: none !important;
 }
 
 .app-calendar-month .calendar-row .calendar-day.calendar-day-now {

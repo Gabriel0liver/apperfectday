@@ -44,4 +44,28 @@ module.exports = {
   microtask(callback) {
     Promise.resolve().then(() => callback);
   },
+  getColors() {
+    return [
+      "red",
+      "orange",
+      "yellow",
+      "green",
+      "blue",
+      "indigo",
+      "violet",
+      "cyan",
+      "magenta",
+      "pink",
+      "teal",
+      "navy",
+      "gold",
+      "aqua",
+      "burlywood",
+      "crimson",
+      "forestgreen",
+      "greenyellow",
+      "hotpink",
+      "indianred",
+    ];
+  },
 };

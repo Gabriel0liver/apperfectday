@@ -56,6 +56,7 @@ function mapActivitiesByDate(options) {
   const weekDay = dateTime.weekday;
   if (subjectsByWeekDay[weekDay]) {
     const list = subjectsByWeekDay[weekDay].map((a) => ({
+      id: a.id,
       title: a.titulo,
       from: DateTime.fromJSDate(a.inicio).toFormat("HH:mm"),
       to: DateTime.fromJSDate(a.fin).toFormat("HH:mm"),
@@ -71,6 +72,7 @@ function mapActivitiesByDate(options) {
         ? subjects.find((s) => s._id == a.asignatura)?.color
         : a.color;
       return {
+        id: a.id,
         title: a.titulo,
         from: DateTime.fromJSDate(a.inicio).toFormat("HH:mm"),
         to: DateTime.fromJSDate(a.fin).toFormat("HH:mm"),
@@ -111,8 +113,9 @@ function groupActivitiesAndSubjects(options) {
   // Agrupo las asignaturas por dia de la semana
   /** @type {HorarioAsignaturaYTituloYColor[]} */
   let subjectsList = [];
-  subjects.forEach(({ titulo, horario, color }) => {
+  subjects.forEach(({ titulo, horario, color, _id }) => {
     const list = horario.map(({ dia, fin, inicio }) => ({
+      id: _id,
       titulo,
       dia,
       fin,
@@ -257,4 +260,4 @@ module.exports = {
   buildMonthCalendar,
   buildDayCalendar,
   groupActivitiesAndSubjects,
-}
+};

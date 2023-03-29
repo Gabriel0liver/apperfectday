@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
   <meta charset="UTF-8" />
@@ -20,7 +20,7 @@
       <button type="button" class="btn btn-primary" id="btnAsignatura">
         Añadir Asignatura
       </button>
-      <button type="button" class="btn btn-primary" id="btnActividad">
+      <button style="display: none;" type="button" class="btn btn-primary" id="btnActividad">
         Añadir Actividad
       </button>
     </div>
@@ -32,16 +32,18 @@
             <% let prevYear = month == 1 ? year - 1 : year; let prevMonth =
                 month == 1 ? 12 : month - 1; let nextYear = month == 12 ? year + 1
                 : year; let nextMonth = month == 12 ? 1 : month + 1; %>
-            <!--a href="/calendar/<%= prevYear %>/<%= prevMonth %>">Mes anterior</a-->
             <div><%= monthName %> <%= year %></div>
-            <!--a href="/calendar/<%= nextYear %>/<%= nextMonth %>">Mes posterior</a-->
+            <div>
+              <a href="/calendar/<%= prevYear %>/<%= prevMonth %>">Mes anterior</a>
+              <a href="/calendar/<%= nextYear %>/<%= nextMonth %>">Mes posterior</a>
+            </div>
           </div>
           <% for (let row = 0; row < calendarDays.length / 7; row++) { %>
           <div class="calendar-row">
             <% for (let col = 0; col < 7; col++) { %> <% let i = row * 7 +
-                col; let classes = ["calendar-day"]; if
+                col; let classes = ["calendar-day"]; if (calendarDays[i].isToday) { classes.push("calendar-day-now");
+              } if
                 (!calendarDays[i].isThisMonth) { classes.push("calendar-day-off");
-                } if (calendarDays[i].isToday) { classes.push("calendar-day-now");
                 } %>
             <!-- a href="/calendar/<%= calendarDays[i].year %>/<%= calendarDays[i].month %>/<%= calendarDays[i].day %>"-->
             <div class="<%= classes.join(' ') %>" data-year="<%= calendarDays[i].year %>" data-month="<%= calendarDays[i].month %>" data-day="<%= calendarDays[i].day %>">
@@ -86,7 +88,7 @@
           <form style="margin-right: 10%; margin-left: 10%">
             <div class="form-group mt-2">
               <label for="nombreAsignatura">Nombre Asignatura</label>
-              <input type="text" class="form-control" id="nombreAsignatura" placeholder="mates, fisica ..." />
+              <input type="text" class="form-control" id="nombreAsignatura" placeholder="mates, fisica ..." required />
             </div>
             <div class="form-group mt-1">
               <label for="numCreditos">Numero de Creditos</label>
@@ -97,17 +99,32 @@
                 <option>12</option>
               </select>
             </div>
-            <div class="form-group mt-1">
-              <label for="fechaAsignatura">fecha</label>
-              <input type="date" class="form-control" id="fechaAsignatura" />
+            <div id="horarioAsignatura">
+              <div class="d-flex">
+                <div class="form-group mt-1 me-2">
+                  <label for="diaSemanaAsignatura0">Fecha</label>
+                  <select class="form-control" id="diaSemanaAsignatura0">
+                    <option value="1">Lunes</option>
+                    <option value="2">Martes</option>
+                    <option value="3">Míércoles</option>
+                    <option value="4">Jueves</option>
+                    <option value="5">Viernes</option>
+                    <option value="6">Sabado</option>
+                    <option value="7">Domingo</option>
+                  </select>
+                </div>
+                <div class="form-group mt-1 me-2">
+                  <label for="horaInicioAsignatura0">Hora inicio</label>
+                  <input type="time" class="form-control" id="horaInicioAsignatura0" required value="00:00" />
+                </div>
+                <div class="form-group mt-1">
+                  <label for="horaFinAsignatura0">Hora Fin</label>
+                  <input type="time" class="form-control" id="horaFinAsignatura0" required value="00:00" />
+                </div>
+              </div>
             </div>
-            <div class="form-group mt-1">
-              <label for="horaInicioAsignatura">Hora inicio</label>
-              <input type="time" class="form-control" id="horaInicioAsignatura" />
-            </div>
-            <div class="form-group mt-1">
-              <label for="horaFinAsignatura">Hora Fin</label>
-              <input type="time" class="form-control" id="horaFinAsignatura" />
+            <div class="py-3">
+              <button id="addHorarioAsignatura" class="btn btn-secondary" type="button">Añadir nueva hora</button>
             </div>
             <div class="row text-center mt-2 mb-1">
               <div class="col">
@@ -116,11 +133,12 @@
                 </button>
               </div>
               <div class="col">
-                <button type="button" class="btn btn-primary btnModal">
+                <button type="button" class="btn btn-primary btnModal" id="btnAddAsignatura">
                   Guardar
                 </button>
               </div>
             </div>
+            <div id="errorAsignatura" class=""></div>
           </form>
         </div>
       </section>
@@ -156,7 +174,7 @@
                 </button>
               </div>
               <div class="col">
-                <button type="button" class="btn btn-primary btnModal">
+                <button type="button" class="btn btn-primary btnModal" id="btnAddActividad">
                   Guardar
                 </button>
               </div>
@@ -217,6 +235,81 @@
             modalBackground.addClass("hidden");
           }
         })
+      })();
+    </script>
+    <script>
+      (() => {
+        let addHorarioCont = 1;
+
+        $("#addHorarioAsignatura").on("click", (ev) => {
+          const horarioAsignaturaPlantilla = $(`
+          <div class="d-flex">
+            <div class="form-group mt-1 me-2">
+              <label for="diaSemanaAsignatura${addHorarioCont}">Fecha</label>
+              <select class="form-control" id="diaSemanaAsignatura${addHorarioCont}">
+                <option value="1">Lunes</option>
+                <option value="2">Martes</option>
+                <option value="3">Míércoles</option>
+                <option value="4">Jueves</option>
+                <option value="5">Viernes</option>
+                <option value="6">Sabado</option>
+                <option value="7">Domingo</option>
+              </select>
+            </div>
+            <div class="form-group mt-1 me-2">
+              <label for="horaInicioAsignatura${addHorarioCont}">Hora inicio</label>
+              <input type="time" class="form-control" id="horaInicioAsignatura${addHorarioCont}" required value="00:00" />
+            </div>
+            <div class="form-group mt-1">
+              <label for="horaFinAsignatura${addHorarioCont}">Hora Fin</label>
+              <input type="time" class="form-control" id="horaFinAsignatura${addHorarioCont}" required value="00:00" />
+            </div>
+          </div>`);
+          addHorarioCont++;
+          $("#horarioAsignatura").append(horarioAsignaturaPlantilla);
+        });
+
+        let addActivityRunning = false;
+        $("#btnAddAsignatura").on("click", (ev) => {
+          if (addActivityRunning) return;
+          addActivityRunning = true;
+          const nombre = $("#nombreAsignatura").val();
+          const numCreditos = Number($("#numCreditos option:selected").text());
+          const horario = [];
+          $("#horarioAsignatura").children().each((i) => {
+            horario.push({
+              dia: Number($(`#diaSemanaAsignatura${i} option:selected`).val()),
+              inicio: $(`#horaInicioAsignatura${i}`).val(),
+              fin: $(`#horaFinAsignatura${i}`).val(),
+            });
+          });
+          fetch(new URL("/calendar/createSubject", window.location.origin), {
+            method: 'post',
+            body: JSON.stringify({
+              nombre,
+              numCreditos,
+              horario,
+            }),
+            headers: {
+              "content-type": "application/json"
+            }
+          }).then((res) => {
+            if (res.status >= 400) {
+              // TODO error
+              console.error("FALLO!!!!");
+              $("#errorAsignatura").text("Ocurrió un error al crear la asignatura");
+            } else {
+              // TODO exito
+              console.log("EXITOOOO!!!!");
+              window.location.reload();
+            }
+            addActivityRunning = false;
+          }).catch((err) => {
+            console.log(err);
+            $("#errorAsignatura").text("Ocurrió un error al crear la asignatura");
+            addActivityRunning = false;
+          });
+        });
       })();
     </script>
 </body>

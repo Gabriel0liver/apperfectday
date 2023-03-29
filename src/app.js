@@ -3,6 +3,7 @@
 const path = require("path");
 const express = require("express");
 const perfilRouter = require("./routes/perfil");
+const activityRouter = require("./routes/activity");
 const horarioRouter = require("./routes/horario");
 const calendarRouter = require("./routes/calendar");
 const subjectRouter = require("./routes/subject");
@@ -76,6 +77,7 @@ const MongoStore = require("connect-mongo");
     app.use("/subject", subjectRouter);
     app.use("/horario", horarioRouter);
     app.use("/perfil", perfilRouter);
+    app.use("/activity", activityRouter);
 
     const port =
       env == "production" ? process.env.PORT : nconf.get("server:port");

@@ -14,26 +14,14 @@
    * @param {string} to
    * @param {string} color
    */
-  function createDayCalendarActivity(title, from, to, color) {
-    const activityDiv = $("<div>");
-    activityDiv.addClass("calendar-activity");
-    const activityColorDiv = $("<div>");
-    activityColorDiv.addClass("calendar-activity-color", `background-${color}`);
-    const activityTitleDiv = $("<div>");
-    activityTitleDiv.addClass("calendar-activity-title");
-    activityTitleDiv.text(title);
-    const activityFromDiv = $("<div>");
-    activityFromDiv.addClass("calendar-activity-from");
-    activityFromDiv.text(from);
-    const activityToDiv = $("<div>");
-    activityToDiv.addClass("calendar-activity-to");
-    activityToDiv.text(to);
-    activityDiv.append(
-      activityColorDiv,
-      activityTitleDiv,
-      activityFromDiv,
-      activityToDiv
-    );
+  function createDayCalendarActivity(id, title, from, to, color) {
+    const activityDiv = $(`
+    <div class="calendar-activity">
+      <div class="calendar-activity-color background-${color}"></div>
+      <div class="calendar-activity-title"><a class="text-reset text-decoration-none" href="/activity/${id}">${title}</a></div>
+      <div class="calendar-activity-from">${from}</div>
+      <div class="calendar-activity-to">${to}</div>
+    </div>`);
     return activityDiv;
   }
 
@@ -76,7 +64,7 @@
         if (activities.length != 0) {
           activitiesDiv.append(
             ...activities.map((a) =>
-              createDayCalendarActivity(a.title, a.from, a.to, a.color)
+              createDayCalendarActivity(a.id, a.title, a.from, a.to, a.color)
             )
           );
         } else {
