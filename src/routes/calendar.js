@@ -12,30 +12,28 @@ const { loginRequired } = require("../controllers/auth");
 const User = require("../models/User");
 
 router.get("/", loginRequired, (req, res) => {
-  const now = new Date();
-  let year = now.getFullYear(),
-    month = now.getMonth() + 1;
+  const now = DateTime.now();
+  let year = now.year,
+    month = now.month;
   res.redirect(`/calendar/${year}/${month}`);
 });
 
 router.get("/:year", loginRequired, (req, res) => {
-  const { params, session } = req;
+  const { params } = req;
   const paramYear = params["year"];
   let year, month;
-  if (paramYear) {
-    const n = Number(paramYear);
-    if (!isNaN(n) && n >= 1970 && n <= 3000) {
-      year = n;
-    }
+  const n = Number(paramYear);
+  if (!isNaN(n) && n >= 1970 && n <= 3000) {
+    year = n;
   }
   if (year) {
     month = 1;
     res.redirect(`/calendar/${year}/${month}`);
     return;
   }
-  const now = new Date();
-  year = now.getFullYear();
-  month = now.getMonth() + 1;
+  const now = DateTime.now();
+  year = now.year;
+  month = now.month;
   res.redirect(`/calendar/${year}/${month}`);
 });
 
@@ -54,16 +52,16 @@ router.get("/:year/:month", loginRequired, async (req, res) => {
     month = n;
   }
   if (!year || !month) {
-    const now = new Date();
-    year = now.getFullYear();
-    month = now.getMonth() + 1;
+    const now = DateTime.now();
+    year = now.year;
+    month = now.month;
     res.redirect(`/calendar/${year}/${month}`);
     return;
   }
   const user = await User.findById(session["userId"]);
   const activities = await Activity.find({ user });
   const subjects = await Subject.find({ user });
-  res.render("calendar/calendar", {
+  res.render("calendar", {
     user,
     year,
     month,

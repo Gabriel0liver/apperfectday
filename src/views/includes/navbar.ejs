@@ -1,0 +1,14 @@
+<nav>
+  <div class="d-flex justify-content-around align-items-center py-3">
+    <form method="post" action="/logout">
+      <button type="submit" class="btn btn-primary">
+        Cerrar sesión
+      </button>
+    </form>
+    <h1><a href="/calendar" class="text-reset text-decoration-none">APPERFECTDAY</a></h1>
+    <div class="d-flex align-items-center">
+      <img src="/img/noUser.png" alt="" style="width: 3rem; height: 3rem; margin-right: 1rem; border-radius: 50%;" />
+      <h3><a href="/perfil" class="text-reset text-decoration-none"><%= user.name %></a></h3>
+    </div>
+  </div>
+</nav>

@@ -2,6 +2,7 @@
 
 const path = require("path");
 const express = require("express");
+const perfilRouter = require("./routes/perfil");
 const horarioRouter = require("./routes/horario");
 const calendarRouter = require("./routes/calendar");
 const subjectRouter = require("./routes/subject");
@@ -65,7 +66,7 @@ const MongoStore = require("connect-mongo");
         store: MongoStore.create({
           mongoUrl: process.env.MONGODB_URI,
           ttl: 14 * 24 * 60 * 60, // Session will expire in 14 days
-          dbName: "apperfectday"
+          dbName: "apperfectday",
         }),
       })
     );
@@ -74,6 +75,7 @@ const MongoStore = require("connect-mongo");
     app.use("/calendar", calendarRouter);
     app.use("/subject", subjectRouter);
     app.use("/horario", horarioRouter);
+    app.use("/perfil", perfilRouter);
 
     const port =
       env == "production" ? process.env.PORT : nconf.get("server:port");
