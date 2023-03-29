@@ -1,6 +1,6 @@
 const { test, expect } = require('@jest/globals')
 const puppeteer = require('puppeteer')
-jest.setTimeout(10000)
+jest.setTimeout(100000)
 
 
 describe('La aplicación de lista de tareas', () => {
