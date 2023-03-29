@@ -92,4 +92,4 @@ router.post("/:asignaturaId/remove", loginRequired, (req, res, next) => {
   });
 });
 
-module.exports = router;
+module.exports = {router};
