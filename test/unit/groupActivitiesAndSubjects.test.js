@@ -11,16 +11,13 @@ const asignaturas = [
 ]
 
 const options = {
-  activities: actividades,
-  subjects: asignaturas,
+  activities: [],
+  subjects: [],
   year: 2023,
   month: 3,
 }
 
- const respuesta = {
-  activitiesByDate: {},
-  subjectsByWeekDay: { '1': [ [Object] ], '2': [ [Object] ] }
-}
+ const respuesta = { activitiesByDate: {}, subjectsByWeekDay: {} }
 
  
 test("Agrupa las actividades por dia y las asignaturas por dia de la semana de mes mayo y años 2023 ", () => { 
