@@ -22,11 +22,11 @@ const UserSchema = new Schema({
   horario_libre: [
     {
       inicio: {
-        type: String,
+        type: Date,
         required: true,
       },
       fin: {
-        type: String,
+        type: Date,
         required: true,
       },
     },
