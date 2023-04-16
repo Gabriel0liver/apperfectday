@@ -19,19 +19,19 @@ const UserSchema = new Schema({
     type: String,
     required: true,
   },
-  horario_libre:[
+  horario_libre: [
     {
       inicio: {
-        type: Date,
+        type: String,
         required: true,
       },
       fin: {
-        type: Date,
+        type: String,
         required: true,
       },
     },
-  ]
-});
+  ],
+})
 
 const User = mongoose.model("User", UserSchema);
 

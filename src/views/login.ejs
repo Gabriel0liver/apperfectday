@@ -8,25 +8,209 @@
     <link rel="stylesheet" href="/css/login.css" />
   </head>
   <body>
-   
-   <p id="Error"><%=message%></p>
-   
+    <p id="Error"><%=message%></p>
+
     <div class="container" id="container">
-     
       <div class="form-container sign-up-container">
-        <form method="post" action="/register">
+        <form>
           <h1>Crear Cuenta</h1>
-          <input type="text" placeholder="Name" class="space" name="name" required/>
-          <input type="email" placeholder="Email" name="email" required/>
-          <input type="password" placeholder="Password" name="password" required/>
-          <button type="submit" class="space">Crear</button>
+          <div class="scroll">
+            <input
+              type="text"
+              placeholder="Name"
+              class="space"
+              name="name"
+              required
+              id="name"
+            />
+            <input
+              type="email"
+              placeholder="Email"
+              name="email"
+              required
+              id="email"
+            />
+            <input
+              type="password"
+              placeholder="Password"
+              name="password"
+              required
+              id="password"
+            />
+            <strong>Horario libre</strong>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>Desde</th>
+                  <th>Hasta</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Lunes</td>
+                  <td>
+                    <input
+                      class="me-3"
+                      type="time"
+                      name="horario_libre[0].inicio"
+                      required
+                      id="lunesini"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="time"
+                      name="horario_libre[0].fin"
+                      required
+                      id="lunesfin"
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td>Martes</td>
+                  <td>
+                    <input
+                      class="me-3"
+                      type="time"
+                      name="horario_libre[1].inicio"
+                      required
+                      id="martesini"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="time"
+                      name="horario_libre[1].fin"
+                      required
+                      id="martesfini"
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td>Miércoles</td>
+                  <td>
+                    <input
+                      class="me-3"
+                      type="time"
+                      name="horario_libre[2].inicio"
+                      required
+                      id="miercolesini"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="time"
+                      name="horario_libre[2].fin"
+                      required
+                      id="miercolesfini"
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td>Jueves</td>
+                  <td>
+                    <input
+                      class="me-3"
+                      type="time"
+                      name="horario_libre[3].inicio"
+                      required
+                      id="juevesini"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="time"
+                      name="horario_libre[3].fin"
+                      required
+                      id="juevesfini"
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td>Viernes</td>
+                  <td>
+                    <input
+                      class="me-3"
+                      type="time"
+                      name="horario_libre[4].inicio"
+                      required
+                      id="viernesini"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="time"
+                      name="horario_libre[4].fin"
+                      required
+                      id="viernesfini"
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td>Sabado</td>
+                  <td>
+                    <input
+                      class="me-3"
+                      type="time"
+                      name="horario_libre[5].inicio"
+                      required
+                      id="sabadoini"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="time"
+                      name="horario_libre[5].fin"
+                      required
+                      id="sabadofini"
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td>Domingo</td>
+                  <td>
+                    <input
+                      class="me-3"
+                      type="time"
+                      name="horario_libre[6].inicio"
+                      required
+                      id="domingoini"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="time"
+                      name="horario_libre[6].fin"
+                      required
+                      id="domingofini"
+                    />
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <button type="submit" class="space" onclick="submitForm()">
+            Crear
+          </button>
         </form>
       </div>
       <div class="form-container sign-in-container">
         <form method="post" action="/login">
           <h1>Inicio Session</h1>
-          <input type="email" placeholder="Email" class="space" name="email" required/>
-          <input type="password" placeholder="Password" name="password" required/>
+          <input
+            type="email"
+            placeholder="Email"
+            class="space"
+            name="email"
+            required
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            name="password"
+            required
+          />
           <button type="submit" class="space">Inicio</button>
         </form>
       </div>
@@ -34,7 +218,7 @@
         <div class="overlay">
           <div class="overlay-panel overlay-left">
             <h1>Vuelve para iniciar tu session</h1>
-            
+
             <button class="ghost space" id="signIn">Volver</button>
           </div>
           <div class="overlay-panel overlay-right">
@@ -56,6 +240,85 @@
       signInButton.addEventListener('click', () => {
         container.classList.remove('right-panel-active')
       })
+      
+
+      function submitForm() {
+        const name = document.getElementById('name').value
+        const email = document.getElementById('email').value
+        const password = document.getElementById('password').value
+        const lunesini = document.getElementById('lunesini').value
+        const lunesfin = document.getElementById('lunesfin').value
+        const martesini = document.getElementById('martesini').value
+        const martesfini = document.getElementById('martesfini').value
+        const miercolesini = document.getElementById('miercolesini').value
+        const miercolesfini = document.getElementById('miercolesfini').value
+        const juevesini = document.getElementById('juevesini').value
+        const juevesfini = document.getElementById('juevesfini').value
+        const viernesini = document.getElementById('viernesini').value
+        const viernesfini = document.getElementById('viernesfini').value
+        const sabadoini = document.getElementById('sabadoini').value
+        const sabadofini = document.getElementById('sabadofini').value
+        const domingoini = document.getElementById('domingoini').value
+        const domingofini = document.getElementById('domingofini').value
+        
+        const horario_libre = [
+          {
+            inicio: lunesini,
+            fin: lunesfin,
+          },
+          {
+            inicio: martesini,
+            fin: martesfini,
+          },
+          {
+            inicio: miercolesini,
+            fin: miercolesfini,
+          },
+          {
+            inicio: juevesini,
+            fin: juevesfini,
+          },
+          {
+            inicio: viernesini,
+            fin: viernesfini,
+          },
+          {
+            inicio: sabadoini,
+            fin: sabadofini,
+          },
+          {
+            inicio: domingoini,
+            fin: domingofini,
+          },
+        ]
+
+        const data = { name, email, password, horario_libre }
+
+        fetch('/register', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(
+            {
+              name: name,
+              email: email,
+              password: password,
+              horario_libre: horario_libre
+            }
+          ),
+        })
+          .then((response) => {
+            console.log('Respuesta del servidor:', response)
+            // hacer algo con la respuesta del servidor, como mostrar un mensaje de confirmación
+          })
+          .catch((error) => {
+            console.error('Error al enviar el formulario:', error)
+          })
+        console.log(horario_libre);
+        console.log(data)
+        console.log(JSON.stringify(data))
+      }
     </script>
   </body>
 </html>
