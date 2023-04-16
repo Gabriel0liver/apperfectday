@@ -16,27 +16,23 @@
   <div class="container-flex">
     <!--NavBar-->
     <%- include('includes/navbar', { user: user }); %>
-    <div class="calendar-actions">
-      <button type="button" class="btn btn-primary" id="btnAsignatura">
-        Añadir Asignatura
-      </button>
-      <button style="display: none;" type="button" class="btn btn-primary" id="btnActividad">
-        Añadir Actividad
-      </button>
-    </div>
+    
     <div class="row p-0 m-0">
       <!--Parte Izquierda-->
       <div class="col p-0 m-0">
         <div class="app-calendar-month">
-          <div class="calendar-panel">
+          <div class="calendar-panel row">
             <% let prevYear = month == 1 ? year - 1 : year; let prevMonth =
                 month == 1 ? 12 : month - 1; let nextYear = month == 12 ? year + 1
                 : year; let nextMonth = month == 12 ? 1 : month + 1; %>
-            <div><%= monthName %> <%= year %></div>
-            <div>
-              <a href="/calendar/<%= prevYear %>/<%= prevMonth %>">Mes anterior</a>
-              <a href="/calendar/<%= nextYear %>/<%= nextMonth %>">Mes posterior</a>
-            </div>
+            
+            <div class="col-4"></div>
+            <div class="col-1"><a  href="/calendar/<%= prevYear %>/<%= prevMonth %>">Mes anterior</a></div>
+             <div class="col-1"><div><%= monthName %> <%= year %></div></div> 
+              <div class="col-1"><a href="/calendar/<%= nextYear %>/<%= nextMonth %>">Mes posterior</a></div>
+            <div class="col-4"></div>
+              
+            
           </div>
           <% for (let row = 0; row < calendarDays.length / 7; row++) { %>
           <div class="calendar-row">
@@ -75,6 +71,14 @@
           <% } %>
         </div>
       </div>
+    </div>
+    <div class="calendar-actions">
+      <button type="button" class="btn btn-primary" id="btnAsignatura">
+        Añadir Asignatura
+      </button>
+      <button style="display: none;" type="button" class="btn btn-primary" id="btnActividad">
+        Añadir Actividad
+      </button>
     </div>
     <div class="modal-bg expand hidden">
       <!--lo que parece al pulsar Añadir asignatura-->
