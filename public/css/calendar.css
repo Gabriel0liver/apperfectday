@@ -317,3 +317,20 @@ body div.modal-bg section .close-btn {
 }
 
 /* MODALS AÑADIR ASIGNATURA Y AÑADIR ACTIVIDAD */
+
+.color-blocks-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  margin: 0.5rem 0.5rem 0;
+}
+
+.color-block {
+  display: inline-flex;
+  width: 1rem;
+  height: 1rem;
+  border: solid 1px black;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}

@@ -88,7 +88,7 @@
       <button type="button" class="btn btn-primary" id="btnAsignatura">
         Añadir Asignatura
       </button>
-      <button style="display: none;" type="button" class="btn btn-primary" id="btnActividad">
+      <button type="button" class="btn btn-primary" id="btnActividad">
         Añadir Actividad
       </button>
     </div>
@@ -159,6 +159,7 @@
               </div>
             </div>
             <div id="errorAsignatura" class=""></div>
+            <div id="exitoAsignatura" class=""></div>
           </form>
         </div>
       </section>
@@ -187,6 +188,31 @@
               <label for="horaFinActividad">Hora Fin</label>
               <input type="time" class="form-control" id="horaFinActividad" />
             </div>
+            <div class="form-group mt-1">
+              <label for="colorActividad">Color</label>
+              <select class="form-control">
+                <option value="red">Red</option>
+                <option value="orange">Orange</option>
+                <option value="yellow">Yellow</option>
+                <option value="green">Green</option>
+                <option value="blue">Blue</option>
+                <option value="indigo">Indigo</option>
+                <option value="violet">Violet</option>
+                <option value="cyan">Cyan</option>
+                <option value="magenta">Magenta</option>
+                <option value="pink">Pink</option>
+                <option value="teal">Teal</option>
+                <option value="navy">Navy</option>
+                <option value="gold">Gold</option>
+                <option value="aqua">Aqua</option>
+                <option value="burlywood">Burlywood</option>
+                <option value="crimson">Crimson</option>
+                <option value="forestgreen">Forest Green</option>
+                <option value="greenyellow">Green Yellow</option>
+                <option value="hotpink">Hot Pink</option>
+                <option value="indianred">Indian Red</option>
+              </select>
+            </div>
             <div class="row text-center mt-2 mb-1">
               <div class="col">
                 <button type="button" class="btn btn-primary btnModal" id="btncerrarModalActividad">
@@ -199,6 +225,8 @@
                 </button>
               </div>
             </div>
+            <div id="errorActividad" class=""></div>
+            <div id="exitoActividad" class=""></div>
           </form>
         </div>
       </section>
@@ -289,10 +317,10 @@
           $("#horarioAsignatura").append(horarioAsignaturaPlantilla);
         });
 
-        let addActivityRunning = false;
+        let addSubjectRunning = false;
         $("#btnAddAsignatura").on("click", (ev) => {
-          if (addActivityRunning) return;
-          addActivityRunning = true;
+          if (addSubjectRunning) return;
+          addSubjectRunning = true;
           const nombre = $("#nombreAsignatura").val();
           const numCreditos = Number($("#numCreditos option:selected").text());
           const horario = [];
@@ -321,12 +349,57 @@
             } else {
               // TODO exito
               console.log("EXITOOOO!!!!");
-              window.location.reload();
+              $("#exitoAsignatura").text("Asignatura creada con éxito");
+              setTimeout(() => {
+                window.location.reload();
+              }, 1000);
+            }
+            addSubjectRunning = false;
+          }).catch((err) => {
+            console.log(err);
+            $("#errorAsignatura").text("Ocurrió un error al crear la asignatura");
+            addSubjectRunning = false;
+          });
+        });
+
+        let addActivityRunning = false;
+        $("#btnAddActividad").on("click", (ev) => {
+          if (addActivityRunning) return;
+          addActivityRunning = true;
+          const nombre = $('#nombreActividad').val();
+          const fecha = $('#fechaActividad').val();
+          const horaInicio = $('#horaInicioActividad').val();
+          const horaFin = $('#horaFinActividad').val();
+          const color = $('#colorActividad option:selected').val();
+          fetch(new URL("/calendar/createActivity", window.location.origin), {
+            method: 'post',
+            body: JSON.stringify({
+              nombre,
+              fecha,
+              horaInicio,
+              horaFin,
+              color,
+            }),
+            headers: {
+              "content-type": "application/json"
+            }
+          }).then((res) => {
+            if (res.status >= 400) {
+              // TODO error
+              console.error("FALLO!!!!");
+              $("#errorActividad").text("Ocurrió un error al crear la actividad");
+            } else {
+              // TODO exito
+              console.log("EXITOOOO!!!!");
+              $("#exitoActividad").text("Actividad creada con éxito");
+              setTimeout(() => {
+                window.location.reload();
+              }, 1000);
             }
             addActivityRunning = false;
           }).catch((err) => {
             console.log(err);
-            $("#errorAsignatura").text("Ocurrió un error al crear la asignatura");
+            $("#errorActividad").text("Ocurrió un error al crear la actividad");
             addActivityRunning = false;
           });
         });

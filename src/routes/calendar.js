@@ -180,4 +180,57 @@ router.post("/createSubject", loginRequired, async (req, res) => {
   res.status(200).json({});
 });
 
+router.post("/createActivity", loginRequired, async (req, res) => {
+  const { body, session } = req;
+  console.log(body);
+  // Validamos parámetro "fecha"
+  const fecha = body.fecha;
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(fecha)) {
+    return res.status(400).json({});
+  }
+  let splitted = fecha.split("-");
+  const date = DateTime.fromObject({
+    year: Number(splitted[0]),
+    month: Number(splitted[1]),
+    day: Number(splitted[2]),
+  });
+  if (!date.isValid) {
+    return res.status(400).json({});
+  }
+  // Validamos parámetro "inicio"
+  const inicio = body.horaInicio;
+  if (!/\d{2}:\d{2}$/.test(inicio)) {
+    return res.status(400).json({});
+  }
+  splitted = inicio.split(":");
+  const dateStart = date.set({
+    hour: Number(splitted[0]),
+    minute: Number(splitted[1]),
+  });
+  // Validamos parámetro "fin"
+  const fin = body.horaFin;
+  if (!/\d{2}:\d{2}$/.test(fin)) {
+    return res.status(400).json({});
+  }
+  splitted = fin.split(":");
+  const dateEnd = date.set({
+    hour: Number(splitted[0]),
+    minute: Number(splitted[1]),
+  });
+  const activity = new Activity({
+    user: session["userId"],
+    titulo: body.nombre,
+    inicio: dateStart.toJSDate(),
+    fin: dateEnd.toJSDate(),
+    color: body.color,
+  });
+  try {
+    await activity.save();
+  } catch (ex) {
+    res.status(409).json({});
+    return;
+  }
+  res.status(200).json({});
+});
+
 module.exports = router;
