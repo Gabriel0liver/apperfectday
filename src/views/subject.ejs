@@ -23,10 +23,10 @@
         <div class="form-group mt-1">
           <label for="numCreditos">Numero de Creditos</label>
           <select class="form-control" id="numCreditos" name="creditos">
-            <option value="4.5">4.5</option>
-            <option value="6">6</option>
-            <option value="9">9</option>
-            <option value="12">12</option>
+            <option <%= asignatura.creditos == 4.5 ? 'selected' : '' %> value="4.5">4.5</option>
+            <option <%= asignatura.creditos == 6 ? 'selected' : '' %> value="6">6</option>
+            <option <%= asignatura.creditos == 9 ? 'selected' : '' %> value="9">9</option>
+            <option <%= asignatura.creditos == 12 ? 'selected' : '' %> value="12">12</option>
           </select>
         </div>
         <button id="btnGuardarAsignatura" type="button" class="btn btn-primary mt-3">Guardar</button>
