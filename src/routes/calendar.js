@@ -172,8 +172,9 @@ router.post("/createSubject", loginRequired, async (req, res) => {
     color: "red",
   });
   try {
-    await subject.save();
+    await Subject.create(subject);
   } catch (ex) {
+    console.log(ex);
     res.status(409).json({});
     return;
   }
