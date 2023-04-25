@@ -52,8 +52,8 @@
                     (calendarDays[i].activities[j].color) {
                     classes.push("background-" +
                     calendarDays[i].activities[j].color); } %>
-                <div class="<%= classes.join(' ') %>">
-                  <span class="calendar-day-activity-title"><%= calendarDays[i].activities[j].title %></span>
+                <div class="<%= classes.join(' ') %>" id="tt" title="asignatura">
+                  <span class="calendar-day-activity-title" ><%= calendarDays[i].activities[j].title %></span>
                   <span class="calendar-day-activity-timerange"><%= calendarDays[i].activities[j].from %> - <%=
                         calendarDays[i].activities[j].to %></span>
                 </div>
@@ -72,28 +72,23 @@
         </div>
       </div>
     </div>
-    <div class="row">
-      
-      <div class="col-6">
-        <div class="card bg-light mb-3" style="max-width: 18rem;">
-  <div class="card-header">Leyenda</div>
-  <div class="card-body">
-    <h5 class="card-title" style="color: red;">Asignatura</h5>
-    <h5 class="card-title" style="color: blue;">Tarea</h5>
-  </div>
-</div>
-      </div>
-      <div class="col-6">
-        <div class="calendar-actions">
+    <div class="row" style="background-color: antiquewhite;">
+      <div class="col-4 text-center"></div>
+        <div class="col-4 text-center">
+        <div class="calendar-actions text-center">
       <button type="button" class="btn btn-primary" id="btnAsignatura">
         Añadir Asignatura
       </button>
-      <button type="button" class="btn btn-primary" id="btnActividad">
+      <button type="button" class="btn btn-primary " style="margin-left: 5em;" id="btnActividad">
         Añadir Actividad
       </button>
     </div>
       </div>
-    </div>
+      </div>
+   
+      
+      
+    
     
     
     <div class="modal-bg expand hidden">
