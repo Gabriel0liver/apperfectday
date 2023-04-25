@@ -1,5 +1,5 @@
-@import "colors.css";
-@import "style.css";
+@import 'colors.css';
+@import 'style.css';
 
 html,
 body {
@@ -291,6 +291,10 @@ body div.modal-bg section .close-btn {
   .calendar-day-activity
   .calendar-day-activity-title {
   font-weight: bold;
+}
+
+#tt:hover {
+  cursor: pointer;
 }
 
 .app-calendar-month
