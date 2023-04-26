@@ -40,11 +40,12 @@ router.post(
     let horario = user.horario_libre;
     let diasbloques = [[], [], [], [], [], [], []];
 
-    let monday = DateTime.now().set({
+    let monday = DateTime.fromObject({
       year: paramYear,
       month: paramMonth,
       day: paramDay,
     });
+    monday = monday.minus({ days: monday.weekday - 1 });
 
     //adaptar el horario al de esa semana
     for (i in horario) {

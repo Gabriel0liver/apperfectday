@@ -10,6 +10,10 @@ const User = require("../models/User");
 router.get("/:asignaturaId", loginRequired, async (req, res) => {
   const user = await User.findById(req.session.userId);
   const asignatura = await Subject.findById(req.params.asignaturaId);
+  if (!asignatura) {
+    res.redirect("/");
+    return;
+  }
   if (asignatura.user == req.session.userId) {
     res.render("subject", {
       user,
@@ -87,7 +91,7 @@ router.post("/:asignaturaId/remove", loginRequired, (req, res, next) => {
         });
       });
     } else {
-      res.redirect("/");
+      res.redirect("/calendar");
     }
   });
 });

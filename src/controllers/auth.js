@@ -1,15 +1,43 @@
 const bcrypt = require("bcrypt");
+const { DateTime } = require("luxon");
 const User = require("../models/User");
 
 exports.register = async (req, res) => {
+  console.log(req.body);
   const userexiste = await User.findOne({ email: req.body.email });
   if (!userexiste) {
     const hashedPassword = await bcrypt.hash(req.body.password, 12);
-    const user = await User.create({ ...req.body, password: hashedPassword, generado:false });
+    req.body.horario_libre = req.body.horario_libre.map((h) => {
+      let splitted = h.inicio.split(":");
+      const start = DateTime.now()
+        .toUTC()
+        .set({
+          hour: Number(splitted[0]),
+          minute: Number(splitted[1]),
+          second: 0,
+          millisecond: 0,
+        });
+      splitted = h.fin.split(":");
+      const end = DateTime.now()
+        .toUTC()
+        .set({
+          hour: Number(splitted[0]),
+          minute: Number(splitted[1]),
+          second: 0,
+          millisecond: 0,
+        });
+      return {
+        inicio: start.toJSDate(),
+        fin: end.toJSDate(),
+      };
+    });
+    const user = await User.create({
+      ...req.body,
+      password: hashedPassword,
+      generado: false,
+    });
     req.session.userId = user.id;
-    return res
-      .status(201)
-      .render("login", { message: "se ha registrado con exito" });
+    return res.status(201).json({});
   }
   return res.status(404).render("login", {
     message: "Error El correo  ya esta asociado a otra cuenta.",
@@ -17,6 +45,10 @@ exports.register = async (req, res) => {
 };
 
 exports.login = async (req, res) => {
+  if (req.session?.userId) {
+    res.redirect("/calendar");
+    return;
+  }
   const user = await User.findOne({ email: req.body.email });
   if (!user) {
     return res

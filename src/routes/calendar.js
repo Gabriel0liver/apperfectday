@@ -136,6 +136,7 @@ router.get("/:year/:month/:day", loginRequired, async (req, res) => {
 router.post("/createSubject", loginRequired, async (req, res) => {
   const { body, session } = req;
   let failed = false;
+  console.log(body);
   const horario = body.horario.map((h) => {
     let splitted = h.inicio.split(":");
     const inicio = DateTime.now().set({
@@ -169,7 +170,7 @@ router.post("/createSubject", loginRequired, async (req, res) => {
     titulo: body.nombre,
     creditos: body.numCreditos,
     horario,
-    color: "primary",
+    color: "red",
   });
   try {
     await Subject.create(subject);
@@ -222,13 +223,12 @@ router.post("/createActivity", loginRequired, async (req, res) => {
     titulo: body.nombre,
     inicio: dateStart.toJSDate(),
     fin: dateEnd.toJSDate(),
-    color: "secondary",
+    color: body.color,
   });
-  console.log(body.color)
   try {
     await Activity.create(activity);
   } catch (ex) {
-    console.log(ex)
+    console.log(ex);
     res.status(409).json({});
     return;
   }

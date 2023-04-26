@@ -1,8 +1,8 @@
 <nav>
-  <div class="d-flex align-items-center p-3 justify-content-between">
+  <div class="d-flex align-items-center p-3 justify-content-between" style="background: #3C486B;color: white;">
     <div>
       <h1 class="text-center">
-        <a href="/calendar" class="text-reset text-decoration-none">APPERFECTDAY</a>
+        <a href="/calendar" style="text-shadow: 1px 2px 2px rgba(0,0,0,0.35);" class="text-reset text-decoration-none">APPERFECTDAY</a>
       </h1>
     </div>
     <div class="d-flex">
@@ -14,7 +14,7 @@
             border-radius: 50%;
           " />
         <h3>
-          <a href="/perfil" class="text-reset text-decoration-none"><%= user.name %></a>
+          <a href="/perfil" style="text-shadow: 1px 2px 2px rgba(0,0,0,0.35);" class="text-reset text-decoration-none"><%= user.name %></a>
         </h3>
       </div>
       <form method="post" action="/logout" class="d-flex align-items-center">

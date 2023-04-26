@@ -9,16 +9,18 @@
     calendarEventsDiv.children(".calendar-loading");
 
   /**
+   * @param {string} id
    * @param {string} title
    * @param {string} from
    * @param {string} to
    * @param {string} color
+   * @param {string} url
    */
-  function createDayCalendarActivity(id, title, from, to, color) {
+  function createDayCalendarActivity(id, title, from, to, color, url) {
     return $(`
     <div class="calendar-activity">
       <div class="calendar-activity-color background-${color}"></div>
-      <div class="calendar-activity-title"><a class="text-reset text-decoration-none" href="/${type}/${id}">${title}</a></div>
+      <div class="calendar-activity-title"><a class="text-reset text-decoration-none" href="${url}">${title}</a></div>
       <div class="calendar-activity-from">${from}</div>
       <div class="calendar-activity-to">${to}</div>
     </div>`);
@@ -52,6 +54,7 @@
         return res.json();
       })
       .then((json) => {
+        console.log(json);
         const panelDiv = appCalendarDayDiv.children(".calendar-panel");
         const dateDiv = panelDiv.children(".calendar-date");
         dateDiv.text(`${day} de ${json["monthName"]} de ${year}`);
@@ -69,7 +72,7 @@
                 a.from,
                 a.to,
                 a.color,
-                a.type
+                a.url
               )
             )
           );
@@ -122,37 +125,37 @@
   enableCalendarDayClick();
 
   panelBGDiv.on("click", closeSidePanel);
+
+  function enableCalendarDayClick() {
+    const daysElements = $(".app-calendar-month .calendar-day");
+
+    if (daysElements.length != 0) {
+      daysElements.each((_, el) => {
+        const o = $(el);
+        if (!o.hasClass("calendar-day-off")) {
+          o.on("click", (ev) => {
+            const div = $(ev.currentTarget);
+            if (!div) return;
+            const year = div.data("year");
+            const month = div.data("month");
+            const day = div.data("day");
+            openSidePanel(year, month, day);
+          });
+        }
+      });
+    }
+  }
+
+  function disableCalendarDayClick() {
+    const daysElements = $(".app-calendar-month .calendar-day");
+
+    if (daysElements.length != 0) {
+      daysElements.each((_, el) => {
+        const o = $(el);
+        if (!o.hasClass("calendar-day-off")) {
+          o.off("click");
+        }
+      });
+    }
+  }
 })();
-
-function enableCalendarDayClick() {
-  const daysElements = $(".app-calendar-month .calendar-day");
-
-  if (daysElements.length != 0) {
-    daysElements.each((_, el) => {
-      const o = $(el);
-      if (!o.hasClass("calendar-day-off")) {
-        o.on("click", (ev) => {
-          const div = $(ev.currentTarget);
-          if (!div) return;
-          const year = div.data("year");
-          const month = div.data("month");
-          const day = div.data("day");
-          openSidePanel(year, month, day);
-        });
-      }
-    });
-  }
-}
-
-function disableCalendarDayClick() {
-  const daysElements = $(".app-calendar-month .calendar-day");
-
-  if (daysElements.length != 0) {
-    daysElements.each((_, el) => {
-      const o = $(el);
-      if (!o.hasClass("calendar-day-off")) {
-        o.off("click");
-      }
-    });
-  }
-}

@@ -36,7 +36,7 @@ const { DateTime } = require("luxon");
  */
 
 /**
- * @typedef {{ title: string; from: string; to: string; color?: string; }} ActividadVista
+ * @typedef {{ title: string; from: string; to: string; color?: string; url: string; }} ActividadVista
  */
 
 /**
@@ -61,7 +61,7 @@ function mapActivitiesByDate(options) {
       from: DateTime.fromJSDate(a.inicio).toFormat("HH:mm"),
       to: DateTime.fromJSDate(a.fin).toFormat("HH:mm"),
       color: a.color,
-      type: "subject"
+      url: "/subject/" + a.id,
     }));
     activities.push(...list);
   }
@@ -78,7 +78,7 @@ function mapActivitiesByDate(options) {
         from: DateTime.fromJSDate(a.inicio).toFormat("HH:mm"),
         to: DateTime.fromJSDate(a.fin).toFormat("HH:mm"),
         color,
-        type: "activity"
+        url: "/activity/" + a.id,
       };
     });
     activities.push(...list.sort((a, b) => a.from.localeCompare(b.from)));
