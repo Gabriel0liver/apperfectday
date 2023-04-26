@@ -183,7 +183,6 @@ router.post("/createSubject", loginRequired, async (req, res) => {
 
 router.post("/createActivity", loginRequired, async (req, res) => {
   const { body, session } = req;
-  console.log(body);
   // Validamos parámetro "fecha"
   const fecha = body.fecha;
   if (!/^\d{4}-\d{2}-\d{2}$/.test(fecha)) {

@@ -5,7 +5,7 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
+
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous" />
   <link rel="stylesheet" href="/css/calendar.css" />
   <title>APPerfectDay</title>
@@ -53,7 +53,7 @@
                     classes.push("background-" +
                     calendarDays[i].activities[j].color); } %>
                 <div class="<%= classes.join(' ') %>" id="tt" title="asignatura">
-                  <span class="calendar-day-activity-title" ><%= calendarDays[i].activities[j].title %></span>
+                  <span class="calendar-day-activity-title"><%= calendarDays[i].activities[j].title %></span>
                   <span class="calendar-day-activity-timerange"><%= calendarDays[i].activities[j].from %> - <%=
                         calendarDays[i].activities[j].to %></span>
                 </div>
@@ -74,228 +74,233 @@
     </div>
     <div class="row">
       <div class="col-4 text-center"></div>
-        <div class="col-4 text-center">
+      <div class="col-4 text-center">
         <div class="calendar-actions text-center">
-      <button type="button" class="btn  btn-primary" id="btnAsignatura">
-        Añadir Asignatura
-      </button>
-      <button type="button" class="btn btn-primary " id="btnActividad">
-        Añadir Actividad
-      </button>
-      <button type="button" class="btn btn-primary" id="btnGenerar">
-        Generar horario
-      </button>
-    </div>
-    <div>
-      
-    </div>
+          <button type="button" class="btn  btn-primary" id="btnAsignatura">
+            Añadir Asignatura
+          </button>
+          <button type="button" class="btn btn-primary " id="btnActividad">
+            Añadir Actividad
+          </button>
+          <button type="button" class="btn btn-primary" id="btnGenerar">
+            Generar horario
+          </button>
+        </div>
+        <div>
+
+        </div>
       </div>
-      </div>
-   
-      
-      
-    
-    
-    
-    <div class="modal-bg expand hidden">
-      <!--lo que parece al pulsar Añadir asignatura-->
-      <section id="modalAsignatura" class="d-none">
-        <button class="close-btn">X</button>
-        <div id="AsignaturaContainer">
-          <div class="row text-center">
-            <h3>Añadir Asignatura</h3>
+    </div>
+  </div>
+
+
+
+
+
+  <div class="modal-bg expand hidden">
+    <!--lo que parece al pulsar Añadir asignatura-->
+    <section id="modalAsignatura" class="d-none">
+      <button class="close-btn">X</button>
+      <div id="AsignaturaContainer">
+        <div class="row text-center">
+          <h3>Añadir Asignatura</h3>
+        </div>
+
+        <form style="margin-right: 10%; margin-left: 10%">
+          <div class="form-group mt-2">
+            <label for="nombreAsignatura">Nombre Asignatura</label>
+            <input type="text" class="form-control" id="nombreAsignatura" placeholder="mates, fisica ..." required />
           </div>
-
-          <form style="margin-right: 10%; margin-left: 10%">
-            <div class="form-group mt-2">
-              <label for="nombreAsignatura">Nombre Asignatura</label>
-              <input type="text" class="form-control" id="nombreAsignatura" placeholder="mates, fisica ..." required />
-            </div>
-            <div class="form-group mt-1">
-              <label for="numCreditos">Numero de Creditos</label>
-              <select class="form-control" id="numCreditos">
-                <option>4.5</option>
-                <option>6</option>
-                <option>9</option>
-                <option>12</option>
-              </select>
-            </div>
-            <div id="horarioAsignatura">
-              <div class="d-flex">
-                <div class="form-group mt-1 me-2">
-                  <label for="diaSemanaAsignatura0">Fecha</label>
-                  <select class="form-control" id="diaSemanaAsignatura0">
-                    <option value="1">Lunes</option>
-                    <option value="2">Martes</option>
-                    <option value="3">Míércoles</option>
-                    <option value="4">Jueves</option>
-                    <option value="5">Viernes</option>
-                    <option value="6">Sabado</option>
-                    <option value="7">Domingo</option>
-                  </select>
-                </div>
-                <div class="form-group mt-1 me-2">
-                  <label for="horaInicioAsignatura0">Hora inicio</label>
-                  <input type="time" class="form-control" id="horaInicioAsignatura0" required value="00:00" />
-                </div>
-                <div class="form-group mt-1">
-                  <label for="horaFinAsignatura0">Hora Fin</label>
-                  <input type="time" class="form-control" id="horaFinAsignatura0" required value="00:00" />
-                </div>
-              </div>
-            </div>
-            <div class="py-3">
-              <button id="addHorarioAsignatura" class="btn btn-secondary" type="button">Añadir nueva hora</button>
-            </div>
-            <div class="row text-center mt-2 mb-1">
-              <div class="col">
-                <button type="button" class="btn btn-primary btnModal" id="btncerrarModalAsignatura">
-                  Cerrar
-                </button>
-              </div>
-              <div class="col">
-                <button type="button" class="btn btn-primary btnModal" id="btnAddAsignatura">
-                  Guardar
-                </button>
-              </div>
-            </div>
-            <div id="errorAsignatura" class=""></div>
-            <div id="exitoAsignatura" class=""></div>
-          </form>
-        </div>
-      </section>
-      <!--lo que parece al pulsar Añadir actividad-->
-      <section id="modalActividad" class="d-none">
-        <button class="close-btn">X</button>
-        <div id="ActividadContainer">
-          <div class="row text-center">
-            <h3>Añadir Actividad</h3>
+          <div class="form-group mt-1">
+            <label for="numCreditos">Numero de Creditos</label>
+            <select class="form-control" id="numCreditos">
+              <option>4.5</option>
+              <option>6</option>
+              <option>9</option>
+              <option>12</option>
+            </select>
           </div>
-
-          <form style="margin-right: 10%; margin-left: 10%">
-            <div class="form-group mt-2">
-              <label for="nombreActividad">Nombre Actividad</label>
-              <input type="text" class="form-control" id="nombreActividad" placeholder="pasear perro, siesta ..." />
-            </div>
-            <div class="form-group mt-1">
-              <label for="fechaActividad">fecha</label>
-              <input type="date" class="form-control" id="fechaActividad" />
-            </div>
-            <div class="form-group mt-1">
-              <label for="horaInicioActividad">Hora inicio</label>
-              <input type="time" class="form-control" id="horaInicioActividad" />
-            </div>
-            <div class="form-group mt-1">
-              <label for="horaFinActividad">Hora Fin</label>
-              <input type="time" class="form-control" id="horaFinActividad" />
-            </div>
-            <div class="form-group mt-1">
-              <label for="colorActividad">Color</label>
-              <select class="form-control">
-                <option value="red">Red</option>
-                <option value="orange">Orange</option>
-                <option value="yellow">Yellow</option>
-                <option value="green">Green</option>
-                <option value="blue">Blue</option>
-                <option value="indigo">Indigo</option>
-                <option value="violet">Violet</option>
-                <option value="cyan">Cyan</option>
-                <option value="magenta">Magenta</option>
-                <option value="pink">Pink</option>
-                <option value="teal">Teal</option>
-                <option value="navy">Navy</option>
-                <option value="gold">Gold</option>
-                <option value="aqua">Aqua</option>
-                <option value="burlywood">Burlywood</option>
-                <option value="crimson">Crimson</option>
-                <option value="forestgreen">Forest Green</option>
-                <option value="greenyellow">Green Yellow</option>
-                <option value="hotpink">Hot Pink</option>
-                <option value="indianred">Indian Red</option>
-              </select>
-            </div>
-            <div class="row text-center mt-2 mb-1">
-              <div class="col">
-                <button type="button" class="btn btn-primary btnModal" id="btncerrarModalActividad">
-                  Cerrar
-                </button>
+          <div id="horarioAsignatura">
+            <div class="d-flex">
+              <div class="form-group mt-1 me-2">
+                <label for="diaSemanaAsignatura0">Fecha</label>
+                <select class="form-control" id="diaSemanaAsignatura0">
+                  <option value="1">Lunes</option>
+                  <option value="2">Martes</option>
+                  <option value="3">Míércoles</option>
+                  <option value="4">Jueves</option>
+                  <option value="5">Viernes</option>
+                  <option value="6">Sabado</option>
+                  <option value="7">Domingo</option>
+                </select>
               </div>
-              <div class="col">
-                <button type="button" class="btn btn-primary btnModal" id="btnAddActividad">
-                  Guardar
-                </button>
+              <div class="form-group mt-1 me-2">
+                <label for="horaInicioAsignatura0">Hora inicio</label>
+                <input type="time" class="form-control" id="horaInicioAsignatura0" required value="00:00" />
+              </div>
+              <div class="form-group mt-1">
+                <label for="horaFinAsignatura0">Hora Fin</label>
+                <input type="time" class="form-control" id="horaFinAsignatura0" required value="00:00" />
               </div>
             </div>
-            <div id="errorActividad" class=""></div>
-            <div id="exitoActividad" class=""></div>
-          </form>
-        </div>
-      </section>
-    </div>
-    <div class="sidepanel">
-      <div class="calendar-events">
-        <img class="calendar-loading" src="/media/loading_spinner.gif" />
-        <div class="calendar-error d-none">
-          <div class="calendar-error-text">Ocurrió un error al cargar las actividades</div>
-          <button>Reintentar</button>
-        </div>
+          </div>
+          <div class="py-3">
+            <button id="addHorarioAsignatura" class="btn btn-secondary" type="button">Añadir nueva hora</button>
+          </div>
+          <div class="row text-center mt-2 mb-1">
+            <div class="col">
+              <button type="button" class="btn btn-primary btnModal" id="btncerrarModalAsignatura">
+                Cerrar
+              </button>
+            </div>
+            <div class="col">
+              <button type="button" class="btn btn-primary btnModal" id="btnAddAsignatura">
+                Guardar
+              </button>
+            </div>
+          </div>
+          <div id="errorAsignatura" class=""></div>
+          <div id="exitoAsignatura" class=""></div>
+        </form>
       </div>
-      <div class="app-calendar-day expand opacity-hidden">
-        <div class="calendar-panel">
-          <div class="calendar-date"></div>
+    </section>
+    <!--lo que parece al pulsar Añadir actividad-->
+    <section id="modalActividad" class="d-none">
+      <button class="close-btn">X</button>
+      <div id="ActividadContainer">
+        <div class="row text-center">
+          <h3>Añadir Actividad</h3>
         </div>
-        <div class="calendar-activities"></div>
+
+        <form style="margin-right: 10%; margin-left: 10%">
+          <div class="form-group mt-2">
+            <label for="nombreActividad">Nombre Actividad</label>
+            <input type="text" class="form-control" id="nombreActividad" placeholder="pasear perro, siesta ..." />
+          </div>
+          <div class="form-group mt-1">
+            <label for="fechaActividad">fecha</label>
+            <input type="date" class="form-control" id="fechaActividad" />
+          </div>
+          <div class="form-group mt-1">
+            <label for="horaInicioActividad">Hora inicio</label>
+            <input type="time" class="form-control" id="horaInicioActividad" />
+          </div>
+          <div class="form-group mt-1">
+            <label for="horaFinActividad">Hora Fin</label>
+            <input type="time" class="form-control" id="horaFinActividad" />
+          </div>
+          <div class="form-group mt-1">
+            <label for="colorActividad">Color</label>
+            <select id="colorActividad" class="form-control">
+              <option value="red">Red</option>
+              <option value="orange">Orange</option>
+              <option value="yellow">Yellow</option>
+              <option value="green">Green</option>
+              <option value="blue">Blue</option>
+              <option value="indigo">Indigo</option>
+              <option value="violet">Violet</option>
+              <option value="cyan">Cyan</option>
+              <option value="magenta">Magenta</option>
+              <option value="pink">Pink</option>
+              <option value="teal">Teal</option>
+              <option value="navy">Navy</option>
+              <option value="gold">Gold</option>
+              <option value="aqua">Aqua</option>
+              <option value="burlywood">Burlywood</option>
+              <option value="crimson">Crimson</option>
+              <option value="forestgreen">Forest Green</option>
+              <option value="greenyellow">Green Yellow</option>
+              <option value="hotpink">Hot Pink</option>
+              <option value="indianred">Indian Red</option>
+            </select>
+          </div>
+          <div class="row text-center mt-2 mb-1">
+            <div class="col">
+              <button type="button" class="btn btn-primary btnModal" id="btncerrarModalActividad">
+                Cerrar
+              </button>
+            </div>
+            <div class="col">
+              <button type="button" class="btn btn-primary btnModal" id="btnAddActividad">
+                Guardar
+              </button>
+            </div>
+          </div>
+          <div id="errorActividad" class=""></div>
+          <div id="exitoActividad" class=""></div>
+        </form>
+      </div>
+    </section>
+
+  </div>
+  <div class="sidepanel">
+    <div class="calendar-events">
+      <img class="calendar-loading" src="/media/loading_spinner.gif" />
+      <div class="calendar-error d-none">
+        <div class="calendar-error-text">Ocurrió un error al cargar las actividades</div>
+        <button>Reintentar</button>
       </div>
     </div>
-    <div class="panel-bg expand hidden"></div>
-    <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
-    <script src="/js/calendar.js"></script>
-    <script>
-      (() => {
-        const modalAsignatura = $('#modalAsignatura');
-        const modalActividad = $('#modalActividad');
-        const modalBackground = $('body div.modal-bg');
+    <div class="app-calendar-day expand opacity-hidden">
+      <div class="calendar-panel">
+        <div class="calendar-date"></div>
+      </div>
+      <div class="calendar-activities"></div>
+    </div>
+  </div>
+  <div class="panel-bg expand hidden"></div>
+  <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+  <script src="/js/calendar.js"></script>
+  <script>
+    (() => {
+      const modalAsignatura = $('#modalAsignatura');
+      const modalActividad = $('#modalActividad');
+      const modalBackground = $('body div.modal-bg');
 
-        //abrir y cerrar modal Asignatura
-        $('#btnAsignatura').on('click', () => {
-          modalAsignatura.removeClass("d-none");
-          modalBackground.removeClass("hidden");
-        })
-        modalAsignatura.children(".close-btn").on('click', () => {
-          if (!modalAsignatura.hasClass("d-none")) {
-            modalAsignatura.addClass("d-none");
-          }
-          if (!modalBackground.hasClass("hidden")) {
-            modalBackground.addClass("hidden");
-          }
-        })
+      //abrir y cerrar modal Asignatura
+      $('#btnAsignatura').on('click', () => {
+        modalAsignatura.removeClass("d-none");
+        modalBackground.removeClass("hidden");
+      })
+      modalAsignatura.children(".close-btn").on('click', () => {
+        if (!modalAsignatura.hasClass("d-none")) {
+          modalAsignatura.addClass("d-none");
+        }
+        if (!modalBackground.hasClass("hidden")) {
+          modalBackground.addClass("hidden");
+        }
+      })
 
-        //abrir y cerrar modal Actividad
-        $('#btnActividad').on('click', () => {
-          modalActividad.removeClass("d-none");
-          modalBackground.removeClass("hidden");
-        })
-        modalActividad.children(".close-btn").on('click', () => {
-          if (!modalActividad.hasClass("d-none")) {
-            modalActividad.addClass("d-none");
-          }
-          if (!modalBackground.hasClass("hidden")) {
-            modalBackground.addClass("hidden");
-          }
-        })
-      })();
-    </script>
-    <script>
-      (() => {
-        let addHorarioCont = 1;
+      //abrir y cerrar modal Actividad
+      $('#btnActividad').on('click', () => {
+        modalActividad.removeClass("d-none");
+        modalBackground.removeClass("hidden");
+      })
+      modalActividad.children(".close-btn").on('click', () => {
+        if (!modalActividad.hasClass("d-none")) {
+          modalActividad.addClass("d-none");
+        }
+        if (!modalBackground.hasClass("hidden")) {
+          modalBackground.addClass("hidden");
+        }
+      })
+    })();
+  </script>
+  <script>
+    (() => {
+      $('.modal-bg form').on('submit', (ev) => {
+        ev.preventDefault();
+      });
 
-        $("#addHorarioAsignatura").on("click", (ev) => {
-          const horarioAsignaturaPlantilla = $(`
+      let counter = 1;
+
+      $("#addHorarioAsignatura").on("click", (ev) => {
+        const horarioAsignaturaPlantilla = $(`
           <div class="d-flex">
             <div class="form-group mt-1 me-2">
-              <label for="diaSemanaAsignatura${addHorarioCont}">Fecha</label>
-              <select class="form-control" id="diaSemanaAsignatura${addHorarioCont}">
+              <label for="diaSemanaAsignatura${counter}">Fecha</label>
+              <select class="form-control" id="diaSemanaAsignatura${counter}">
                 <option value="1">Lunes</option>
                 <option value="2">Martes</option>
                 <option value="3">Míércoles</option>
@@ -306,106 +311,140 @@
               </select>
             </div>
             <div class="form-group mt-1 me-2">
-              <label for="horaInicioAsignatura${addHorarioCont}">Hora inicio</label>
-              <input type="time" class="form-control" id="horaInicioAsignatura${addHorarioCont}" required value="00:00" />
+              <label for="horaInicioAsignatura${counter}">Hora inicio</label>
+              <input type="time" class="form-control" id="horaInicioAsignatura${counter}" required value="00:00" />
             </div>
             <div class="form-group mt-1">
-              <label for="horaFinAsignatura${addHorarioCont}">Hora Fin</label>
-              <input type="time" class="form-control" id="horaFinAsignatura${addHorarioCont}" required value="00:00" />
+              <label for="horaFinAsignatura${counter}">Hora Fin</label>
+              <input type="time" class="form-control" id="horaFinAsignatura${counter}" required value="00:00" />
             </div>
           </div>`);
-          addHorarioCont++;
-          $("#horarioAsignatura").append(horarioAsignaturaPlantilla);
-        });
-
-        let addSubjectRunning = false;
-        $("#btnAddAsignatura").on("click", (ev) => {
-          if (addSubjectRunning) return;
-          addSubjectRunning = true;
-          const nombre = $("#nombreAsignatura").val();
-          const numCreditos = Number($("#numCreditos option:selected").text());
-          const horario = [];
-          $("#horarioAsignatura").children().each((i) => {
-            horario.push({
-              dia: Number($(`#diaSemanaAsignatura${i} option:selected`).val()),
-              inicio: $(`#horaInicioAsignatura${i}`).val(),
-              fin: $(`#horaFinAsignatura${i}`).val(),
-            });
+        counter++;
+        $("#horarioAsignatura").append(horarioAsignaturaPlantilla);
+      });
+    })();
+    (() => {
+      let running = false;
+      $("#btnAddAsignatura").on("click", (ev) => {
+        if (running) return;
+        running = true;
+        const nombre = $("#nombreAsignatura").val();
+        const numCreditos = Number($("#numCreditos option:selected").text());
+        const horario = [];
+        $("#horarioAsignatura").children().each((i) => {
+          horario.push({
+            dia: Number($(`#diaSemanaAsignatura${i} option:selected`).val()),
+            inicio: $(`#horaInicioAsignatura${i}`).val(),
+            fin: $(`#horaFinAsignatura${i}`).val(),
           });
-          fetch(new URL("/calendar/createSubject", window.location.origin), {
-            method: 'post',
-            body: JSON.stringify({
-              nombre,
-              numCreditos,
-              horario,
-            }),
-            headers: {
-              "content-type": "application/json"
-            }
-          }).then((res) => {
-            if (res.status >= 400) {
-              // TODO error
-              console.error("FALLO!!!!");
-              $("#errorAsignatura").text("Ocurrió un error al crear la asignatura");
-            } else {
-              // TODO exito
-              console.log("EXITOOOO!!!!");
-              $("#exitoAsignatura").text("Asignatura creada con éxito");
-              setTimeout(() => {
-                window.location.reload();
-              }, 1000);
-            }
-            addSubjectRunning = false;
-          }).catch((err) => {
-            console.log(err);
+        });
+        fetch(new URL("/calendar/createSubject", window.location.origin), {
+          method: 'post',
+          body: JSON.stringify({
+            nombre,
+            numCreditos,
+            horario,
+          }),
+          headers: {
+            "content-type": "application/json"
+          }
+        }).then((res) => {
+          if (res.status >= 400) {
+            // TODO error
+            console.error("FALLO!!!!");
             $("#errorAsignatura").text("Ocurrió un error al crear la asignatura");
-            addSubjectRunning = false;
-          });
+          } else {
+            // TODO exito
+            console.log("EXITOOOO!!!!");
+            $("#exitoAsignatura").text("Asignatura creada con éxito");
+            setTimeout(() => {
+              window.location.reload();
+            }, 1000);
+          }
+          running = false;
+        }).catch((err) => {
+          console.log(err);
+          $("#errorAsignatura").text("Ocurrió un error al crear la asignatura");
+          running = false;
         });
-
-        let addActivityRunning = false;
-        $("#btnAddActividad").on("click", (ev) => {
-          if (addActivityRunning) return;
-          addActivityRunning = true;
-          const nombre = $('#nombreActividad').val();
-          const fecha = $('#fechaActividad').val();
-          const horaInicio = $('#horaInicioActividad').val();
-          const horaFin = $('#horaFinActividad').val();
-          const color = $('#colorActividad option:selected').val();
-          fetch(new URL("/calendar/createActivity", window.location.origin), {
-            method: 'post',
-            body: JSON.stringify({
-              nombre,
-              fecha,
-              horaInicio,
-              horaFin,
-              color,
-            }),
-            headers: {
-              "content-type": "application/json"
-            }
-          }).then((res) => {
-            if (res.status >= 400) {
-              // TODO error
-              console.error("FALLO!!!!");
-              $("#errorActividad").text("Ocurrió un error al crear la actividad");
-            } else {
-              // TODO exito
-              console.log("EXITOOOO!!!!");
-              $("#exitoActividad").text("Actividad creada con éxito");
-              setTimeout(() => {
-                window.location.reload();
-              }, 1000);
-            }
-            addActivityRunning = false;
-          }).catch((err) => {
-            console.log(err);
+      });
+    })();
+    (() => {
+      let running = false;
+      $("#btnAddActividad").on("click", (ev) => {
+        if (running) return;
+        running = true;
+        const nombre = $('#nombreActividad').val();
+        const fecha = $('#fechaActividad').val();
+        const horaInicio = $('#horaInicioActividad').val();
+        const horaFin = $('#horaFinActividad').val();
+        const color = $('#colorActividad option:selected').val();
+        fetch(new URL("/calendar/createActivity", window.location.origin), {
+          method: 'post',
+          body: JSON.stringify({
+            nombre,
+            fecha,
+            horaInicio,
+            horaFin,
+            color,
+          }),
+          headers: {
+            "content-type": "application/json"
+          }
+        }).then((res) => {
+          if (res.status >= 400) {
+            // TODO error
+            console.error("FALLO!!!!");
             $("#errorActividad").text("Ocurrió un error al crear la actividad");
-            addActivityRunning = false;
-          });
+          } else {
+            // TODO exito
+            console.log("EXITOOOO!!!!");
+            $("#exitoActividad").text("Actividad creada con éxito");
+            setTimeout(() => {
+              window.location.reload();
+            }, 1000);
+          }
+          running = false;
+        }).catch((err) => {
+          console.log(err);
+          $("#errorActividad").text("Ocurrió un error al crear la actividad");
+          running = false;
         });
-      })();
-    </script>
+      });
+    })();
+    (() => {
+      let running = false;
+      $('#btnGenerarHorario').on('click', () => {
+        if (running) return;
+        running = true;
+        fetch(new URL("/calendar/generateWeeklySchedule", window.location.origin), {
+          method: 'post',
+          body: JSON.stringify({}),
+          headers: {
+            "content-type": "application/json"
+          }
+        }).then((res) => {
+          if (res.status >= 400) {
+            // TODO error
+            console.error("FALLO!!!!");
+            $("#errorActividad").text("Ocurrió un error al crear la actividad");
+          } else {
+            // TODO exito
+            console.log("EXITOOOO!!!!");
+            $("#exitoActividad").text("Actividad creada con éxito");
+            setTimeout(() => {
+              window.location.reload();
+            }, 1000);
+          }
+          running = false;
+        }).catch((err) => {
+          console.log(err);
+          $("#errorActividad").text("Ocurrió un error al crear la actividad");
+          running = false;
+        });
+      });
+    })();
+  </script>
 </body>
 
 </html>

@@ -1,1 +1,84 @@
 @import "style.css";
+
+:root {
+  --cell-width: 12px;
+  --info-width: 160px;
+}
+
+.horario-libre-wrapper {
+  overflow-x: auto;
+  border: solid 1px black;
+}
+
+.horario-libre {
+  display: flex;
+  flex-direction: column;
+}
+
+.horario-libre .horas {
+  padding-left: var(--info-width);
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+}
+
+.horario-libre .horas div {
+  display: inline-block;
+  width: calc(var(--cell-width) * 4);
+  padding-left: 0.25rem;
+  border-left: solid 2px black;
+  font-size: 0.75rem;
+  font-weight: bold;
+}
+
+.horario-libre .dia {
+  display: grid;
+  grid-template-columns: var(--info-width) auto;
+}
+
+.horario-libre .dia .info {
+  display: flex;
+  border-top: solid 1px black;
+}
+
+.horario-libre .dia .info .dia-semana {
+  flex-grow: 1;
+  align-items: center;
+  display: flex;
+  padding-left: 0.25rem;
+}
+
+.horario-libre .dia .info .controles {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  padding: 0.25rem;
+  gap: 0.25rem;
+}
+
+.horario-libre .dia .info .controles label {
+  align-items: center;
+  display: flex;
+  justify-content: end;
+}
+.horario-libre .dia .info .controles select {
+  padding: 0.25rem !important;
+}
+
+.horario-libre .dia .celdas {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+}
+
+.horario-libre .dia .celdas .celda {
+  display: inline-block;
+  width: var(--cell-width);
+  border-left: solid 1px #c0c0c0;
+  border-top: solid 1px black;
+}
+.horario-libre .dia .celdas .celda.ocupada {
+  background-color: #0d6efd;
+  border-left: solid 1px #0d6efd;
+}
+
+.horario-libre .dia .celdas .celda:nth-of-type(4n + 1) {
+  border-left: solid 2px black;
+}

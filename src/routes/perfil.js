@@ -26,6 +26,7 @@ router.post("/", loginRequired, (req, res) => {
   const nombre = body["nombre"];
   const email = body["email"];
   const horario = [];
+  console.log(body);
   for (let i = 1; i <= 7; i++) {
     let splitted = body[`horaInicio${i}`].split(":");
     const inicio = DateTime.now().set({

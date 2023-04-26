@@ -1,242 +1,154 @@
+<%
+let weekdayNames = ['Lunes','Martes','Miércoles','Jueves','Viernes','Sábado','Domingo'];
+%>
+
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
-      crossorigin="anonymous"
-    />
-    <link rel="stylesheet" href="/css/profile.css" />
-    <title>APPerfectDay</title>
-    <script src="/js/utils.js"></script>
-  </head>
 
-  <body>
-    <div class="container-flex">
-      <!--NavBar-->
-      <%- include('includes/navbar', { user: user }); %>
-      <form action="/perfil" method="POST" class="container">
-        <div class="row">
-          <div class="col-4"></div>
-          <div class="col-4">
-            <strong>Datos de usuario</strong>
-            <div class="d-flex mt-3">
-              <img
-                class="userpic me-3"
-                src="/img/noUser.png"
-                style="border-radius: 50%; width: 6rem; height: 6rem"
-              />
-              <div>
-                <table class="table">
-                  <tr>
-                    <td>Nombre:</td>
-                    <td>
-                      <input
-                        type="text"
-                        name="nombre"
-                        value="<%= user.name %>"
-                        required
-                      />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Email</td>
-                    <td>
-                      <input
-                        type="email"
-                        name="email"
-                        value="<%= user.email %>"
-                        required
-                      />
-                    </td>
-                  </tr>
-                </table>
-              </div>
-            </div>
-          </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous" />
+  <link rel="stylesheet" href="/css/profile.css" />
+  <title>APPerfectDay</title>
+  <script src="/js/utils.js"></script>
+</head>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="/css/profile.css" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous" />
+  <title>APPerfectDay</title>
+  <script src="/js/utils.js"></script>
+</head>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="/css/profile.css" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous" />
+  <title>APPerfectDay</title>
+  <script src="/js/utils.js"></script>
+</head>
+
+<body>
+  <div class="container-flex">
+    <!--NavBar-->
+    <%- include('includes/navbar', { user: user }); %>
+    <form action="/perfil" method="POST" class="container">
+      <div class="row">
+        <div class="col-2">
+          <img class="userpic" src="/img/noUser.png" style="border-radius: 50%; width: 6rem; height: 6rem;">
         </div>
-        <div class="row mt-3">
-          <div class="col-4"></div>
-          <div class="col-4 schedule">
-            <strong>Horario libre</strong>
+        <div class="col-4">
+          <div>
             <table class="table">
-              <thead>
-                <tr>
-                  <th></th>
-                  <th>Desde</th>
-                  <th>Hasta</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Lunes</td>
-                  <td>
-                    <input
-                      class="me-3"
-                      type="time"
-                      name="horaInicio1"
-                      required
-                      value="<%= user.horario_libre[0].inicio %>"
-                    />
-                  </td>
-                  <td>
-                    <input
-                      type="time"
-                      name="horaFin1"
-                      required
-                      value="<%= user.horario_libre[0].fin %>"
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td>Martes</td>
-                  <td>
-                    <input
-                      class="me-3"
-                      type="time"
-                      name="horaInicio2"
-                      required
-                      value="<%= user.horario_libre[1].inicio %>"
-                    />
-                  </td>
-                  <td>
-                    <input
-                      type="time"
-                      name="horaFin2"
-                      required
-                      value="<%= user.horario_libre[1].fin %>"
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td>Miércoles</td>
-                  <td>
-                    <input
-                      class="me-3"
-                      type="time"
-                      name="horaInicio3"
-                      required
-                      value="<%= user.horario_libre[2].inicio %>"
-                    />
-                  </td>
-                  <td>
-                    <input
-                      type="time"
-                      name="horaFin3"
-                      required
-                      value="<%= user.horario_libre[2].fin %>"
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td>Jueves</td>
-                  <td>
-                    <input
-                      class="me-3"
-                      type="time"
-                      name="horaInicio4"
-                      required
-                      value="<%= user.horario_libre[3].inicio %>"
-                    />
-                  </td>
-                  <td>
-                    <input
-                      type="time"
-                      name="horaFin4"
-                      required
-                      value="<%= user.horario_libre[3].fin %>"
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td>Viernes</td>
-                  <td>
-                    <input
-                      class="me-3"
-                      type="time"
-                      name="horaInicio5"
-                      required
-                      value="<%= user.horario_libre[4].inicio %>"
-                    />
-                  </td>
-                  <td>
-                    <input
-                      type="time"
-                      name="horaFin5"
-                      required
-                      value="<%= user.horario_libre[4].fin %>"
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td>Sabado</td>
-                  <td>
-                    <input
-                      class="me-3"
-                      type="time"
-                      name="horaInicio6"
-                      required
-                      value="<%= user.horario_libre[5].inicio %>"
-                    />
-                  </td>
-                  <td>
-                    <input
-                      type="time"
-                      name="horaFin6"
-                      required
-                      value="<%= user.horario_libre[5].fin %>"
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td>Domingo</td>
-                  <td>
-                    <input
-                      class="me-3"
-                      type="time"
-                      name="horaInicio7"
-                      required
-                      value="<%= user.horario_libre[6].inicio %>"
-                    />
-                  </td>
-                  <td>
-                    <input
-                      type="time"
-                      name="horaFin7"
-                      required
-                      value="<%= user.horario_libre[6].fin %>"
-                    />
-                  </td>
-                </tr>
-              </tbody>
+              <tr>
+                <td>Nombre:</td>
+                <td>
+                  <input type="text" name="nombre" value="<%= user.name %>" required>
+                </td>
+              </tr>
+              <tr>
+                <td>Email</td>
+                <td>
+                  <input type="email" name="email" value="<%= user.email %>" required>
+                </td>
+              </tr>
             </table>
           </div>
         </div>
-        <div class="row text-center mt-3">
-          <div class="col-5"></div>
-          <div class="col-2">
-            <button class="btn btn-primary" type="submit" style="width: 5em">
-              Guardar
-            </button>
-          </div>
-          <div class="col-5"></div>
+        <div class="col-6">
+          <button class="btn btn-primary" type="submit">Guardar</button>
         </div>
-      </form>
-    </div>
-    <script
-      src="https://code.jquery.com/jquery-3.6.1.min.js"
-      integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
-      crossorigin="anonymous"
-    ></script>
-  </body>
+      </div>
+
+      <div class="row">
+        <div class="col-12 schedule">
+          <strong>Horario libre</strong>
+          <div class="horario-libre-wrapper">
+            <div class="horario-libre">
+              <div class="horas">
+                <% for (let j = 0; j < 24; j++) { %><div><%= j.toString().padStart(2, '0') %>:00</div><% } %>
+              </div>
+              <% for (let i = 0; i < 7; i++) { %>
+              <div class="dia">
+                <div class="info">
+                  <div class="dia-semana"><%= weekdayNames[i] %></div>
+                  <div class="controles">
+                    <label for="horaInicio<%= i + 1 %>">De</label>
+                    <select class="form-control" id="horaInicio<%= i + 1 %>" name="horaInicio<%= i + 1 %>">
+                      <% for (let j = 0; j < 24 * 4; j++) { %>
+                      <% let hora = Math.floor(j / 4).toString().padStart(2, '0') + ':' + ((j % 4) * 15).toString().padStart(2, '0'); %>
+                      <option value="<%= hora %>" <%= user.horario_libre[i].inicio == hora ? ' selected' : '' %>><%= hora %></option>
+                      <% } %>
+                    </select>
+                    <label for="horaFin<%= i + 1 %>">A</label>
+                    <select class="form-control" id="horaFin<%= i + 1 %>" name="horaFin<%= i + 1 %>">
+                      <% for (let j = 0; j < 24 * 4; j++) { %>
+                      <% let hora = Math.floor(j / 4).toString().padStart(2, '0') + ':' + ((j % 4) * 15).toString().padStart(2, '0'); %>
+                      <option value="<%= hora %>" <%= user.horario_libre[i].fin == hora ? ' selected' : '' %>><%= hora %></option>
+                      <% } %>
+                    </select>
+                  </div>
+                </div>
+                <div class="celdas">
+                  <% for (let j = 0; j < 24 * 4; j++) { %>
+                  <div class="celda" data-hour="<%= Math.floor(j / 4) %>" data-minute="<%= (j % 4) * 15 %>"></div>
+                  <% } %>
+                </div>
+              </div>
+              <% } %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+  <script>
+    (() => {
+      function generateWeekdayCalendar(weekdayDiv) {
+        const $cells = $(weekdayDiv).children('.celdas').children('.celda');
+        const $selects = $(weekdayDiv).children('.info').children('.controles').children('select');
+        const start = $($selects.get(0)).children('option:selected').attr('value');
+        let splitted = start.split(':');
+        const hourStart = Number(splitted[0]);
+        const minuteStart = Number(splitted[1]);
+        const end = $($selects.get(1)).children('option:selected').attr('value');
+        splitted = end.split(':');
+        const hourEnd = Number(splitted[0]);
+        const minuteEnd = Number(splitted[1]);
+        $cells.each((i, el) => {
+          const $el = $(el);
+          $el.removeClass('ocupada');
+        });
+        $cells.each((i, el) => {
+          const $el = $(el);
+          const hour = Number($el.data('hour'));
+          const minute = Number($el.data('minute'));
+          if (hour < hourStart || hour > hourEnd) return;
+          if (hour == hourStart && minute < minuteStart) return;
+          if (hour == hourEnd && minute >= minuteEnd) return;
+          $el.addClass('ocupada');
+        });
+      }
+
+      $('.horario-libre .dia').each((i, el) => {
+        generateWeekdayCalendar(el);
+        const $selects = $(el).children('.info').children('.controles').children('select');
+        $selects.on('change', () => {
+          generateWeekdayCalendar(el);
+        });
+      });
+    })();
+  </script>
+</body>
+
 </html>

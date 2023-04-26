@@ -14,15 +14,14 @@
    * @param {string} to
    * @param {string} color
    */
-  function createDayCalendarActivity(id, title, from, to, color,type) {
-    const activityDiv = $(`
+  function createDayCalendarActivity(id, title, from, to, color) {
+    return $(`
     <div class="calendar-activity">
       <div class="calendar-activity-color background-${color}"></div>
       <div class="calendar-activity-title"><a class="text-reset text-decoration-none" href="/${type}/${id}">${title}</a></div>
       <div class="calendar-activity-from">${from}</div>
       <div class="calendar-activity-to">${to}</div>
     </div>`);
-    return activityDiv;
   }
 
   let loading = 0;
@@ -64,7 +63,14 @@
         if (activities.length != 0) {
           activitiesDiv.append(
             ...activities.map((a) =>
-              createDayCalendarActivity(a.id, a.title, a.from, a.to, a.color, a.type)
+              createDayCalendarActivity(
+                a.id,
+                a.title,
+                a.from,
+                a.to,
+                a.color,
+                a.type
+              )
             )
           );
         } else {
@@ -113,8 +119,12 @@
     }, 200);
   }
 
-  panelBGDiv.on("click", closeSidePanel);
+  enableCalendarDayClick();
 
+  panelBGDiv.on("click", closeSidePanel);
+})();
+
+function enableCalendarDayClick() {
   const daysElements = $(".app-calendar-month .calendar-day");
 
   if (daysElements.length != 0) {
@@ -132,43 +142,17 @@
       }
     });
   }
+}
 
-  const botonGenerar = $('#btnGenerar');
-  botonGenerar.on('click',()=>{
-    const today = new Date();
-    const year = today.getFullYear();
-    const month = today.getMonth() + 1;
-    const lastDayOfMonth = new Date(year, month, 0).getDate();
-    let lastMonday = 0;
+function disableCalendarDayClick() {
+  const daysElements = $(".app-calendar-month .calendar-day");
 
-    for (let i = lastDayOfMonth; i > 0; i--) {
-      const dayOfWeek = new Date(year, month - 1, i).getDay();
-      if (dayOfWeek === 1) {
-        lastMonday = i;
-        break;
+  if (daysElements.length != 0) {
+    daysElements.each((_, el) => {
+      const o = $(el);
+      if (!o.hasClass("calendar-day-off")) {
+        o.off("click");
       }
-    }
-
-    console.log("/horario/"+year+"/"+month+"/"+lastMonday)
-
-    fetch(new URL("/horario/create/"+year+"/"+month+"/"+lastMonday, window.location.origin), {
-      method: 'post',
-      headers: {
-        "content-type": "application/json"
-      }
-    })
-    .then(response => {
-      if(response.status >= 400){
-        alert("El horario de la semana ya a sido generado");
-      }else{
-        window.location.reload();
-      if (response.ok) {
-        return response.json();
-      } else {
-        throw new Error('Something went wrong');
-      }
-      }
-      
-    })
-  })
-})();
+    });
+  }
+}
