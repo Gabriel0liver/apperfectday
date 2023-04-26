@@ -1,9 +1,9 @@
 :root {
-  --red: #ff0000;
+  --red: #F45050  ;
   --orange: #ff7f00;
   --yellow: #ffff00;
   --green: #00ff00;
-  --blue: #0000ff;
+  --blue: #F9D949  ;
   --indigo: #4b0082;
   --violet: #ee82ee;
   --cyan: #00ffff;
@@ -19,12 +19,19 @@
   --greenyellow: #adff2f;
   --hotpink: #ff69b4;
   --indianred: #cd5c5c;
+  --primary: #E5F1EE; 
+  --secondary: #F0E4EC;
+  --accent1: #D3F3EE; 
+  --accent2: #F2E9E4; 
+  --text: #3C486B;
 }
+
+
 
 /* Classes for background-color */
 .background-red {
   background-color: var(--red) !important;
-  color: white !important;
+  color: #F0F0F0 !important;
 }
 .background-orange {
   background-color: var(--orange) !important;
@@ -40,7 +47,7 @@
 }
 .background-blue {
   background-color: var(--blue) !important;
-  color: white !important;
+  color: #3C486B !important;
 }
 .background-indigo {
   background-color: var(--indigo) !important;

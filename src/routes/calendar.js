@@ -169,7 +169,7 @@ router.post("/createSubject", loginRequired, async (req, res) => {
     titulo: body.nombre,
     creditos: body.numCreditos,
     horario,
-    color: "red",
+    color: "primary",
   });
   try {
     await Subject.create(subject);
@@ -223,11 +223,13 @@ router.post("/createActivity", loginRequired, async (req, res) => {
     titulo: body.nombre,
     inicio: dateStart.toJSDate(),
     fin: dateEnd.toJSDate(),
-    color: body.color,
+    color: "secondary",
   });
+  console.log(body.color)
   try {
-    await activity.save();
+    await Activity.create(activity);
   } catch (ex) {
+    console.log(ex)
     res.status(409).json({});
     return;
   }

@@ -61,6 +61,7 @@ function mapActivitiesByDate(options) {
       from: DateTime.fromJSDate(a.inicio).toFormat("HH:mm"),
       to: DateTime.fromJSDate(a.fin).toFormat("HH:mm"),
       color: a.color,
+      type: "subject"
     }));
     activities.push(...list);
   }
@@ -77,6 +78,7 @@ function mapActivitiesByDate(options) {
         from: DateTime.fromJSDate(a.inicio).toFormat("HH:mm"),
         to: DateTime.fromJSDate(a.fin).toFormat("HH:mm"),
         color,
+        type: "activity"
       };
     });
     activities.push(...list.sort((a, b) => a.from.localeCompare(b.from)));

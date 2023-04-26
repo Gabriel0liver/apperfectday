@@ -25,6 +25,11 @@ router.post('/create/:year/:month/:day', loginRequired , async (req, res, next) 
     const subjectsList = await Subject.find({ user });// habria que ordenar por creditos
     const activitiesList = await Activity.find({ user });
 
+    if(user.generado){
+        res.status(409).json({});
+        return;
+    }
+
     const { params }  = req;
     const paramMonth = params.month;
     const paramYear= params.year;
@@ -111,6 +116,7 @@ router.post('/create/:year/:month/:day', loginRequired , async (req, res, next) 
             }
         }
         //añadir response
+        res.redirect("/");
     })
 });
   

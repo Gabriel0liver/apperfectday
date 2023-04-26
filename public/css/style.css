@@ -1,9 +1,16 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@700&display=swap');
+
 *,
 *::before,
 *::after {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+}
+
+*{
+  font-family: 'Montserrat', sans-serif;
 }
 
 .d-none {
@@ -17,4 +24,45 @@
 body {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 16px;
+}
+
+.btn{
+  --bs-btn-color: #fff;
+--bs-btn-bg: #3C486B;
+--bs-btn-border-color: #3C486B;
+--bs-btn-hover-color: #fff;
+--bs-btn-hover-bg: #37415f;
+--bs-btn-hover-border-color: #3C486B;
+--bs-btn-focus-shadow-rgb: 49,132,253;
+--bs-btn-active-color: #fff;
+--bs-btn-active-bg: #3C486B;
+--bs-btn-active-border-color: #3C486B;
+--bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+--bs-btn-disabled-color: #fff;
+--bs-btn-disabled-bg: #3C486B;
+--bs-btn-disabled-border-color: #0d6efd;
+font-family: 'Montserrat', sans-serif;
+}
+
+.btn-danger{
+  --bs-btn-color: #fff;
+--bs-btn-bg: #F45050;
+--bs-btn-border-color: #F45050;
+--bs-btn-hover-color: #fff;
+--bs-btn-hover-bg: #db4b4b;
+--bs-btn-hover-border-color: #e44a4a;
+--bs-btn-focus-shadow-rgb: 49,132,253;
+--bs-btn-active-color: #fff;
+--bs-btn-active-bg: #F45050;
+--bs-btn-active-border-color: #F45050;
+--bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+--bs-btn-disabled-color: #fff;
+--bs-btn-disabled-bg: #F45050;
+--bs-btn-disabled-border-color: #F45050;
+font-family: 'Montserrat', sans-serif;
+}
+
+h1 .text-reset{
+  font-family: 'Roboto Condensed', sans-serif;
+  color: #3C486B;
 }

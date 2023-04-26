@@ -5,7 +5,7 @@ exports.register = async (req, res) => {
   const userexiste = await User.findOne({ email: req.body.email });
   if (!userexiste) {
     const hashedPassword = await bcrypt.hash(req.body.password, 12);
-    const user = await User.create({ ...req.body, password: hashedPassword });
+    const user = await User.create({ ...req.body, password: hashedPassword, generado:false });
     req.session.userId = user.id;
     return res
       .status(201)

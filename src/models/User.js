@@ -31,6 +31,9 @@ const UserSchema = new Schema({
       },
     },
   ],
+  generado:{
+    type: Boolean
+  }
 })
 
 const User = mongoose.model("User", UserSchema);
