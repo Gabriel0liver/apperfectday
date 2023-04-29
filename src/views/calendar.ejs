@@ -83,7 +83,7 @@
             Añadir Actividad
           </button>
           <button type="button" class="btn btn-primary " style="margin-left: 8em;" id="btnGenerarHorario">
-            Generar horario
+            Generar Horario de la Semana
           </button>
         </div>
       </div>
@@ -135,6 +135,9 @@
                 <input type="time" class="form-control" id="horaFinAsignatura0" required value="00:00" />
               </div>
             </div>
+          </div>
+          <div class="py-3">
+            <button id="addHorarioAsignatura" class="btn btn-secondary" type="button">Añadir nueva hora</button>
           </div>
           <div class="col">
             <button type="button" class="btn btn-primary btnModal" id="btnAddAsignatura">
@@ -394,7 +397,14 @@
             "content-type": "application/json"
           }
         }).then((res) => {
-          window.location.reload();
+          if(res.status == 409){
+            alert("El horario de la semana ya ha sido generado");
+          }
+          else if(res.status == 408){
+            alert("Es necesario añadir asignaturas para generar el horario");
+          }else{
+            window.location.reload();
+          }
           running = false;
         }).catch((err) => {
           console.log(err);

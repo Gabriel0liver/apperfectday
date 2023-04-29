@@ -20,5 +20,5 @@ describe('La aplicación de lista de tareas', () => {
     await page.goto('https://apperfectday.herokuapp.com/')
     const pageTitle = await page.title()
     expect(pageTitle).toBe('APPerfectDay')
-  }, 10000)
+  }, 50000)
 })

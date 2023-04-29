@@ -32,7 +32,8 @@ const UserSchema = new Schema({
     },
   ],
   generado:{
-    type: Boolean
+    type: Date,
+    required: true,
   }
 })
 

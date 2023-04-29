@@ -10,37 +10,59 @@ exports.register = async (req, res) => {
     req.body.horario_libre = req.body.horario_libre.map((h) => {
       let splitted = h.inicio.split(":");
       const start = DateTime.now()
-        .toUTC()
+      if(splitted == ""){
+        start.toUTC()
+        .set({
+          hour: 0,
+          minute: 0,
+          second: 0,
+          millisecond: 0,
+        });
+      }else{
+        start.toUTC()
         .set({
           hour: Number(splitted[0]),
           minute: Number(splitted[1]),
           second: 0,
           millisecond: 0,
         });
+      }
       splitted = h.fin.split(":");
       const end = DateTime.now()
-        .toUTC()
+      if(splitted == ""){
+        end.toUTC()
+        .set({
+          hour: 0,
+          minute: 0,
+          second: 0,
+          millisecond: 0,
+        });
+      }else{
+        end.toUTC()
         .set({
           hour: Number(splitted[0]),
           minute: Number(splitted[1]),
           second: 0,
           millisecond: 0,
         });
+      }
+        
       return {
         inicio: start.toJSDate(),
         fin: end.toJSDate(),
       };
     });
+    const generado = DateTime.now().minus({years:1})
     const user = await User.create({
       ...req.body,
       password: hashedPassword,
-      generado: false,
+      generado,
     });
     req.session.userId = user.id;
     return res.status(201).json({});
   }
-  return res.status(404).render("login", {
-    message: "Error El correo  ya esta asociado a otra cuenta.",
+  return res.status(401).render("login", {
+    message: " El correo  ya esta asociado a otra cuenta."
   });
 };
 
@@ -50,9 +72,10 @@ exports.login = async (req, res) => {
     return;
   }
   const user = await User.findOne({ email: req.body.email });
+
   if (!user) {
+    console.log(user + "sdadasdsa");
     return res
-      .status(404)
       .render("login", { message: "El correo  no existe." });
   }
   const IsPasswordCorrect = await bcrypt.compare(

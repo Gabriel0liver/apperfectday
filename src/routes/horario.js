@@ -28,11 +28,6 @@ router.post(
     const subjectsList = await Subject.find({ user }); // habria que ordenar por creditos
     const activitiesList = await Activity.find({ user });
 
-    if (user.generado) {
-      res.status(409).json({});
-      return;
-    }
-
     const { params } = req;
     const paramMonth = params.month;
     const paramYear = params.year;
@@ -46,6 +41,17 @@ router.post(
       day: paramDay,
     });
     monday = monday.minus({ days: monday.weekday - 1 });
+
+    const generado = DateTime.fromJSDate(user.generado);
+
+    if  (subjectsList.length == 0){
+      res.status(408).json({});
+      return;
+    }
+    if (monday <= generado) {
+      res.status(409).json({});
+      return;
+    }
 
     //adaptar el horario al de esa semana
     for (i in horario) {
@@ -89,7 +95,7 @@ router.post(
     }
 
     //se iteran las asignaturas hasta que no quepan mas o todos los creditos han sido encajados
-    subjectsList.forEach(async ({ creditos, _id, titulo }) => {
+    await subjectsList.forEach(async ({ creditos, _id, titulo }) => {
       let c = creditos;
 
       let dia = 0;
@@ -124,9 +130,15 @@ router.post(
           dia++;
         }
       }
-      //añadir response
-      res.redirect("/");
     });
+    //añadir response
+
+    await User.findByIdAndUpdate(req.session.userId, {
+      generado: monday
+    })
+
+    res.status(200).json({});
+    return ;
   }
 );
 

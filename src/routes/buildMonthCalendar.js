@@ -77,7 +77,7 @@ function mapActivitiesByDate(options) {
         title: a.titulo,
         from: DateTime.fromJSDate(a.inicio).toFormat("HH:mm"),
         to: DateTime.fromJSDate(a.fin).toFormat("HH:mm"),
-        color,
+        color: a.color,
         url: "/activity/" + a.id,
       };
     });

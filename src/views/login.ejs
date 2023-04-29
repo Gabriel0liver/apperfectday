@@ -206,11 +206,11 @@
           }),
         })
         .then((response) => {
-          $('#Error').text('Se ha registrado con éxito');
+          if(response.status == 201){
+            window.location.href = '/calendar'
+          }
+          
           // hacer algo con la respuesta del servidor, como mostrar un mensaje de confirmación
-        })
-        .catch((error) => {
-          $('#Error').text('Error al enviar el formulario');
         })
     }
   </script>

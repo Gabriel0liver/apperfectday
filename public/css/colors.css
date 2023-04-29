@@ -1,9 +1,9 @@
 :root {
   --red: #F45050  ;
   --orange: #ff7f00;
-  --yellow: #ffff00;
+  --yellow: #F9D949;
   --green: #00ff00;
-  --blue: #F9D949  ;
+  --blue: #4787ff  ;
   --indigo: #4b0082;
   --violet: #ee82ee;
   --cyan: #00ffff;
@@ -47,7 +47,7 @@
 }
 .background-blue {
   background-color: var(--blue) !important;
-  color: #3C486B !important;
+  color: #ffffff !important;
 }
 .background-indigo {
   background-color: var(--indigo) !important;
